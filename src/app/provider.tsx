@@ -1,11 +1,14 @@
 'use client'
 
 import { HeroUIProvider } from '@heroui/react'
-import { ThemeProvider } from 'next-themes'
+import dynamic from 'next/dynamic';
+
+const ThemeProvider = dynamic(() => import("next-themes").then(mod => mod.ThemeProvider), { ssr: false })
+
 
 export function Providers({ children }: { children: React.ReactNode }) {
     return (
-        <ThemeProvider attribute={'class'} defaultTheme='dark'>
+        <ThemeProvider attribute="class" defaultTheme='dark'>
             <HeroUIProvider>
                 {children}
 

@@ -15,7 +15,8 @@ export function ThemeSwitcher() {
     if (!mounted) return null
 
     return (
-        <div className="space-y-4 flex-col gap-4 flex">
+        <div className="space-y-4 flex-col gap-4 flex"
+        >
             The current theme is: {theme}
             <button onClick={() => setTheme('light')} >Light Mode</button>
             <button onClick={() => setTheme('dark')} >Dark Mode</button>
