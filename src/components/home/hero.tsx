@@ -13,8 +13,10 @@ const Hero = () => {
                 className='h-screen w-full  absolute -z-10  object-center object-cover'
             />
             <div>
-                <h1 className='text-4xl font-bold text-primary'>
-                    Welcome to <span className='font-bold'>StayEasy</span>
+                <h1 className='text-4xl font-bold text-white '>
+                    Welcome to <span className='font-bold'>Booking </span>
+                    Your Dream Stay Awaits
+
                 </h1>
                 <InputCon />
                 <div>
