@@ -10,12 +10,13 @@ const Hero = () => {
                 height={1024}
                 src={'/hotel-hero.png'}
                 alt='hotel image'
-                className='h-screen w-full  absolute -z-10  object-center object-cover'
+                className='h-screen w-full  absolute -z-20  object-center object-cover brightness-50 blur-[1.5px]'
             />
-            <div>
-                <h1 className='text-4xl font-bold text-white '>
-                    Welcome to <span className='font-bold'>Booking </span>
-                    Your Dream Stay Awaits
+            {/* <div className="absolute -z-10 inset-0 bg-black/60 " /> */}
+            <div >
+                <h2 className='text-2xl  text-white ' >Welcome to Booking </h2>
+                <h1 className='text-5xl font-bold text-white mb-4'>
+                    Find your next stay with us
 
                 </h1>
                 <InputCon />
