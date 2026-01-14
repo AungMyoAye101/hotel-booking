@@ -7,6 +7,7 @@
 
 body {
     font-family: "Roboto", sans-serif;
+
 }
 
 :root {
@@ -46,4 +47,10 @@ body {
     --primary: #8b5cf6;
     --primary-hover: #a78bfa;
     --primary-light: rgba(139, 92, 246, 0.1);
+}
+
+@layer {
+    .head-1 {
+        @apply text-2xl font-semibold
+    }
 }

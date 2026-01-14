@@ -13,14 +13,14 @@ const Header = () => {
             <div>
                 <Link href="/" className='flex items-center gap-4 '>
                     <Image
-                        src="/booking-logo.png"
+                        src="/brand-logo.svg"
                         alt="Logo"
                         width={60}
                         height={60}
                         className='bg-white rounded-full'
 
                     />
-                    <h1 className='text-2xl font-bold text-white'>Booking</h1>
+                    <h1 className='text-2xl font-bold text-white uppercase'>Booking</h1>
                 </Link>
             </div>
 
