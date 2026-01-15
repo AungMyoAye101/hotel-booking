@@ -1,7 +1,7 @@
 'use client';
 
 import { Card, CardHeader, CardBody, CardFooter, Divider, Link, Image, Button, Badge } from "@heroui/react";
-import { Dot, DotIcon, LocateFixedIcon, LocateIcon, LocationEdit, Star } from "lucide-react";
+import { ArrowRight, Dot, DotIcon, LocateFixedIcon, LocateIcon, LocationEdit, Star } from "lucide-react";
 
 export default function HotelCardList() {
     return (
@@ -26,33 +26,33 @@ export default function HotelCardList() {
                                         className="w-full rounded-none"
                                     />
                                 </div>
-                                <div className="px-4 py-2 space-y-2">
+                                <div className="px-4 py-2 space-y-1">
                                     <div className="flex justify-between">
                                         <h3 className="font-semibold">Hotel name</h3>
                                         <Badge color="secondary">4</Badge>
                                     </div>
+                                    <p>Downtown 2 km from hotel</p>
                                     <div className="flex items-center gap-1">
                                         <Star fill=" oklch(79.5% 0.184 86.047)" size={16} className="text-yellow-500" />
-
-
                                         <Star fill=" oklch(79.5% 0.184 86.047)" size={16} className="text-yellow-500" />
                                         <Star fill=" oklch(79.5% 0.184 86.047)" size={16} className="text-yellow-500" />
 
                                         <Star fill=" oklch(79.5% 0.184 86.047)" size={16} className="text-yellow-500" />
                                         <Star fill=" oklch(79.5% 0.184 86.047)" size={16} className="text-yellow-500" />
-
+                                        <p>(120 reviews)</p>
                                     </div>
+                                    <div className="flex items-center justify-between gap-4">
 
-                                    <p className="text-black/90  text-sm flex gap-1">
+                                        <p>
+                                            <span className="text-black font-bold text-xl">$150</span>/night
 
-                                        Make beautiful websites.</p>
-                                    <div>
-                                        <span className="font-semibold text-xl">$120</span>
-                                        <span className="text-sm text-black/60"> / night</span>
+                                        </p>
+
+
+                                        <Button size="sm" radius="full" variant="solid" color="primary" className="py-2 mb-2 px-6">
+                                            Book now <ArrowRight />
+                                        </Button>
                                     </div>
-                                    <Button fullWidth size="sm" radius="full" variant="solid" color="primary" className="py-2 mb-2">
-                                        Book now
-                                    </Button>
                                 </div>
 
                             </CardBody>

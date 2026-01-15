@@ -18,11 +18,12 @@ const Destination = () => {
                                     height={240}
                                     className='aspect-video rounded-md'
                                 />
-                                <div className='flex justify-between items-center p-4'>
-                                    <p className='font-semibold'>Yangon</p>
-                                    <Link href="#" className='bg-white rounded-full shadow border'>
-                                        <ArrowRight />
-                                    </Link>
+                                <div className='flex flex-col gap-2 p-4'>
+                                    <h1 className='text-lg font-bold'>Yangon</h1>
+                                    <p className=''>120 + hotels</p>
+                                    <Button variant='bordered' className='text-primary border-primary bg-blue-50'>
+                                        Explore stays   <ArrowRight />
+                                    </Button>
                                 </div>
                             </CardBody>
                         </Card>
