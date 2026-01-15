@@ -25,10 +25,10 @@ const Header = () => {
             </div>
 
             <div>
-                <Button variant='solid' color='primary' className='text-sm'>
+                <Button variant='solid' color='primary' size='sm' isIconOnly>
                     <Link href="/login" className='flex items-center gap-2'>
 
-                        Signup <LogIn />
+                        <LogIn />
                     </Link>
                 </Button>
             </div>

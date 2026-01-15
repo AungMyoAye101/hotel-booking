@@ -10,6 +10,8 @@ body {
 
 }
 
+
+
 :root {
 
     /* --- Brand Colors --- */
@@ -49,8 +51,12 @@ body {
     --primary-light: rgba(139, 92, 246, 0.1);
 }
 
+@utility no-scrollbar {
+    @apply [scrollbar-width:none] [&::-webkit-scrollbar]:hidden;
+}
+
 @layer {
     .head-1 {
-        @apply text-2xl font-semibold
+        @apply text-2xl font-bold
     }
 }

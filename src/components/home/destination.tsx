@@ -4,8 +4,8 @@ import { ArrowRight, MoveRight, Stars } from 'lucide-react'
 
 const Destination = () => {
     return (
-        <section className=' py-12 px-4 space-y-6 '>
-            <h1 className='text-2xl font-semibold text-black'>Popular destinations</h1>
+        <section className=' py-12 space-y-6 '>
+            <h1 className='head-1 text-black'>Popular destinations</h1>
             <div className='flex gap-4'>
                 {
                     Array(4).fill(null).map((_, i) => (

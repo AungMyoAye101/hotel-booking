@@ -4,6 +4,7 @@ import "./globals.css";
 import { HeroUIProvider } from "@heroui/system";
 import { Providers } from "./provider";
 import Header from "@/components/header";
+import Footer from "@/components/footer";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -29,10 +30,11 @@ export default function RootLayout({
     <html lang="en">
       <body>
         <Providers>
+          <Header />
           <div className="max-w-7xl mx-auto">
-            <Header />
             {children}
           </div>
+          <Footer />
         </Providers>
 
       </body>
