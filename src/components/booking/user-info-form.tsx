@@ -5,7 +5,7 @@ import React from 'react'
 
 const UserInfoForm = () => {
     return (
-        <form className='bg-white rounded-lg border border-slate-200 shadow-md  p-6 max-w-lg space-y-4'>
+        <form className='bg-white rounded-lg border border-slate-200 shadow-md  p-6 max-w-xl space-y-4'>
             <h1 className='head-1'>Guest information</h1>
             <div className='grid gird-cols-2 gap-4' >
                 <Input type='text' placeholder='First name' label="First name" labelPlacement='outside' radius='sm' />
