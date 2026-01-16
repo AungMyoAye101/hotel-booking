@@ -6,10 +6,10 @@ const Destination = () => {
     return (
         <section className=' py-12 space-y-6 '>
             <h1 className='head-1 text-black'>Popular destinations</h1>
-            <div className='flex gap-4'>
+            <div className='flex gap-4 overflow-hidden overflow-x-scroll'>
                 {
                     Array(4).fill(null).map((_, i) => (
-                        <Card key={i} radius='sm'>
+                        <Card key={i} radius='sm' className='min-w-xs'>
                             <CardBody className='p-0'>
                                 <Image
                                     src={'/hotel-bg.png'}

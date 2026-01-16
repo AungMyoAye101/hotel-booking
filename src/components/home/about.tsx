@@ -5,7 +5,7 @@ const About = () => {
     return (
         <section className='py-12 px-4 flex flex-col gap-6 items-center justify-center'>
             <h1 className='head-1'>Why book with us</h1>
-            <div className='flex gap-12 flex-wrap'>
+            <div className='flex items-center justify-center gap-12 flex-wrap'>
                 <div className='flex flex-col gap-2 items-center '>
                     <Building2 size={60} className='text-primary' />
                     <h2 className='text-lg font-semibold'>Verified hotels</h2>

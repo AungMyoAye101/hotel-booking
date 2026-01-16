@@ -7,7 +7,7 @@ import Link from 'next/link'
 const Footer = () => {
     return (
         <footer className='bg-slate-800 '>
-            <section className='max-w-7xl mx-auto text-white py-12 px-4 flex gap-4'>
+            <section className='max-w-7xl mx-auto text-white py-12 px-4 flex flex-wrap gap-4'>
                 <div className='space-y-4 max-w-xs'>
                     <div className='flex items-center gap-2'>
 
@@ -44,7 +44,7 @@ const Footer = () => {
                 </div>
                 {/* Contact section */}
                 <div className='flex-1 max-w-2xl '>
-                    <div className='flex justify-between gap-4'>
+                    <div className='flex flex-wrap justify-between gap-4'>
                         <div className='space-y-4'>
                             <h1 className='text-lg font-semibold'>
                                 Company

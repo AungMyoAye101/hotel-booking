@@ -14,11 +14,13 @@ const Hero = () => {
             />
             {/* <div className="absolute -z-10 inset-0 bg-black/60 " /> */}
             <div className='space-y-4' >
-                <h1 className='text-5xl font-bold text-white'>
+                <h1 className='text-3xl sm:text-4xl md:text-5xl font-bold text-white'>
                     Find your perfect stay
 
                 </h1>
-                <h2 className='text-2xl  text-white ' >Compare prices, check availability, book with confidence. </h2>
+                <h2 className='text-base sm:text-2xl  text-white ' >
+                    Compare prices, check availability, book with confidence.
+                </h2>
                 <InputCon />
                 <div>
 
