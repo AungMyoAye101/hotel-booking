@@ -3,6 +3,7 @@
 import { AirVentIcon, LocateFixed, PlaneTakeoff, Pointer, Refrigerator, Star, Wifi } from "lucide-react"
 import { LocaleRouteNormalizer } from "next/dist/server/normalizers/locale-route-normalizer"
 import Image from "next/image"
+import HotelReview from "./hotel-review"
 
 
 
@@ -54,8 +55,8 @@ const HotelDetails = () => {
 
 
             </div>
-            <div className="bg-white mt-12   py-6">
-                <div className="max-w-sm space-y-4">
+            <div className="bg-white mt-12   py-6 flex flex-col md:flex-row gap-12 justify-between max-w-7xl px-4 md:px-0">
+                <div className=" space-y-4">
                     <h1 className="head-1">Overview</h1>
                     <p className="text-balance">
                         Lorem ipsum dolor sit amet consectetur adipisicing elit.
@@ -80,7 +81,7 @@ const HotelDetails = () => {
 
                     </div>
                 </div>
-
+                <HotelReview />
 
             </div>
         </section>
