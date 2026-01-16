@@ -1,3 +1,4 @@
+import AvaliableRooms from "@/components/hotel/avaliable-rooms";
 import HotelDetails from "@/components/hotel/hotel-details";
 
 type Params = {
@@ -10,6 +11,7 @@ const page = async ({ params }: { params: Promise<Params> }) => {
     return (
         <>
             <HotelDetails />
+            <AvaliableRooms />
         </>
     )
 }

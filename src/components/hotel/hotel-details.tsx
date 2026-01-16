@@ -10,7 +10,7 @@ import HotelReview from "./hotel-review"
 const HotelDetails = () => {
     return (
 
-        <section className=" ">
+        <section >
             <div className="h-screen max-w-7xl flex items-end  text-white">
 
                 <Image
