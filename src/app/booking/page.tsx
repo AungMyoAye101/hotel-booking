@@ -1,11 +1,14 @@
+
 import BookingInfo from "@/components/booking/booking-info"
 import PaymentDetailsForm from "@/components/booking/payment-details"
 import UserInfoForm from "@/components/booking/user-info-form"
+import { useBookingStore } from "@/stores/booking-store"
 import { BadgeDollarSign, Check } from "lucide-react"
 
 const page = () => {
+
     return (
-        <section className="py-24 space-y-6 ">
+        <section >
             <div>
 
                 <h1 className="text-3xl font-semibold">Secure your booking</h1>
