@@ -4,15 +4,16 @@ import { Chip, Progress } from '@heroui/react'
 
 const Indicator = () => {
     const stage = useBookingStore(s => s.stage)
+    const color = stage === 1 ? "success" : "default";
     return (
         <div className='flex items-center   '>
-            <Chip radius='full' color='primary' size={'lg'}>1</Chip>
+            <Chip radius='full' color={stage === 1 || stage > 1 ? "primary" : "default"} size={'lg'}>1</Chip>
 
             <Progress aria-label='progress' value={stage > 1 ? 100 : 0} color='primary' radius='none' />
-            <Chip radius='full' color='primary' size={'lg'}>2</Chip>
+            <Chip radius='full' color={stage === 2 || stage > 2 ? "primary" : "default"} size={'lg'}>2</Chip>
             <Progress aria-label='progress' value={stage > 2 ? 100 : 0} color='primary' radius='none' />
 
-            <Chip radius='full' color='primary' size={'lg'}>3</Chip>
+            <Chip radius='full' color={stage === 3 ? 'primary' : "default"} size={'lg'}>3</Chip>
         </div>
     )
 }
