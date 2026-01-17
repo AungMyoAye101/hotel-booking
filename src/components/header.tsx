@@ -3,13 +3,15 @@ import { Button } from '@heroui/react'
 import { LogIn, LogInIcon, Menu } from 'lucide-react'
 import Image from 'next/image'
 import Link from 'next/link'
+import { useParams, usePathname } from 'next/navigation';
 import { useEffect, useState } from 'react';
 
-
 const Header = () => {
-    const [isScroll, setIsScroll] = useState<boolean>(false)
+    const [isScroll, setIsScroll] = useState<boolean>(false);
 
-    const navBackground = isScroll ? "bg-blue-800" : "bg-blue-800/20"
+    const path = usePathname()
+
+    const navBackground = path === '/' ? isScroll ? "bg-blue-950/90" : "bg-blue-800/20" : "bg-blue-950/90";
 
     useEffect(() => {
         const handleScroll = () => {
@@ -31,8 +33,8 @@ const Header = () => {
                         <Image
                             src="/brand-logo.svg"
                             alt="Logo"
-                            width={60}
-                            height={60}
+                            width={50}
+                            height={50}
                             className='bg-white rounded-full'
 
                         />

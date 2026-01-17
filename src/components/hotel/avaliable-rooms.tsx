@@ -21,11 +21,9 @@ const AvaliableRooms = () => {
                     Array(10).fill(0).map((_, i) => (
                         <Card key={i}>
                             <CardBody className='p-2'>
-                                <div className='flex gap-4 '>
+                                <div className='flex flex-col sm:flex-row gap-4 '>
 
                                     <div className='relative'>
-
-
                                         <Image
                                             src={'/hotel-hero.png'}
                                             alt='room photo'
@@ -33,7 +31,7 @@ const AvaliableRooms = () => {
                                             height={300}
                                             className='aspect-video rounded-lg w-full h-full'
                                         />
-                                        <div className='absolute left-0 bottom-0 z-10 bg-yellow-100 p-1 px-2 flex '> <Check className='text-green-500' /> Free Cancellation</div>
+                                        <div className='absolute left-1 bottom-1 rounded-sm z-10 bg-yellow-100 p-1 px-2 flex '> <Check className='text-green-500' /> Free Cancellation</div>
                                     </div>
                                     <div className='space-y-4 p-4 flex-1'>
                                         <h1 className='head-1'>Room title</h1>

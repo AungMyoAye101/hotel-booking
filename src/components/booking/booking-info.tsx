@@ -5,13 +5,13 @@ import Image from "next/image"
 
 const BookingInfo = () => {
     return (
-        <div className='max-w-lg bg-white rounded-lg border border-slate-200 shadow-md h-fit overflow-hidden'>
+        <div className='max-w-sm bg-white rounded-lg border border-slate-200 shadow-md h-fit overflow-hidden'>
 
             <Image
                 src="/hotel-hero.png"
                 alt="Booking Information"
-                width={320}
-                height={200}
+                width={400}
+                height={400}
                 className="aspect-video"
             />
             <div className="p-4 space-y-2">

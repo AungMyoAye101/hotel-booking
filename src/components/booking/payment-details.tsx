@@ -5,7 +5,7 @@ import React from 'react'
 
 const PaymentDetailsForm = () => {
     return (
-        <form className='bg-white rounded-lg border border-slate-200 shadow-md  p-6 max-w-xl space-y-4'>
+        <form className='bg-white rounded-lg border border-slate-200 shadow-md  p-6  space-y-4'>
             <h1 className='head-1 mb-2'>Payment details</h1>
             <Input type='text' placeholder='123 456 789' label="Card number" labelPlacement='outside' radius='sm' />
             <div className='flex justify-between gap-4'>

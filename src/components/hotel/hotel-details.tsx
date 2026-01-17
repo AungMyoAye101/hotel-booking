@@ -18,9 +18,9 @@ const HotelDetails = () => {
                     height={1024}
                     src={'/hotel-bg.jfif'}
                     alt='hotel image'
-                    className='  absolute inset-0 -z-20  object-center object-cover  brightness-60'
+                    className='  absolute h-screen inset-0 -z-20  object-center object-cover  brightness-60'
                 />
-                <div className="space-y-6 mb-12">
+                <div className="space-y-6 mb-12 px-4">
                     <h1 className="text-4xl sm:text-5xl text-white font-semibold">Hotel Yangon </h1>
                     <div className="flex items-center">
                         {
@@ -55,7 +55,7 @@ const HotelDetails = () => {
 
 
             </div>
-            <div className="bg-white mt-12   py-6 flex flex-col md:flex-row gap-12 justify-between max-w-7xl px-4 md:px-0">
+            <div className="bg-white mt-4   py-6 flex flex-col md:flex-row gap-12 justify-between max-w-7xl px-4 md:px-0">
                 <div className=" space-y-4">
                     <h1 className="head-1">Overview</h1>
                     <p className="text-balance">
