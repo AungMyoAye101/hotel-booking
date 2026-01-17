@@ -3,7 +3,7 @@ import { Button } from '@heroui/react'
 import { LogIn, LogInIcon, Menu } from 'lucide-react'
 import Image from 'next/image'
 import Link from 'next/link'
-import { useParams, usePathname } from 'next/navigation';
+import { usePathname } from 'next/navigation';
 import { useEffect, useState } from 'react';
 
 const Header = () => {
@@ -43,7 +43,13 @@ const Header = () => {
                 </div>
 
                 <div className='hidden sm:flex'>
-                    <Button variant='solid' color='primary' href='/login' radius='sm' >
+                    <Button
+                        as={Link}
+                        href='/signup'
+                        variant='solid'
+                        color='primary'
+
+                        radius='sm' >
 
                         Signup
                         <LogInIcon />

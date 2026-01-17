@@ -4,7 +4,7 @@ import { Chip, Progress } from '@heroui/react'
 
 const Indicator = () => {
     const stage = useBookingStore(s => s.stage)
-    const color = stage === 1 ? "success" : "default";
+
     return (
         <div className='flex items-center   '>
             <Chip radius='full' color={stage === 1 || stage > 1 ? "primary" : "default"} size={'lg'}>1</Chip>
