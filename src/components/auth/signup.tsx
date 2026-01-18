@@ -50,10 +50,7 @@ const Signup = () => {
             router.push('/')
             return responseData.result;
         } catch (error: unknown) {
-            addToast({
-                title: "Faild to create user.",
-                color: 'danger'
-            })
+
             console.warn(error)
             throw new Error("Sigup failed.")
         } finally {

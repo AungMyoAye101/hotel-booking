@@ -8,11 +8,10 @@ const ThemeProvider = dynamic(() => import("next-themes").then(mod => mod.ThemeP
 
 export function Providers({ children }: { children: React.ReactNode }) {
     return (
-        <ThemeProvider attribute="class" defaultTheme='dark'>
+        <ThemeProvider attribute="class" defaultTheme='light'>
             <HeroUIProvider>
                 <ToastProvider />
                 {children}
-
             </HeroUIProvider>
         </ThemeProvider>
     )

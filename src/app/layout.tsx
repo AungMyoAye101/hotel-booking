@@ -29,13 +29,15 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
+        <Providers>
 
-        <Header />
-        <div className="max-w-7xl mx-auto">
-          {children}
-        </div>
-        <Footer />
 
+          <Header />
+          <div className="max-w-7xl mx-auto">
+            {children}
+          </div>
+          <Footer />
+        </Providers>
 
       </body>
     </html >

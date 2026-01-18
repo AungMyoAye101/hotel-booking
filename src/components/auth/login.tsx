@@ -49,10 +49,6 @@ const Login = () => {
             router.push('/')
             return responseData.result;
         } catch (error: unknown) {
-            addToast({
-                title: "Faild to login.",
-                color: 'danger'
-            })
             console.warn(error)
             throw new Error("login failed.")
         } finally {

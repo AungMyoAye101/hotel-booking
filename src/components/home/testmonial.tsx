@@ -1,8 +1,9 @@
 'use client'
 
-import { Avatar, Card, CardBody, CardFooter, CardHeader } from '@heroui/react'
-import { LucideQuote, MessageSquareQuote, Quote, Star, TextQuote } from 'lucide-react'
-import React from 'react'
+import { Avatar, Card, CardBody, CardFooter, } from '@heroui/react'
+
+import { Star, } from 'lucide-react'
+
 
 const Testmonial = () => {
     return (
