@@ -11,14 +11,14 @@ import { hotelType } from "@/types/hotel-types";
 
 
 export default async function Home() {
-  const data = await serverFetch<APIResponse<hotelType[]>>('/hotel')
-  console.log(data.result)
+  const data = await serverFetch<APIResponse<{ hotels: hotelType[] }>>('/hotel')
+
   return (
     <section className="max-w-7xl mx-auto px-4">
       <Hero />
       <About />
       <Destination />
-      <HotelCardList />
+      <HotelCardList hotels={data.result.hotels} />
       <Promotion />
       <Testmonial />
     </section>
