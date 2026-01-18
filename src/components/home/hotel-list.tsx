@@ -8,6 +8,9 @@ import { useRef } from "react";
 
 
 export default function HotelCardList() {
+
+
+
     const containerRef = useRef<HTMLDivElement>(null);
 
     const handleSlide = (isRight: boolean) => {

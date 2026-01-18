@@ -5,8 +5,14 @@ import Hero from "@/components/home/hero";
 import Promotion from "@/components/home/promotion";
 import About from "@/components/home/about";
 import Testmonial from "@/components/home/testmonial";
+import { serverFetch } from "@/hooks/api";
+import { APIResponse } from "@/types";
+import { hotelType } from "@/types/hotel-types";
 
-export default function Home() {
+
+export default async function Home() {
+  const data = await serverFetch<APIResponse<hotelType[]>>('/hotel')
+  console.log(data.result)
   return (
     <section className="max-w-7xl mx-auto px-4">
       <Hero />
