@@ -1,24 +1,65 @@
 
 'use client';
+import { BASE_URL } from '@/hooks/api';
+import type { APIResponse } from '@/types';
 import { registerSchema, registerType } from '@/validations/auth-schema';
-import { Button, Card, CardBody, CardHeader, Form, Input } from '@heroui/react'
+import { addToast, Button, Card, CardBody, CardHeader, Form, Input, toast } from '@heroui/react'
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Eye, EyeOff, Lock, Mail } from 'lucide-react';
 import Image from 'next/image'
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import React, { useState } from 'react'
 import { useForm } from 'react-hook-form';
 
 const Signup = () => {
+    const [isLoading, setIsLoading] = useState<boolean>(false);
     const [isVisible, setIsVisible] = useState<boolean>(false);
     const toggleVisible = () => setIsVisible(pre => !pre);
 
-    const { register, handleSubmit, formState: { errors, isLoading } } = useForm<registerType>({
+    //navigate to home page after sigup success.
+    const router = useRouter()
+    const { register, handleSubmit, formState: { errors }, reset } = useForm<registerType>({
         resolver: zodResolver(registerSchema)
     })
 
     const onSubmit = async (data: registerType) => {
-        console.log(data)
+        setIsLoading(true)
+        try {
+            const res = await fetch(`${BASE_URL}/auth/register`, {
+                method: "POST",
+                headers: {
+                    "Content-type": "application/json"
+                },
+                body: JSON.stringify(data),
+                credentials: "include",
+            })
+            const responseData: APIResponse<{ user: User }> = await res.json()
+            if (!res.ok) {
+                addToast({
+                    title: responseData.message || "Faild to create user.",
+                    color: 'danger'
+                })
+                throw new Error(responseData.message || "Faild to create user.")
+            }
+            addToast({
+                title: responseData.message || "Sigup successful.",
+                color: 'success'
+            })
+            reset()
+            router.push('/')
+            return responseData.result;
+        } catch (error: unknown) {
+            addToast({
+                title: "Faild to create user.",
+                color: 'danger'
+            })
+            console.warn(error)
+            throw new Error("Sigup failed.")
+        } finally {
+            setIsLoading(false)
+        }
+
     }
     return (
         <section className='h-screen flex justify-end items-center'>

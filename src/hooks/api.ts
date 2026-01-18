@@ -1,4 +1,4 @@
-const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
+export const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
 if (!BASE_URL) {
     throw new Error("Base url is required.")
 }
@@ -14,7 +14,7 @@ type useFetchPropsTypes = {
     query?: QueryTypes
 }
 
-console.log(BASE_URL)
+
 
 export async function serverFetch<T>(endpoint: string, options?: RequestInit): Promise<T> {
 
@@ -40,3 +40,4 @@ export async function serverFetch<T>(endpoint: string, options?: RequestInit): P
     return data;
 
 }
+

@@ -1,23 +1,64 @@
 
 'use client';
+import { BASE_URL } from '@/hooks/api';
+import { APIResponse } from '@/types';
 import { loginSchema, type loginType } from '@/validations/auth-schema';
-import { Button, Card, CardBody, CardHeader, Form, Input } from '@heroui/react'
+import { addToast, Button, Card, CardBody, CardHeader, Form, Input } from '@heroui/react'
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Eye, EyeClosed, EyeOff, Lock, Mail } from 'lucide-react';
 import Image from 'next/image'
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 
 const Login = () => {
+    const [isLoading, setIsLoading] = useState(false)
     const [isVisible, setIsVisible] = useState<boolean>(false)
+
+    const router = useRouter()
     const toggleVisible = () => setIsVisible(pre => !pre)
-    const { register, handleSubmit, formState: { errors, isLoading } } = useForm<loginType>({
+    const { register, handleSubmit, formState: { errors }, reset } = useForm<loginType>({
         resolver: zodResolver(loginSchema)
     })
 
     const onSubmit = async (data: loginType) => {
-        console.log(data)
+        setIsLoading(true)
+        try {
+            const res = await fetch(`${BASE_URL}/auth/login`, {
+                method: "POST",
+                headers: {
+                    "Content-type": "application/json"
+                },
+                body: JSON.stringify(data),
+                credentials: "include",
+            })
+            const responseData: APIResponse<{ user: User }> = await res.json()
+            if (!res.ok) {
+                addToast({
+                    title: responseData.message || "Faild to login.",
+                    color: 'danger'
+                })
+                throw new Error(responseData.message || "Faild to login.")
+            }
+            addToast({
+                title: responseData.message || "login success.",
+                color: 'success'
+            })
+            reset()
+            router.push('/')
+            return responseData.result;
+        } catch (error: unknown) {
+            addToast({
+                title: "Faild to login.",
+                color: 'danger'
+            })
+            console.warn(error)
+            throw new Error("login failed.")
+        } finally {
+            setIsLoading(false)
+        }
+
     }
     return (
         <section className='h-screen flex justify-end items-center'>
