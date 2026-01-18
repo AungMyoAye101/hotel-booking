@@ -1,7 +1,8 @@
 
 'use client';
 import { BASE_URL } from '@/hooks/api';
-import type { APIResponse } from '@/types';
+import { useAuth } from '@/stores/auth-store';
+import type { APIResponse, AuthResType } from '@/types';
 import { registerSchema, registerType } from '@/validations/auth-schema';
 import { addToast, Button, Card, CardBody, CardHeader, Form, Input, toast } from '@heroui/react'
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -13,6 +14,7 @@ import React, { useState } from 'react'
 import { useForm } from 'react-hook-form';
 
 const Signup = () => {
+    const { setToken, setUser } = useAuth(s => s)
     const [isLoading, setIsLoading] = useState<boolean>(false);
     const [isVisible, setIsVisible] = useState<boolean>(false);
     const toggleVisible = () => setIsVisible(pre => !pre);
@@ -34,7 +36,7 @@ const Signup = () => {
                 body: JSON.stringify(data),
                 credentials: "include",
             })
-            const responseData: APIResponse<{ user: User }> = await res.json()
+            const responseData: APIResponse<AuthResType> = await res.json()
             if (!res.ok) {
                 addToast({
                     title: responseData.message || "Faild to create user.",
@@ -46,6 +48,8 @@ const Signup = () => {
                 title: responseData.message || "Sigup successful.",
                 color: 'success'
             })
+            setUser(responseData.result.user)
+            setToken(responseData.result.token || '')
             reset()
             router.push('/')
             return responseData.result;

@@ -1,7 +1,8 @@
 
 'use client';
 import { BASE_URL } from '@/hooks/api';
-import { APIResponse } from '@/types';
+import { useAuth } from '@/stores/auth-store';
+import { APIResponse, AuthResType } from '@/types';
 import { loginSchema, type loginType } from '@/validations/auth-schema';
 import { addToast, Button, Card, CardBody, CardHeader, Form, Input } from '@heroui/react'
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -13,6 +14,7 @@ import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 
 const Login = () => {
+    const { setToken, setUser } = useAuth(s => s)
     const [isLoading, setIsLoading] = useState(false)
     const [isVisible, setIsVisible] = useState<boolean>(false)
 
@@ -33,7 +35,7 @@ const Login = () => {
                 body: JSON.stringify(data),
                 credentials: "include",
             })
-            const responseData: APIResponse<{ user: User }> = await res.json()
+            const responseData: APIResponse<AuthResType> = await res.json()
             if (!res.ok) {
                 addToast({
                     title: responseData.message || "Faild to login.",
@@ -45,6 +47,9 @@ const Login = () => {
                 title: responseData.message || "login success.",
                 color: 'success'
             })
+            setUser(responseData.result.user)
+            setToken(responseData.result.token || '')
+
             reset()
             router.push('/')
             return responseData.result;
@@ -113,8 +118,8 @@ const Login = () => {
                             }
                         />
 
-                        <Button color="primary" type="submit">
-                            Submit
+                        <Button isLoading={isLoading} color="primary" type="submit">
+                            Login
                         </Button>
 
 

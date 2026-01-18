@@ -1,12 +1,15 @@
 'use client';
-import { Button } from '@heroui/react'
+import { useAuth } from '@/stores/auth-store';
+import { Avatar, Button } from '@heroui/react'
 import { LogIn, LogInIcon, Menu } from 'lucide-react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation';
 import { useEffect, useState } from 'react';
+import AvaliableRooms from './hotel/avaliable-rooms';
 
 const Header = () => {
+    const { user, isAutenticated } = useAuth(s => s)
     const [isScroll, setIsScroll] = useState<boolean>(false);
 
     const path = usePathname()
@@ -43,18 +46,23 @@ const Header = () => {
                 </div>
 
                 <div className='hidden sm:flex'>
-                    <Button
-                        as={Link}
-                        href='/signup'
-                        variant='solid'
-                        color='primary'
+                    {
+                        isAutenticated
+                            ? <Avatar></Avatar>
+                            : <Button
+                                as={Link}
+                                href='/signup'
+                                variant='solid'
+                                color='primary'
 
-                        radius='sm' >
+                                radius='sm' >
 
-                        Signup
-                        <LogInIcon />
+                                Signup
+                                <LogInIcon />
 
-                    </Button>
+                            </Button>
+                    }
+
                 </div>
                 <div className='sm:hidden'>
                     <Button variant='solid' radius='full' isIconOnly>
