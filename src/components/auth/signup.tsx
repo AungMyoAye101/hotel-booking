@@ -1,6 +1,7 @@
 
 'use client';
-import { BASE_URL } from '@/hooks/api';
+
+import { BASE_URL } from '@/lib';
 import { useAuth } from '@/stores/auth-store';
 import type { APIResponse, AuthResType } from '@/types';
 import { registerSchema, registerType } from '@/validations/auth-schema';

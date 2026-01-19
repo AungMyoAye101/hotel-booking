@@ -1,17 +1,35 @@
-export const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
-if (!BASE_URL) {
-    throw new Error("Base url is required.")
-}
+'use server'
+import { BASE_URL } from "@/lib";
+import { APIResponse } from "@/types";
+import { cookies } from "next/headers";
 
-type QueryTypes = {
-    page?: number,
-    limit?: number,
-}
-type useFetchPropsTypes = {
-    endpoint: string,
-    method: "GET" | "POST" | "PUT",
-    data?: any,
-    query?: QueryTypes
+
+
+
+export async function refresh(): Promise<string> {
+    const res = await fetch(`${BASE_URL}/auth/refresh`, {
+        method: "POST",
+        headers: {
+            "Content-type": "application/json",
+        },
+        credentials: 'include'
+    })
+    const data: APIResponse<{ token: string }> = await res.json();
+    console.log(data)
+    if (!res.ok) {
+        throw new Error("Failed to refresh")
+    }
+
+
+    const cookieStore = await cookies();
+    cookieStore.set('access_token', data.result.token, {
+        httpOnly: true,
+        secure: true,
+        sameSite: "strict",
+
+    })
+    console.log(data.result.token)
+    return data.result.token;
 }
 
 
@@ -23,9 +41,13 @@ export async function serverFetch<T>(endpoint: string, options?: RequestInit): P
             ...options,
             headers: {
                 "Content-type": "application/json",
-                ...options?.headers,
+                // ...token && {
+                //     Authorization: `Bearer ${token}`,
+                // }
+
 
             },
+            credentials: "include",
             cache: "force-cache"
 
         }
@@ -36,7 +58,7 @@ export async function serverFetch<T>(endpoint: string, options?: RequestInit): P
     }
 
     const data = res.json()
-    // console.log(data)
+
     return data;
 
 }

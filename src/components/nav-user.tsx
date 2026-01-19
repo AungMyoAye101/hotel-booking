@@ -4,12 +4,12 @@ import { BookMarked, LogOut, User } from "lucide-react";
 import Link from "next/link"
 
 
-const NavUser = () => {
+const NavUser = ({ id }: { id: string }) => {
     return (
         <div className="w-60 p-4 rounded-lg bg-background flex flex-col gap-1">
 
 
-            <Button as={Link} href="/user/1213" radius="sm" startContent={<User size={20} />} className="flex justify-start items-center">
+            <Button as={Link} href={`/user/${id}`} radius="sm" startContent={<User size={20} />} className="flex justify-start items-center">
 
                 Profile
             </Button>

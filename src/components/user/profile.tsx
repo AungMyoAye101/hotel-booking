@@ -1,20 +1,16 @@
 "use client";
 
-import { Avatar, Card, CardBody, CardHeader, Divider, Input, Tab, Tabs, } from '@heroui/react'
-import React from 'react'
-import UserInfoForm from '../booking/user-info-form';
-import { User } from 'lucide-react';
+import { Avatar, Card, CardBody, CardHeader, Divider, Tab, Tabs, } from '@heroui/react'
+
 import UserInfoInput from './user-input';
-const user = {
-    _id: "12345",
-    name: "Aung Myo Aye",
-    email: "aungmyo@example.com",
-    country: "Myanmar",
-    city: "Yangon",
-    phone: "+95 912345678",
+import type { User } from '@/types/user-type';
+
+type props = {
+    user: User
 }
 
-const Profile = () => {
+const Profile = ({ user }: props) => {
+
     return (
         <Card className="rounded-2xl shadow-md border border-slate-200">
             {/* Header */}
