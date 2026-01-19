@@ -1,15 +1,17 @@
 'use client';
 import { useAuth } from '@/stores/auth-store';
-import { Avatar, Button } from '@heroui/react'
+import { Avatar, Button, Popover, PopoverContent, PopoverTrigger } from '@heroui/react'
 import { LogIn, LogInIcon, Menu } from 'lucide-react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import AvaliableRooms from './hotel/avaliable-rooms';
+import NavUser from './nav-user';
 
 const Header = () => {
-    const { user, isAutenticated } = useAuth(s => s)
+    // const { user, isAutenticated } = useAuth(s => s)
+    const isAutenticated = true;
     const [isScroll, setIsScroll] = useState<boolean>(false);
 
     const path = usePathname()
@@ -48,7 +50,26 @@ const Header = () => {
                 <div className='hidden sm:flex'>
                     {
                         isAutenticated
-                            ? <Avatar></Avatar>
+
+                            ?
+                            <Popover>
+
+                                <PopoverTrigger>
+
+
+                                    <Avatar
+                                        src='/user.jpg'
+                                        radius='full'
+                                        alt='User Avatar'
+
+                                    />
+                                </PopoverTrigger>
+                                <PopoverContent>
+                                    <NavUser />
+                                </PopoverContent>
+                            </Popover>
+
+
                             : <Button
                                 as={Link}
                                 href='/signup'
