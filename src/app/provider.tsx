@@ -5,14 +5,30 @@ import dynamic from 'next/dynamic';
 
 const ThemeProvider = dynamic(() => import("next-themes").then(mod => mod.ThemeProvider), { ssr: false })
 
+import {
+    QueryClient,
+    QueryClientProvider,
+} from '@tanstack/react-query'
+
+const queryClient = new QueryClient({
+    defaultOptions: {
+        queries: {
+            refetchOnWindowFocus: false,
+            retry: 1,
+            staleTime: 5 * 60 * 1000, // 5 minutes
+        }
+    }
+})
 
 export function Providers({ children }: { children: React.ReactNode }) {
     return (
         <ThemeProvider attribute="class" defaultTheme='light'>
-            <HeroUIProvider>
-                <ToastProvider />
-                {children}
-            </HeroUIProvider>
+            <QueryClientProvider client={queryClient}>
+                <HeroUIProvider>
+                    <ToastProvider />
+                    {children}
+                </HeroUIProvider>
+            </QueryClientProvider>
         </ThemeProvider>
     )
 }

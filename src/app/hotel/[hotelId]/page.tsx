@@ -1,5 +1,10 @@
 import AvaliableRooms from "@/components/hotel/avaliable-rooms";
 import HotelDetails from "@/components/hotel/hotel-details";
+import { serverFetch } from "@/hooks/api";
+import { APIResponse } from "@/types";
+import { hotelType } from "@/types/hotel-types";
+
+
 
 type Params = {
     hotelId: string;
@@ -7,10 +12,11 @@ type Params = {
 
 const page = async ({ params }: { params: Promise<Params> }) => {
     const hotelId = (await params).hotelId;
-    console.log("HotelDetail rendered", hotelId);
+    const data = await serverFetch<APIResponse<{ hotel: hotelType }>>(`/hotel/${hotelId}`);
+
     return (
         <>
-            <HotelDetails />
+            <HotelDetails hotel={data.result.hotel} />
             <AvaliableRooms />
         </>
     )

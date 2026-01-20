@@ -7,21 +7,28 @@ import { cookies } from "next/headers";
 
 
 export async function refresh(): Promise<string> {
+    const cookieStore = await cookies();
+    const refresh_token = cookieStore.get('refresh_token')?.value;
+    console.log(refresh_token, "ref")
+
+    const headers: Record<string, string> = {
+        "Content-Type": "application/json",
+        ...(refresh_token ? { "Cookie": `refresh_token=${refresh_token}` } : '')
+    };
+
     const res = await fetch(`${BASE_URL}/auth/refresh`, {
         method: "POST",
-        headers: {
-            "Content-type": "application/json",
-        },
+        headers,
         credentials: 'include'
     })
     const data: APIResponse<{ token: string }> = await res.json();
     console.log(data)
-    if (!res.ok) {
-        throw new Error("Failed to refresh")
-    }
+    // if (!res.ok) {
+    //     throw new Error("Failed to refresh")
+    // }
 
 
-    const cookieStore = await cookies();
+
     cookieStore.set('access_token', data.result.token, {
         httpOnly: true,
         secure: true,
@@ -30,6 +37,7 @@ export async function refresh(): Promise<string> {
     })
     console.log(data.result.token)
     return data.result.token;
+
 }
 
 
