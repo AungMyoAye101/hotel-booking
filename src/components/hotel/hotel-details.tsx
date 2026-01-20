@@ -1,12 +1,12 @@
 'use client'
 
-import { AirVentIcon, Locate, LocateFixed, Pin, PlaneTakeoff, Pointer, Refrigerator, Star, Wifi } from "lucide-react"
-import { LocaleRouteNormalizer } from "next/dist/server/normalizers/locale-route-normalizer"
+import { Locate, MapPin, Star } from "lucide-react"
 
 import HotelReview from "./hotel-review"
-import { useHotelDetail } from "@/hooks/use-hotel"
+
 import { hotelType } from "@/types/hotel-types"
 import Image from "next/image"
+import { AMENITIES } from "@/utils/amentits"
 
 
 
@@ -23,8 +23,7 @@ const HotelDetails = ({ hotel }: Props) => {
                 <Image
                     width={1400}
                     height={1024}
-                    src={hotel.photo?.secure_url || 'hotel-bg.jfif'}
-
+                    src={hotel.photo?.secure_url || '/hotel-bg.jfif'}
                     alt='hotel image'
                     className='  absolute h-screen inset-0 -z-20  object-center object-cover  brightness-60'
                 />
@@ -41,24 +40,18 @@ const HotelDetails = ({ hotel }: Props) => {
                         <span className="">{hotel.rating} (120 reviews)</span>
                     </div>
                     <p className="flex font-medium ">
-                        <Locate /> {hotel.address}
+                        <MapPin /> {hotel.address}
                     </p>
                     <div className="bg-white rounded-lg p-4 text-black grid grid-cols-2 gap-4">
+                        {
+                            AMENITIES.filter(amenity => hotel.amenities.includes(amenity.value)).slice(0, 4).map((amenity) => (
+                                <div key={amenity.value} className="flex gap-2 items-center">
+                                    {amenity.icon} {amenity.label}
+                                </div>
+                            ))
+                        }
 
 
-
-                        <div className="flex gap-1">
-                            <Wifi /> Free Wi-Fi
-                        </div>
-                        <div className="flex gap-1">
-                            <PlaneTakeoff /> Airport
-                        </div>
-                        <div className="flex gap-1">
-                            <Refrigerator /> Mini Bar
-                        </div>
-                        <div className="flex gap-1">
-                            <AirVentIcon /> Air Conditioning
-                        </div>
 
                     </div>
                 </div>
@@ -74,18 +67,13 @@ const HotelDetails = ({ hotel }: Props) => {
 
                     <h1 className="head-1">Amenities highlight</h1>
                     <div className="flex flex-wrap gap-4">
-                        <div className="flex gap-1">
-                            <Wifi /> Free Wi-Fi
-                        </div>
-                        <div className="flex gap-1">
-                            <PlaneTakeoff /> Airport
-                        </div>
-                        <div className="flex gap-1">
-                            <Refrigerator /> Mini Bar
-                        </div>
-                        <div className="flex gap-1">
-                            <AirVentIcon /> Air Conditioning
-                        </div>
+                        {
+                            AMENITIES.filter(amenity => hotel.amenities.includes(amenity.value)).slice(0, 4).map((amenity) => (
+                                <div key={amenity.value} className="flex gap-2 items-center">
+                                    {amenity.icon} {amenity.label}
+                                </div>
+                            ))
+                        }
 
                     </div>
                 </div>

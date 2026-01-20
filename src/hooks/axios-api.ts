@@ -10,9 +10,10 @@ export const apiClient = axios.create({
 });
 
 apiClient.interceptors.request.use(config => {
-    const token = useAuth(s => s.token)
+    const token = useAuth.getState().token;
+    console.log(token)
     if (token) {
-        config.headers.Authorization = `Barer ${token}`
+        config.headers.Authorization = `Bearer ${token}`
     }
     return config;
 },

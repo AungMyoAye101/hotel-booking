@@ -1,7 +1,7 @@
 'use client';
 
 import { hotelType } from "@/types/hotel-types";
-import { Card, CardBody, Button, Badge, Chip } from "@heroui/react";
+import { Card, CardBody, Button, Chip } from "@heroui/react";
 import { ArrowLeft, ArrowRight, Star } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
@@ -54,12 +54,10 @@ export default function HotelCardList({ hotels }: { hotels: hotelType[] }) {
                                     <div className="relative w-full">
 
                                         <Image
-                                            alt="heroui logo"
+                                            src={hotel.photo?.secure_url || '/hotel-bg.png'}
+                                            alt="hotel photo"
                                             height={160}
                                             width={240}
-
-                                            src="/hotel-hero.png"
-
                                             className="w-full rounded-none"
                                         />
                                     </div>
@@ -71,7 +69,7 @@ export default function HotelCardList({ hotels }: { hotels: hotelType[] }) {
                                             </Chip>
 
                                         </div>
-                                        <p className="line-clamp-1">{hotel.description}</p>
+                                        <p className="line-clamp-1">{hotel.address}</p>
                                         <div className="flex items-center gap-1">
                                             {
                                                 Array(hotel.star).fill(null).map((_, i) => (

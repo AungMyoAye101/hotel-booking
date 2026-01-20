@@ -15,10 +15,10 @@ const page = async ({ params }: { params: Promise<Params> }) => {
     const data = await serverFetch<APIResponse<{ hotel: hotelType }>>(`/hotel/${hotelId}`);
 
     return (
-        <>
+        <section className="p-4">
             <HotelDetails hotel={data.result.hotel} />
-            <AvaliableRooms />
-        </>
+            <AvaliableRooms hotelId={hotelId} />
+        </section>
     )
 }
 
