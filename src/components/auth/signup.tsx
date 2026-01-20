@@ -70,10 +70,10 @@ const Signup = () => {
                 alt='hotel photo'
                 width={1400}
                 height={1240}
-                className='object-cover absolute inset-0 -z-10'
+                className='object-cover absolute inset-0 -z-10 h-screen'
 
             />
-            <Card className='min-w-xs w-full max-w-100 bg-background/90'>
+            <Card className='min-w-xs w-full max-w-100 bg-background'>
                 <CardHeader className='flex flex-col gap-1'>
                     <h1 className='text-2xl font-semibold text-center'>Signup</h1>
                     <p>Please create new account.</p>

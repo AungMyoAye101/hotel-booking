@@ -69,10 +69,10 @@ const Login = () => {
                 alt='hotel photo'
                 width={1400}
                 height={1240}
-                className='object-cover absolute inset-0 -z-10'
+                className='object-cover absolute inset-0 -z-10 h-screen w-full '
 
             />
-            <Card className=' px-4 py-6 min-w-xs w-full max-w-100 bg-background/90'>
+            <Card className=' px-4 py-6 min-w-xs w-full max-w-100 bg-background'>
                 <CardHeader className='flex flex-col gap-1'>
                     <h1 className='text-2xl font-semibold text-center'>Login</h1>
                     <p>Please login your account.</p>

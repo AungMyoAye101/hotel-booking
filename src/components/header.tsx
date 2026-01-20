@@ -10,7 +10,7 @@ import NavUser from './nav-user';
 
 const Header = () => {
     const { user, isAutenticated } = useAuth(s => s)
-
+    console.log(useAuth(s => s.token))
     const [isScroll, setIsScroll] = useState<boolean>(false);
 
     const path = usePathname()

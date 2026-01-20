@@ -1,8 +1,10 @@
 import Image from 'next/image'
 import InputCon from './input-con'
+import { useAuth } from '@/stores/auth-store'
 
 
 const Hero = () => {
+
     return (
         <section className='h-screen flex items-center justify-center'>
             <Image
