@@ -10,7 +10,7 @@ import NavUser from './nav-user';
 
 const Header = () => {
     const { user, isAutenticated } = useAuth(s => s)
-    console.log(useAuth(s => s.token))
+
     const [isScroll, setIsScroll] = useState<boolean>(false);
 
     const path = usePathname()
@@ -64,7 +64,7 @@ const Header = () => {
                                     />
                                 </PopoverTrigger>
                                 <PopoverContent>
-                                    <NavUser id={user?._id ?? ''} />
+                                    <NavUser id={user?._id!} />
                                 </PopoverContent>
                             </Popover>
 

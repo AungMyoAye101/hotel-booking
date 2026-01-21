@@ -33,7 +33,7 @@ export default async function RootLayout({
   const headerList = await headers();
 
   const accessToken = headerList.get('x-internal-access-token') || (await cookies()).get('access_token')?.value;
-  console.log("RootLayout accessToken:", accessToken);
+
   return (
     <html lang="en">
       <body>

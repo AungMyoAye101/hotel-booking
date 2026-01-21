@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { APIResponse } from "@/types";
+import { BASE_URL } from "./lib";
 
 
 export async function middleware(req: NextRequest) {
@@ -9,7 +10,7 @@ export async function middleware(req: NextRequest) {
 
     if (!accessToken && refreshToken) {
 
-        const res = await fetch(`http://localhost:5000/api/v1/auth/refresh`, {
+        const res = await fetch(`${BASE_URL}/auth/refresh`, {
             method: "POST",
             headers: {
                 "Content-type": "application/json",

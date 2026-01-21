@@ -31,3 +31,9 @@ export type RoomType = {
     photo?: photoType,
     bedTypes: Bed_Types
 }
+
+export interface TokenPayload {
+    id: string,
+    email: string,
+
+}
