@@ -11,3 +11,22 @@ export const currentUser = async () => {
         console.warn(error)
     }
 }
+
+type updateUserType = {
+    id: string,
+    user: User
+}
+export const updateUser = async ({ id, user }: updateUserType) => {
+    try {
+        const { data } = await apiClient.put<APIResponse<{ user: User }>>(
+            `/users/${id}`, user
+        )
+        if (!data.success) {
+            throw new Error("Faied to update user")
+        }
+
+        return data.result.user;
+    } catch (error) {
+        console.warn(error)
+    }
+}

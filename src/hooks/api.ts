@@ -31,20 +31,20 @@ export async function refresh(refreshToken: string) {
 
 
 export async function serverFetch<T>(endpoint: string, options?: RequestInit): Promise<T> {
-
+    const token = (await cookies()).get('access_token')?.value;
     const res = await fetch(`${BASE_URL}${endpoint}`,
         {
             ...options,
             headers: {
                 "Content-type": "application/json",
-                // ...token && {
-                //     Authorization: `Bearer ${token}`,
-                // }
+                ...token && {
+                    Authorization: `Bearer ${token}`,
+                }
 
 
             },
             credentials: "include",
-            cache: "force-cache"
+            cache: 'default'
 
         }
     )

@@ -1,12 +1,10 @@
-
-import { BASE_URL } from '@/lib'
-import { useAuth } from '@/stores/auth-store'
-import type { APIResponse } from '@/types'
+'use cleint';
+import { useUpdateUser } from '@/hooks/use-user'
 import { User } from '@/types/user-type'
 import { userSchemaType, userSchmea } from '@/validations/user-schema'
-import { addToast, Button, Input, toast } from '@heroui/react'
+import { addToast, Button, Input } from '@heroui/react'
 import { zodResolver } from '@hookform/resolvers/zod'
-import React, { useState } from 'react'
+
 import { useForm } from 'react-hook-form'
 
 type props = {
@@ -15,53 +13,22 @@ type props = {
 }
 
 const UserInfoInput = ({ user, readonly }: props) => {
-    const token = useAuth(s => s.token)
-    const setUser = useAuth(s => s.setUser)
-    console.log(token)
-    const [isLoading, setIsLoading] = useState(false)
+
+
     const { register, handleSubmit, formState: { errors } } = useForm<userSchemaType>({
         resolver: zodResolver(userSchmea),
         defaultValues: user
     })
-
+    const { mutate, isPending } = useUpdateUser()
     const onSubmit = async (data: userSchemaType) => {
-        setIsLoading(true)
-        try {
-            const res = await fetch(`${BASE_URL}/users/${user._id}`, {
-                method: "PUT",
-                headers: {
-                    "Content-type": "application/json",
-                    "authorization": `Bearer ${token}`
-                },
-                body: JSON.stringify(data)
-            })
-
-            const response: APIResponse<{ user: User }> = await res.json()
-            if (!res.ok) {
-
+        mutate({ id: user._id, user: data as User }, {
+            onSuccess: () => {
                 addToast({
-                    title: response.message,
-                    color: 'danger'
+                    title: "Updated Successfully",
+                    color: "success",
                 })
-                throw new Error(response.message || "Failed to update user info.")
             }
-
-            setUser(response.result.user)
-            addToast({
-                title: "User info updated successfully.",
-                color: 'success'
-            })
-
-
-        } catch (error: unknown) {
-            console.warn(error)
-            if (error instanceof Error) {
-                throw new Error(error.message)
-            }
-        } finally {
-            setIsLoading(false)
-        }
-
+        })
     }
     return (
         <form
@@ -126,7 +93,13 @@ const UserInfoInput = ({ user, readonly }: props) => {
 
                 readOnly={readonly}
             />
-            <Button type='submit' disabled={readonly} color={readonly ? "default" : 'primary'} radius='sm' className='place-items-end'>
+            <Button
+                isLoading={isPending}
+                type='submit'
+                disabled={readonly}
+                color={readonly ? "default" : 'primary'}
+                radius='sm'
+                className='place-items-end'>
                 Submit
             </Button>
         </form>
