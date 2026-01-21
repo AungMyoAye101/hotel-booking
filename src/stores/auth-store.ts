@@ -15,7 +15,7 @@ export const useAuth = create<AuthType>((set) => ({
     token: null,
     isAutenticated: false,
     setUser: (user: User) => set({ user, isAutenticated: true }),
-    setToken: (token: string) => set({ token }),
+    setToken: (token: string) => set({ token, isAutenticated: true }),
     reset: () => set({
         user: null,
         token: null,

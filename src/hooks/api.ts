@@ -6,37 +6,25 @@ import { cookies } from "next/headers";
 
 
 
-export async function refresh(): Promise<string> {
-    const cookieStore = await cookies();
-    const refresh_token = cookieStore.get('refresh_token')?.value;
-    console.log(refresh_token, "ref")
+export async function refresh(refreshToken: string) {
 
-    const headers: Record<string, string> = {
-        "Content-Type": "application/json",
-        ...(refresh_token ? { "Cookie": `refresh_token=${refresh_token}` } : '')
-    };
 
-    const res = await fetch(`${BASE_URL}/auth/refresh`, {
+    const res = await fetch(`http://localhost:5000/api/v1/auth/refresh`, {
         method: "POST",
-        headers,
-        credentials: 'include'
-    })
-    const data: APIResponse<{ token: string }> = await res.json();
-    console.log(data)
-    // if (!res.ok) {
-    //     throw new Error("Failed to refresh")
-    // }
+        headers: {
+            "Content-type": "application/json",
+            'Cookie': `refresh_token=${refreshToken}`
+        }
+    });
 
 
+    if (res.ok) {
 
-    cookieStore.set('access_token', data.result.token, {
-        httpOnly: true,
-        secure: true,
-        sameSite: "strict",
-
-    })
-    console.log(data.result.token)
-    return data.result.token;
+        const data: APIResponse<{ token: string }> = await res.json();
+        return data.result.token;
+    } else {
+        console.log("Failed to refresh.")
+    }
 
 }
 

@@ -35,8 +35,9 @@ apiClient.interceptors.response.use(
                     withCredentials: true
                 })
                 const token = data.result.token;
+
                 useAuth.getState().setToken(token);
-                //set heaser with new token
+
                 original_request.headers.Authorization = `Bearer ${token}`;
                 return apiClient(original_request)
 
