@@ -9,30 +9,35 @@ export async function middleware(req: NextRequest) {
     console.log(`Middleware running for: ${req.nextUrl.pathname}`);
 
     if (!accessToken && refreshToken) {
+        try {
+            const res = await fetch(`${BASE_URL}/auth/refresh`, {
+                method: "POST",
+                headers: {
+                    "Content-type": "application/json",
+                    'Cookie': `refresh_token=${refreshToken}`
+                }
+            });
 
-        const res = await fetch(`${BASE_URL}/auth/refresh`, {
-            method: "POST",
-            headers: {
-                "Content-type": "application/json",
-                'Cookie': `refresh_token=${refreshToken}`
+
+            const data: APIResponse<{ token: string }> = await res.json();
+
+            if (res.ok) {
+                const token = data.result.token;
+
+                const response = NextResponse.next();
+
+                // Update browser cookies so CSR sees the new token
+                response.cookies.set('access_token', token, { httpOnly: true });
+
+                // PASS THE NEW TOKEN TO SSR VIA HEADERS
+                response.headers.set('x-internal-access-token', token);
+                return response;
             }
-        });
-
-
-        const data: APIResponse<{ token: string }> = await res.json();
-
-        if (res.ok) {
-            const token = data.result.token;
-
-            const response = NextResponse.next();
-
-            // Update browser cookies so CSR sees the new token
-            response.cookies.set('access_token', token, { httpOnly: true });
-
-            // PASS THE NEW TOKEN TO SSR VIA HEADERS
-            response.headers.set('x-internal-access-token', token);
-            return response;
+        } catch (error) {
+            console.warn(error);
+            throw new Error("Failed to refresh .")
         }
+
 
     }
 
