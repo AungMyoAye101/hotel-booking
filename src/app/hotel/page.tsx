@@ -1,10 +1,11 @@
+import Search from "@/components/search"
 
 
 
 const page = () => {
     return (
-        <section>
-
+        <section className="py-20 px-4">
+            <Search />
         </section>
     )
 }
