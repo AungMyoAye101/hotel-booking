@@ -1,6 +1,6 @@
 
 import { Card, CardBody, Checkbox, CheckboxGroup, cn, Input, Radio, RadioGroup, Slider } from '@heroui/react'
-import { useState } from 'react'
+import { useDebouncedCallback } from 'use-debounce'
 
 
 // import { SearchPropsType } from './SideBar'
@@ -24,11 +24,11 @@ export const ratingOrder = [
     {
 
         label: "Highest to Lowest rating",
-        value: "highestToHighRating",
+        value: "asc",
     }, {
 
         label: "Lowest to Highest rating",
-        value: "lowestToHightRating",
+        value: "desc",
 
 
     }
@@ -37,22 +37,27 @@ export const ratingOrder = [
 
 const priceOrder = [{
     label: "Highest to Lowest price",
-    value: "highestToLowestPrice",
+    value: 'asc',
 
 }, {
 
     label: "Lowest to Highest price",
-    value: "lowestToHighestPrice",
+    value: 'desc',
 
 
 }]
 
 
+type Props = {
+    searchParams: URLSearchParams,
+    updateParams: (name: string, value: string) => void
+}
 
+const SideBar = ({ searchParams, updateParams }: Props) => {
 
-const SideBar = ({ searchParams, handleChange }: any) => {
-    const [isOpen, setIsOpen] = useState(true)
-
+    const handleDestinationChange = useDebouncedCallback((value: string) => {
+        updateParams("destination", value)
+    }, 500)
 
     return (
         <Card radius='sm' shadow='md' className='border-2 border-slate-200' >
@@ -66,8 +71,8 @@ const SideBar = ({ searchParams, handleChange }: any) => {
                         placeholder='destination'
                         name='destination'
                         radius='sm'
-                        value={searchParams.get('destination') || ''}
-                        onChange={handleChange}
+                        defaultValue={searchParams.get('destination') || ''}
+                        onChange={(e) => handleDestinationChange(e.target.value)}
                     />
 
 
@@ -76,12 +81,19 @@ const SideBar = ({ searchParams, handleChange }: any) => {
                     <div>
                         <Slider
                             className='w-60'
-                            defaultValue={[100, 300]}
+                            defaultValue={[
+                                Number(searchParams.get("minPrice")) ?? 100,
+                                Number(searchParams.get("maxPrice")) ?? 300]}
                             formatOptions={{ style: "currency", currency: "USD" }}
                             label="Price Range"
                             maxValue={1000}
                             minValue={0}
+                            onChangeEnd={([min, max]) => {
 
+                                updateParams("minPrice", min)
+                                updateParams("maxPrice", max)
+
+                            }}
                             step={10}
                             color='secondary'
 
@@ -89,7 +101,13 @@ const SideBar = ({ searchParams, handleChange }: any) => {
                     </div>
 
                     {/* sort by price order */}
-                    <RadioGroup label='Sort by price order'>
+                    <RadioGroup
+                        defaultValue={searchParams.get('priceOrder') ?? 'asc'}
+                        onChange={(e) => updateParams('priceOrder', e.target.value)
+
+                        }
+                        label='Sort by price order'
+                    >
                         {
                             priceOrder.map(field => (
                                 <Radio value={field.value} key={field.value} color='secondary' >
@@ -104,7 +122,10 @@ const SideBar = ({ searchParams, handleChange }: any) => {
 
                     {/* Sort by stars */}
                     <div>
-                        <CheckboxGroup label="Sort by stars">
+                        <CheckboxGroup
+                            defaultValue={searchParams.getAll('star')}
+                            onChange={(values) => updateParams('star', values)}
+                            label="Sort by stars">
 
                             {
                                 starCheckBoxes.fields.map((field) => (
@@ -122,24 +143,28 @@ const SideBar = ({ searchParams, handleChange }: any) => {
                         </CheckboxGroup>
                     </div>
                     {/* Sorting by rating */}
-                    <div>
 
-                        <RadioGroup label='Sort by rating order' >
-                            {
-                                ratingOrder.map(field => (
-                                    <Radio
-                                        key={field.value}
-                                        value={field.value}
-                                        color='secondary'
-                                    >
-                                        <span className='text-sm ml-1'>
-                                            {field.label}
-                                        </span>
-                                    </Radio>
-                                ))
-                            }
-                        </RadioGroup>
-                    </div>
+
+                    <RadioGroup
+                        defaultValue={searchParams.get('rating') ?? "asc"}
+                        onChange={(e) => updateParams("rating", e.target.value)}
+                        label='Sort by rating order'
+                    >
+                        {
+                            ratingOrder.map(field => (
+                                <Radio
+                                    key={field.value}
+                                    value={field.value}
+                                    color='secondary'
+                                >
+                                    <span className='text-sm ml-1'>
+                                        {field.label}
+                                    </span>
+                                </Radio>
+                            ))
+                        }
+                    </RadioGroup>
+
                 </div>
             </CardBody>
         </Card>
