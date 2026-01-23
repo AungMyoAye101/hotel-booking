@@ -19,16 +19,25 @@ export const starCheckBoxes = {
     name: "rating",
     fields: [{ value: 5, label: "5 Stars" }, { value: 4, label: "4 Stars" }, { value: 3, label: "3 Stars" }, { value: 2, label: "2 Stars" }, { value: 1, label: "1 Stars" }]
 }
+export const typeCheckBoxes = {
+    name: "rating",
+    fields: [
+        { value: "hotel", label: "Hotel" },
+        { value: 'motel', label: "Motel" },
+        { value: 'guest-house', label: "Guest house" }
+    ]
+}
 
 export const ratingOrder = [
     {
 
         label: "Highest to Lowest rating",
-        value: "asc",
+        value: "desc",
     }, {
 
         label: "Lowest to Highest rating",
-        value: "desc",
+
+        value: "asc",
 
 
     }
@@ -37,15 +46,21 @@ export const ratingOrder = [
 
 const priceOrder = [{
     label: "Highest to Lowest price",
-    value: 'asc',
-
+    value: 'desc',
 }, {
 
     label: "Lowest to Highest price",
-    value: 'desc',
+
+    value: 'asc',
 
 
 }]
+const typeRadio = [
+    { value: "hotel", label: "Hotel" },
+    { value: 'motel', label: "Motel" },
+    { value: 'guest-house', label: "Guest house" }
+]
+
 
 
 type Props = {
@@ -142,12 +157,32 @@ const SideBar = ({ searchParams, updateParams }: Props) => {
                             }
                         </CheckboxGroup>
                     </div>
+
+                    <RadioGroup
+                        defaultValue={searchParams.get('type') ?? ""}
+                        onChange={(e) => updateParams("type", e.target.value)}
+                        label='Property Typex   '
+                    >
+                        {
+                            typeRadio.map(field => (
+                                <Radio
+                                    key={field.value}
+                                    value={field.value}
+                                    color='secondary'
+                                >
+                                    <span className='text-sm ml-1'>
+                                        {field.label}
+                                    </span>
+                                </Radio>
+                            ))
+                        }
+                    </RadioGroup>
                     {/* Sorting by rating */}
 
 
                     <RadioGroup
-                        defaultValue={searchParams.get('rating') ?? "asc"}
-                        onChange={(e) => updateParams("rating", e.target.value)}
+                        defaultValue={searchParams.get('ratingOrder') ?? "asc"}
+                        onChange={(e) => updateParams("ratingOrder", e.target.value)}
                         label='Sort by rating order'
                     >
                         {

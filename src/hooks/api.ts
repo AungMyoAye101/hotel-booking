@@ -1,8 +1,16 @@
 'use server'
 import { BASE_URL } from "@/lib";
-import { APIResponse } from "@/types";
-import { cookies } from "next/headers";
+import type { APIResponse } from "@/types";
+import { notFound } from "next/navigation";
 
+
+class FetchError extends Error {
+    status: number;
+    constructor(status: number, message: string) {
+        super(message);
+        this.status = status;
+    }
+}
 
 
 
@@ -31,31 +39,39 @@ export async function refresh(refreshToken: string) {
 
 
 export async function serverFetch<T>(endpoint: string, options?: RequestInit): Promise<T> {
-    const token = (await cookies()).get('access_token')?.value;
-    const res = await fetch(`${BASE_URL}${endpoint}`,
-        {
-            ...options,
-            headers: {
-                "Content-type": "application/json",
-                ...token && {
-                    Authorization: `Bearer ${token}`,
-                }
+    try {
+        const res = await fetch(`${BASE_URL}${endpoint}`,
+            {
+                ...options,
+                headers: {
+                    "Content-type": "application/json",
 
 
-            },
-            credentials: "include",
-            cache: 'default'
+                },
+                credentials: "include",
+                cache: 'no-store'
+
+            }
+        )
+
+        if (!res.ok) {
+
+            throw new FetchError(res.status, await res.text())
+        }
+
+        const data = res.json()
+
+        return data;
+    } catch (error) {
+        console.log(error)
+        if (error instanceof FetchError) {
+            if (error.status === 404) notFound()
 
         }
-    )
 
-    if (!res.ok) {
-        throw new Error("Failed to fetch.")
+        throw error // ⬅️ let Error Boundary handle it
     }
 
-    const data = res.json()
-
-    return data;
 
 }
 

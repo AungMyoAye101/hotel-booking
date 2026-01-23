@@ -1,6 +1,6 @@
 import { hotelType } from '@/types/hotel-types'
 import { Button, Card, CardBody, Chip } from '@heroui/react'
-import { ArrowRight, Star } from 'lucide-react'
+import { ArrowRight, MapPin, Star } from 'lucide-react'
 import Image from 'next/image'
 import Link from 'next/link'
 
@@ -32,7 +32,14 @@ const HotelCard = ({ hotel }: Props) => {
                             </Chip>
 
                         </div>
-                        <p className="line-clamp-1">{hotel.address}</p>
+                        <p>{hotel.type}</p>
+                        <p>{hotel.city}</p>
+                        <p>{hotel.country}</p>
+                        <p className="flex items-center gap-1 text-sm ">
+                            <MapPin />
+                            {hotel.address}</p>
+
+
                         <div className="flex items-center gap-1">
                             {
                                 Array(hotel.star).fill(null).map((_, i) => (
