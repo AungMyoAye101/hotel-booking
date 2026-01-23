@@ -3,6 +3,7 @@
 import { useRouter, useSearchParams } from "next/navigation";
 import SideBar from "./filter-sidebar";
 import HotelCard from "./hotel-card"
+import { hotelType } from "@/types/hotel-types";
 
 
 const hotel = {
@@ -21,7 +22,7 @@ const hotel = {
     createdAt: new Date(),
     updatedAt: new Date()
 }
-const Search = () => {
+const Search = ({ hotels }: { hotels: hotelType[] }) => {
     const searchParams = useSearchParams()
     const router = useRouter();
     const updateParams = (key: string, value?: string | string[]) => {
@@ -45,12 +46,11 @@ const Search = () => {
                     <SideBar searchParams={searchParams} updateParams={updateParams} />
                 </div>
                 <div className="flex-1 flex flex-col gap-4">
-
-                    <HotelCard hotel={hotel} />
-                    <HotelCard hotel={hotel} />
-                    <HotelCard hotel={hotel} />
-                    <HotelCard hotel={hotel} />
-                    <HotelCard hotel={hotel} />
+                    {
+                        hotels.map(hotel => (
+                            <HotelCard key={hotel._id} hotel={hotel} />
+                        ))
+                    }
                 </div>
             </div>
         </section>

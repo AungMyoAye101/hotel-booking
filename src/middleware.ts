@@ -49,7 +49,7 @@ export const config = {
     matcher: [
         '/',
         '/booking/:path*',
-        '/hotel/:path*',
+        // '/hotel/:path*',
         '/payment/:path*',
         '/user/:path*'
     ],
