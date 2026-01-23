@@ -1,5 +1,6 @@
-
+'use client'
 import { Card, CardBody, Checkbox, CheckboxGroup, cn, Input, Radio, RadioGroup, Slider } from '@heroui/react'
+import { useRouter, useSearchParams } from 'next/navigation'
 import { useDebouncedCallback } from 'use-debounce'
 
 
@@ -44,7 +45,7 @@ export const ratingOrder = [
 
 ]
 
-const priceOrder = [{
+export const priceOrder = [{
     label: "Highest to Lowest price",
     value: 'desc',
 }, {
@@ -55,7 +56,7 @@ const priceOrder = [{
 
 
 }]
-const typeRadio = [
+export const typeRadio = [
     { value: "hotel", label: "Hotel" },
     { value: 'motel', label: "Motel" },
     { value: 'guest-house', label: "Guest house" }
@@ -63,19 +64,31 @@ const typeRadio = [
 
 
 
-type Props = {
-    searchParams: URLSearchParams,
-    updateParams: (name: string, value: string) => void
-}
 
-const SideBar = ({ searchParams, updateParams }: Props) => {
+
+const SideBar = () => {
+    const searchParams = useSearchParams()
+    const router = useRouter();
+    const updateParams = (key: string, value?: string | string[]) => {
+        const params = new URLSearchParams(searchParams.toString());
+
+        if (!value || (Array.isArray(value) && value.length === 0)) {
+            params.delete(key);
+        } else if (Array.isArray(value)) {
+            params.delete(key);
+            value.forEach(v => params.append(key, v));
+        } else {
+            params.set(key, value);
+        }
+        router.replace(`/search?${params.toString()}`, { scroll: false });
+    }
 
     const handleDestinationChange = useDebouncedCallback((value: string) => {
         updateParams("destination", value)
     }, 500)
 
     return (
-        <Card radius='sm' shadow='md' className='border-2 border-slate-200' >
+        <Card radius='sm' shadow='md' className='border-2 border-slate-200  max-w-xs hidden md:block ' >
             <CardBody  >
                 <div className='flex flex-col gap-6 p-4 max-w-sm'>
 
@@ -103,11 +116,15 @@ const SideBar = ({ searchParams, updateParams }: Props) => {
                             label="Price Range"
                             maxValue={1000}
                             minValue={0}
-                            onChangeEnd={([min, max]) => {
-
-                                updateParams("minPrice", min)
-                                updateParams("maxPrice", max)
-
+                            onChangeEnd={(value) => {
+                                if (Array.isArray(value)) {
+                                    const [min, max] = value;
+                                    updateParams("minPrice", String(min));
+                                    updateParams("maxPrice", String(max));
+                                } else {
+                                    updateParams("minPrice", String(value));
+                                    updateParams("maxPrice", String(value));
+                                }
                             }}
                             step={10}
                             color='secondary'

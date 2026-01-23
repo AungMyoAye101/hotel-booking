@@ -22,7 +22,7 @@ const InputCon = () => {
         params.set('checkIn', checkInStr);
         params.set('checkOut', checkOutStr);
         params.set('guest', guest);
-        router.push(`/hotel?${params.toString()}`);
+        router.push(`/search?${params.toString()}`);
     }
 
     return (
