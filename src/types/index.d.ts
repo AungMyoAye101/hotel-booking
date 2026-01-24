@@ -46,3 +46,17 @@ export type MetaType = {
     hasPrev: boolean;
     hasNext: boolean
 }
+
+export type BookingStatus = "PENDING" | "CONFIRMED" | "STAYED" | "CANCELLED" | "EXPIRED";
+
+export type BookingType = {
+    userId: string,
+    roomId: string,
+    hotelId: string,
+    totalPrice: number,
+    quantity: number,
+    status: BookingStatus,
+    checkIn: Date,
+    checkOut: Date,
+
+}
