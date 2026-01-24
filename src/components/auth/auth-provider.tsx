@@ -13,16 +13,13 @@ export default function AuthInitializer({ token }: { token?: string }) {
     const setUser = useAuth(state => state.setUser);
     if (!token) return null;
     const { data, isLoading } = useGetMe();
+    console.log(data, "user")
+    console.log(initialized.current, "initialized")
 
-    useEffect(() => {
-        if (!initialized.current && token) {
-
-            setToken(token); // Set the token in Zustand memory
-            setUser(data!); // Set the user data in Zustand memory
-            initialized.current = true;
-            console.log("AuthInitializer set token:", token);
-        }
-    }, [token, data, isLoading, setToken]);
-
+    if (!isLoading && data && !initialized.current) {
+        setToken(token);
+        setUser(data);
+        initialized.current = true;
+    }
     return null;
 }

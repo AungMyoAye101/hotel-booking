@@ -9,7 +9,9 @@ import { useEffect, useState } from 'react';
 import NavUser from './nav-user';
 
 const Header = () => {
-    const { user, isAutenticated } = useAuth(s => s)
+    const isAuthenticated = useAuth(s => s.isAuthenticated)
+    const user = useAuth(s => s.user);
+
 
     const [isScroll, setIsScroll] = useState<boolean>(false);
 
@@ -48,7 +50,7 @@ const Header = () => {
 
                 <div className='hidden sm:flex'>
                     {
-                        isAutenticated
+                        isAuthenticated
 
                             ?
                             <Popover>

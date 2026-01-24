@@ -3,7 +3,6 @@
 import { Avatar, Card, CardBody, CardHeader, Divider, Tab, Tabs, } from '@heroui/react'
 
 import UserInfoInput from './user-input';
-import type { User } from '@/types/user-type';
 import { useGetUserById } from '@/hooks/use-user';
 
 type props = {
@@ -16,7 +15,7 @@ const Profile = ({ id }: props) => {
     if (isLoading) {
         return <p>Loading....</p>
     }
-
+    console.log(user)
     return (
         <Card className="rounded-2xl shadow-md border border-slate-200">
             {/* Header */}

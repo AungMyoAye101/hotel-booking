@@ -6,7 +6,15 @@ import { BASE_URL } from "./lib";
 export async function middleware(req: NextRequest) {
     const accessToken = req.cookies.get('access_token')?.value;
     const refreshToken = req.cookies.get('refresh_token')?.value;
+    const pathname = req.nextUrl.pathname;
     console.log(`Middleware running for: ${req.nextUrl.pathname}`);
+
+    if (pathname.startsWith('/booking') && !accessToken) {
+
+
+        return NextResponse.redirect(new URL('/login', req.url))
+
+    }
 
     if (!accessToken && refreshToken) {
         try {

@@ -1,10 +1,12 @@
 'use client'
 import { useGetAvaliableRoom } from '@/hooks/use-hotel'
-import { Button, Card, CardBody, DatePicker, Input } from '@heroui/react'
+import { Button, Card, CardBody, DatePicker, Input, Tooltip } from '@heroui/react'
 import { BedDouble, Check, Group, Star, UserRound, UsersRound } from 'lucide-react'
 import Image from 'next/image'
 import Link from 'next/link'
 import RoomCardLoading from '../loading/room-loading'
+import Empty from '../empty'
+import { useAuth } from '@/stores/auth-store'
 
 
 type Props = {
@@ -13,9 +15,11 @@ type Props = {
 
 
 const AvaliableRooms = ({ hotelId }: Props) => {
-    const { data: rooms, isError } = useGetAvaliableRoom(hotelId, { page: 1, limit: 10 })
-    const isLoading = true;
-    if (isError) return <div>Error loading rooms</div>
+    const isAuthenticated = useAuth((state) => state.isAuthenticated)
+    const { data: rooms, isLoading } = useGetAvaliableRoom(hotelId, { page: 1, limit: 10 })
+
+
+
     return (
         <section className='py-4 space-y-4 mb-6'>
             <h1 className='head-1'>Avaliable Rooms</h1>
@@ -41,6 +45,9 @@ const AvaliableRooms = ({ hotelId }: Props) => {
                     fullWidth >Apply</Button>
             </div>
             {/* Room */}
+            {
+                rooms && rooms.length === 0 && !isLoading && <Empty />
+            }
             <div className='flex flex-col gap-4'>
                 {
                     isLoading ? <RoomCardLoading /> :
@@ -78,12 +85,22 @@ const AvaliableRooms = ({ hotelId }: Props) => {
                                                     </span>
                                                     <p >includes taxes and fees</p>
                                                 </div>
-                                                <Button
-                                                    as={Link}
-                                                    href={'/booking'}
-                                                    variant='solid'
-                                                    color='primary'
-                                                    radius='sm'>Reserve</Button>
+                                                <Tooltip
+                                                    radius='sm'
+                                                    color={isAuthenticated ? 'default' : 'danger'}
+                                                    content={isAuthenticated ? "Reserve this room" : "Please login to reserve a room"}
+                                                >
+
+
+                                                    <Button
+                                                        as={Link}
+                                                        href={'/booking'}
+                                                        variant='solid'
+                                                        color='primary'
+                                                        radius='sm'>
+                                                        Reserve
+                                                    </Button>
+                                                </Tooltip>
                                             </div>
                                         </div>
                                     </div>
