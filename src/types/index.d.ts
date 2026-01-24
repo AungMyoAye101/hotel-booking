@@ -38,10 +38,11 @@ export interface TokenPayload {
 
 }
 
-export class FetchError extends Error {
-    status: number;
-    constructor(status: number, message: string) {
-        super(message);
-        this.status = status;
-    }
+export type MetaType = {
+    page: number,
+    limit: number,
+    total: number;
+    totalPages: number;
+    hasPrev: boolean;
+    hasNext: boolean
 }

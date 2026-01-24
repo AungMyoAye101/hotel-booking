@@ -1,7 +1,10 @@
 
+
+
 import HotelCard from "@/components/hotel/hotel-card"
+import Meta from "@/components/pagination"
 import { serverFetch } from "@/hooks/api"
-import { APIResponse } from "@/types"
+import { APIResponse, MetaType } from "@/types"
 import { hotelType } from "@/types/hotel-types"
 import { Suspense } from "react"
 
@@ -13,7 +16,13 @@ type HotelQueryProps = {
     priceOrder?: 'asc' | 'desc'
     ratingOrder?: 'asc' | 'desc',
     star?: string | string[]
+    page: number
+}
 
+
+type HotelWithMeta = {
+    hotels: hotelType[],
+    meta: MetaType
 }
 
 const page = async ({ searchParams }: { searchParams: Promise<HotelQueryProps> }) => {
@@ -31,6 +40,7 @@ const page = async ({ searchParams }: { searchParams: Promise<HotelQueryProps> }
     urlParams.set('maxPrice', String((params.maxPrice ?? 500)));
     urlParams.set('priceOrder', params.priceOrder ?? "asc");
     urlParams.set('ratingOrder', params.ratingOrder ?? "asc");
+    urlParams.set('page', params.page ? params.page.toString() : "1");
     urlParams.delete('star');
     if (Array.isArray(params.star)) {
         params.star.forEach(star => {
@@ -38,12 +48,13 @@ const page = async ({ searchParams }: { searchParams: Promise<HotelQueryProps> }
         })
     }
 
-    const data = await serverFetch<APIResponse<{ hotels: hotelType[] }>>(`/hotel?${urlParams.toString()}`);
+    const data = await serverFetch<APIResponse<HotelWithMeta>>(`/hotel?${urlParams.toString()}`);
 
 
     return (
         <Suspense fallback={<div>Loading...</div>}>
             <HotelCard hotels={data.result.hotels ?? []} />
+            <Meta meta={data.result.meta} />
         </Suspense>
     )
 }

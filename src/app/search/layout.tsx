@@ -13,6 +13,7 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
                 </div>
                 <div className="flex-1 ">
                     {children}
+
                 </div>
             </div>
         </section>
