@@ -1,7 +1,6 @@
 
-
-
 import HotelCard from "@/components/hotel/hotel-card"
+import HotelCardLoading from "@/components/loading/hotel-loading"
 import Meta from "@/components/pagination"
 import { serverFetch } from "@/hooks/api"
 import { APIResponse, MetaType } from "@/types"
@@ -52,7 +51,7 @@ const page = async ({ searchParams }: { searchParams: Promise<HotelQueryProps> }
 
 
     return (
-        <Suspense fallback={<div>Loading...</div>}>
+        <Suspense fallback={<HotelCardLoading />}>
             <HotelCard hotels={data.result.hotels ?? []} />
             <Meta meta={data.result.meta} />
         </Suspense>

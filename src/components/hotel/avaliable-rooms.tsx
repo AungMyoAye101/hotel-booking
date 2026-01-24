@@ -4,6 +4,7 @@ import { Button, Card, CardBody, DatePicker, Input } from '@heroui/react'
 import { BedDouble, Check, Group, Star, UserRound, UsersRound } from 'lucide-react'
 import Image from 'next/image'
 import Link from 'next/link'
+import RoomCardLoading from '../loading/room-loading'
 
 
 type Props = {
@@ -12,22 +13,37 @@ type Props = {
 
 
 const AvaliableRooms = ({ hotelId }: Props) => {
-    const { data: rooms, isLoading, isError } = useGetAvaliableRoom(hotelId, { page: 1, limit: 10 })
-    console.log(rooms)
+    const { data: rooms, isError } = useGetAvaliableRoom(hotelId, { page: 1, limit: 10 })
+    const isLoading = true;
     if (isError) return <div>Error loading rooms</div>
     return (
         <section className='py-4 space-y-4 mb-6'>
             <h1 className='head-1'>Avaliable Rooms</h1>
-            <div className='flex flex-col md:flex-row items-center rounded-lg overflow-hidden bg-white shadow border border-slate-300'>
-                <DatePicker radius='none' aria-label={"check-in date"} />
-                <DatePicker radius='none' aria-label={"check-out date"} />
-                <Input type='number' placeholder='guest' radius='none' aria-label='guest' />
-                <Button variant='solid' color='primary' radius='sm' className='mx-1' fullWidth >Apply</Button>
+            <div
+                className='flex flex-col md:flex-row items-center rounded-lg overflow-hidden bg-white shadow border border-slate-300'>
+                <DatePicker
+                    radius='none'
+                    aria-label={"check-in date"} />
+                <DatePicker
+                    radius='none'
+                    aria-label={"check-out date"} />
+                <Input
+                    type='number'
+                    placeholder='guest'
+                    radius='none'
+                    aria-label='guest'
+                    startContent={<UsersRound size={16} />} />
+                <Button
+                    variant='solid'
+                    color='primary'
+                    radius='sm'
+                    className='mx-1'
+                    fullWidth >Apply</Button>
             </div>
             {/* Room */}
             <div className='flex flex-col gap-4'>
                 {
-                    isLoading ? <div>Loading...</div> :
+                    isLoading ? <RoomCardLoading /> :
                         rooms?.map((room) => (
                             <Card key={room._id}>
                                 <CardBody className='p-2'>
