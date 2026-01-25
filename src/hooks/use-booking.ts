@@ -33,6 +33,6 @@ export const useGetBookingById = (bookingId: string) => {
     return useQuery({
         queryKey: ['booking_by_id', bookingId],
         queryFn: () => getBookingById(bookingId),
-        enabled: !bookingId
+        enabled: !!bookingId
     })
 }

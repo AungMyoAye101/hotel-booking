@@ -31,7 +31,7 @@ export const updateBooking = async (booking: BookingType) => {
 
 export const getBookingById = async (bookingId: string) => {
     const { data } = await apiClient.get<APIResponse<{ booking: BookingType }>>(`/booking/${bookingId}`)
-
+    console.log(data)
 
     if (!data.success) {
         throw new Error(data.message || "Failed to update booking")

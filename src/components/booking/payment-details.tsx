@@ -1,5 +1,6 @@
 'use client';
 
+import { useCreatePayment } from '@/hooks/use-payment';
 import { useBookingStore } from '@/stores/booking-store';
 import { PaymentMethodType } from '@/types';
 import { Button, Card, CardBody, DatePicker, Input } from '@heroui/react'
@@ -8,17 +9,32 @@ import Image from 'next/image';
 import { redirect, useRouter } from 'next/navigation';
 import { useState } from 'react';
 
+type Props = {
+    bookingId: string,
+    userId: string,
+    amount: number
+}
 
-
-const PaymentDetailsForm = ({ }) => {
+const PaymentDetailsForm = ({ bookingId, userId, amount }: Props) => {
     const { stage, setStage, setBookingId, setPaymentId } = useBookingStore(s => s)
     const router = useRouter()
-
+    const { mutate, isPending } = useCreatePayment()
     const handleSubmit = () => {
-        setStage(2)
-        setPaymentId('23'),
-            setBookingId("12dd")
-        router.push('/booking/confirm')
+        mutate({
+            bookingId,
+            userId,
+
+            paymentMethod: payment,
+            amount,
+        }, {
+            onSuccess: (data) => {
+                setStage(2)
+                setPaymentId(data._id)
+                setBookingId(bookingId)
+            }
+        })
+
+
     }
     const [payment, setPayment] = useState<PaymentMethodType>('CARD')
 

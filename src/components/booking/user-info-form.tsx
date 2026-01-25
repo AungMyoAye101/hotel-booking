@@ -11,7 +11,7 @@ import { useForm } from 'react-hook-form';
 
 const UserInfoForm = () => {
     const user = useAuth(s => s.user)
-    console.log(user)
+
     const { register, handleSubmit, formState: { errors } } = useForm<userSchemaType>({
         resolver: zodResolver(userSchmea),
         defaultValues: {
@@ -34,7 +34,7 @@ const UserInfoForm = () => {
         })
     }
     return (
-        <form className='bg-white rounded-lg border border-slate-200 shadow-md  p-6  space-y-4'>
+        <section className='bg-white rounded-lg border border-slate-200 shadow-md  p-6  space-y-4'>
             <h1 className='head-1'>Guest information</h1>
             <form className='grid grid-cols-1  md:grid-cols-2 gap-4'
                 onSubmit={handleSubmit(onSubmit)}
@@ -112,7 +112,7 @@ const UserInfoForm = () => {
                 <input type='checkbox' /> Save your details for next time
             </div>
 
-        </form >
+        </section >
     )
 }
 
