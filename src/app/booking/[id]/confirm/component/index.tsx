@@ -1,4 +1,6 @@
 "use client"
+import { useConfirmPayment } from '@/hooks/use-payment'
+import { useAuth } from '@/stores/auth-store'
 import { useBookingStore } from '@/stores/booking-store'
 import { Button } from '@heroui/button'
 import { Card } from '@heroui/react'
@@ -9,7 +11,7 @@ import { useEffect } from 'react'
 
 const ConfirmPage = () => {
     const { stage, setStage, bookingId, paymentId, confirmPayment } = useBookingStore(s => s);
-
+    const user = useAuth(s => s.user)
     const router = useRouter()
     console.log(bookingId, paymentId, stage)
     useEffect(() => {
@@ -17,10 +19,18 @@ const ConfirmPage = () => {
             router.push(`/booking/${bookingId}`)
         }
     }, [paymentId, router])
+
+    const { mutate, isPending } = useConfirmPayment()
     const handleSubmit = () => {
-        setStage(3)
-        confirmPayment(true)
-        redirect('/booking/complete')
+        if (bookingId && paymentId && user?._id) {
+            mutate({
+                bookingId,
+                userId: user?._id,
+                paymentId,
+            })
+        }
+
+
     }
     return (
         <div>
@@ -136,6 +146,7 @@ const ConfirmPage = () => {
                             </div>
 
                             <Button
+                                isLoading={isPending}
                                 color="primary"
                                 size="lg"
                                 className="w-full mt-6"
