@@ -16,8 +16,8 @@ type Props = {
 }
 
 const PaymentDetailsForm = ({ bookingId, userId, amount }: Props) => {
-    const { stage, setStage, setBookingId, setPaymentId } = useBookingStore(s => s)
-    const router = useRouter()
+
+
     const { mutate, isPending } = useCreatePayment()
     const handleSubmit = () => {
         mutate({
@@ -26,13 +26,8 @@ const PaymentDetailsForm = ({ bookingId, userId, amount }: Props) => {
 
             paymentMethod: payment,
             amount,
-        }, {
-            onSuccess: (data) => {
-                setStage(2)
-                setPaymentId(data._id)
-                setBookingId(bookingId)
-            }
-        })
+        },
+        )
 
 
     }
