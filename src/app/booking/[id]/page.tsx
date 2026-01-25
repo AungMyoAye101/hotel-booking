@@ -4,8 +4,11 @@ import PaymentDetailsForm from "@/components/booking/payment-details"
 import UserInfoForm from "@/components/booking/user-info-form"
 import { useBookingStore } from "@/stores/booking-store"
 import { BadgeDollarSign, Check } from "lucide-react"
-
-const page = () => {
+type ParamsType = {
+    id: string
+}
+const page = async ({ params }: { params: Promise<ParamsType> }) => {
+    const bookingId = (await params).id
 
     return (
         <section >
@@ -36,7 +39,7 @@ const page = () => {
                     </div>
                 </div>
 
-                <BookingInfo />
+                <BookingInfo bookingId={bookingId} />
             </div>
 
         </section>

@@ -1,7 +1,7 @@
-import { createBooking } from "@/service/booking-service"
+import { createBooking, getBookingById } from "@/service/booking-service"
 import { BookingType } from "@/types"
 import { addToast } from "@heroui/react"
-import { useMutation } from "@tanstack/react-query"
+import { useMutation, useQueries, useQuery } from "@tanstack/react-query"
 import { useRouter } from "next/navigation"
 
 export const useCreateBooking = () => {
@@ -26,5 +26,13 @@ export const useCreateBooking = () => {
 
             })
         }
+    })
+}
+
+export const useGetBookingById = (bookingId: string) => {
+    return useQuery({
+        queryKey: ['booking_by_id', bookingId],
+        queryFn: () => getBookingById(bookingId),
+        enabled: !bookingId
     })
 }

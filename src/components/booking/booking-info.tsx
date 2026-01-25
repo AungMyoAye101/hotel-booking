@@ -1,9 +1,14 @@
 'use client'
 
+import { useGetBookingById } from "@/hooks/use-booking"
 import { Check, DollarSign, Star } from "lucide-react"
 import Image from "next/image"
-
-const BookingInfo = () => {
+type Props = {
+    bookingId: string
+}
+const BookingInfo = ({ bookingId }: Props) => {
+    const { data: booking, isLoading } = useGetBookingById(bookingId)
+    console.log(booking)
     return (
         <div className='max-w-sm bg-white rounded-lg border border-slate-200 shadow-md h-fit overflow-hidden'>
 

@@ -61,3 +61,12 @@ export type BookingType = {
     checkOut: Date,
 
 }
+export type PaymentMethodType = "MOBILE_BANKING" | "CARD" | "BANK"
+export type PaymentType = {
+    bookingId: string,
+    userId: string,
+    paymentMethod: PaymentMethodType
+    status: "PENDING" | "PAID" | "FAILED",
+    amount: number,
+    paidAt: Date
+}
