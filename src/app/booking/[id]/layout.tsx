@@ -8,7 +8,7 @@ type Props = {
 
 const layout = ({ children }: Props) => {
     return (
-        <div className="py-24 space-y-6 ">
+        <div className="py-24 space-y-6 px-4">
             <Indicator />
             {
                 children

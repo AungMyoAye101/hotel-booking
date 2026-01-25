@@ -1,7 +1,7 @@
 'use client'
 
 import { useMemo, useState, useCallback } from 'react'
-import { useSearchParams } from 'next/navigation'
+import { useRouter, useSearchParams } from 'next/navigation'
 import Image from 'next/image'
 import Link from 'next/link'
 
@@ -42,6 +42,7 @@ type DateRange = {
 
 const AvaliableRooms = ({ hotelId }: Props) => {
     const searchParams = useSearchParams()
+    const router = useRouter()
     const { isAuthenticated, user } = useAuth()
 
     /* ----------------------------- fetch rooms ----------------------------- */
@@ -81,29 +82,31 @@ const AvaliableRooms = ({ hotelId }: Props) => {
 
     /* --------------------------- create booking ----------------------------- */
 
-    const { mutate: createBooking, isPending } = useCreateBooking()
+    const { mutate, isPending } = useCreateBooking()
 
     const now = new Date()
-    const handleCreateBooking =
-        (roomId: string, quantity: number, price: number) => {
-            if (!isAuthenticated || !user?._id || !dateRange.start || !dateRange.end) {
-                return
-            }
-
-            const bookingData = {
-                userId: user._id,
-                hotelId,
-                roomId,
-                quantity,
-                totalPrice: price * quantity,
-                status: 'PENDING' as BookingStatus,
-                checkIn: now,
-                checkOut: new Date(2, 2, 2026),
-
-            }
-            console.log(bookingData)
-            createBooking(bookingData)
+    const handleCreateBooking = (roomId: string, quantity: number, price: number) => {
+        if (!isAuthenticated || !user?._id || !dateRange.start || !dateRange.end) {
+            return
         }
+
+        const bookingData = {
+            userId: user._id,
+            hotelId,
+            roomId,
+            quantity,
+            totalPrice: price * quantity,
+            status: 'PENDING' as BookingStatus,
+            checkIn: now,
+            checkOut: new Date(2, 2, 2026),
+
+        }
+        mutate(bookingData, {
+            onSuccess(data) {
+                router.push(`/booking/${data._id}`)
+            },
+        })
+    }
 
 
 

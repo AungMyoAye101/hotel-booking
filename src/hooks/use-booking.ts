@@ -1,8 +1,11 @@
 import { createBooking } from "@/service/booking-service"
+import { BookingType } from "@/types"
 import { addToast } from "@heroui/react"
 import { useMutation } from "@tanstack/react-query"
+import { useRouter } from "next/navigation"
 
 export const useCreateBooking = () => {
+
     return useMutation({
         mutationKey: ['create_booking'],
         mutationFn: createBooking,
@@ -12,6 +15,7 @@ export const useCreateBooking = () => {
                 color: 'success'
 
             })
+
         },
         onError: (error
         ) => {
