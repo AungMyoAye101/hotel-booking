@@ -1,11 +1,11 @@
 'use client'
 
 import { useGetBookingById } from "@/hooks/use-booking"
-import { BookingType } from "@/types"
+import { BookingInfoType, BookingType } from "@/types"
 import { Check, DollarSign, Star } from "lucide-react"
 import Image from "next/image"
 type Props = {
-    booking: BookingType,
+    booking: BookingInfoType,
     isLoading: boolean
 }
 const BookingInfo = ({ booking, isLoading }: Props) => {
@@ -21,8 +21,12 @@ const BookingInfo = ({ booking, isLoading }: Props) => {
                 className="aspect-video"
             />
             <div className="p-4 space-y-2">
-                <h1 className="head-1">Hotel name</h1>
-                <p>Downtown 2 km from hotel</p>
+                <h1 className="head-1">
+                    {booking.hotel.name}
+                </h1>
+                <p>
+                    {booking.hotel.adddress}
+                </p>
                 <div className="flex items-center gap-1">
                     <Star fill=" oklch(79.5% 0.184 86.047)" size={16} className="text-yellow-500" />
                     <Star fill=" oklch(79.5% 0.184 86.047)" size={16} className="text-yellow-500" />
@@ -35,11 +39,11 @@ const BookingInfo = ({ booking, isLoading }: Props) => {
 
                 <div className="flex justify-between gap-4">
                     <span>Check In </span>
-                    <span>{new Date().toDateString()}</span>
+                    <span>{new Date(booking.checkIn).toDateString()}</span>
                 </div>
                 <div className="flex justify-between gap-4">
                     <span>Check Out </span>
-                    <span>{new Date().toDateString()}</span>
+                    <span>{new Date(booking.checkOut).toDateString()}</span>
                 </div>
                 <div className="flex justify-between gap-4">
                     <span>Guests </span>
@@ -48,7 +52,7 @@ const BookingInfo = ({ booking, isLoading }: Props) => {
                 <div className="h-0.5 w-full bg-slate-600/70 my-1"></div>
                 <div className="flex justify-between gap-4">
                     <span className="text-lg font-medium">Total price</span>
-                    <span className="font-semibold">$ 400</span>
+                    <span className="font-semibold">$ {booking.totalPrice}</span>
                 </div>
                 <div className="flex justify-between gap-4">
                     <span>Taxes and fees </span>

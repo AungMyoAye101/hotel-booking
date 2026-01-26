@@ -78,3 +78,21 @@ export type createPaymentType = {
     paymentMethod: PaymentMethodType,
     amount: number,
 }
+
+export type BookingInfoType = {
+    _id: string
+    checkIn: Date,
+    checkOut: Date
+    hotel: {
+        adddress: string,
+        city: string,
+        name: string,
+        photo: photoType
+    }
+    quantity: number,
+    room: { name: string }
+    status: BookingStatus
+    totalPrice: number,
+    user: { _id: string, name: string }
+
+}

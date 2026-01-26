@@ -1,5 +1,5 @@
 import { apiClient } from "@/hooks/axios-api";
-import { APIResponse, BookingType } from "@/types";
+import { APIResponse, BookingInfoType, BookingType } from "@/types";
 import { createBookingType } from "@/validations/booking-schema";
 
 
@@ -30,8 +30,8 @@ export const updateBooking = async (booking: BookingType) => {
 }
 
 export const getBookingById = async (bookingId: string) => {
-    const { data } = await apiClient.get<APIResponse<{ booking: BookingType }>>(`/booking/${bookingId}`)
-    console.log(data)
+    const { data } = await apiClient.get<APIResponse<{ booking: BookingInfoType }>>(`/booking/${bookingId}`)
+
 
     if (!data.success) {
         throw new Error(data.message || "Failed to update booking")

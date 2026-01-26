@@ -5,7 +5,7 @@ type ParamsType = {
 }
 const page = async ({ params }: { params: Promise<ParamsType> }) => {
     const bookingId = (await params).id
-    console.log(bookingId)
+
     return (
         <>
             <Payment bookingId={bookingId} />

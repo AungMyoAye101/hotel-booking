@@ -26,7 +26,7 @@ const Payment = ({ bookingId }: Props) => {
                     <UserInfoForm />
                     <PaymentDetailsForm
                         bookingId={bookingId}
-                        userId={booking?.userId!}
+                        userId={booking?.user._id!}
                         amount={booking?.totalPrice!}
                     />
                     <div className="bg-white p-6 rouded-lg shadow-md border border-slate-200  space-y-4">

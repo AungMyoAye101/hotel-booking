@@ -2,12 +2,16 @@
 import { useConfirmPayment } from '@/hooks/use-payment'
 import { useAuth } from '@/stores/auth-store'
 import { useBookingStore } from '@/stores/booking-store'
+import { BookingInfoType, BookingStatus } from '@/types'
 import { Button } from '@heroui/button'
 import { Card } from '@heroui/react'
 import Image from 'next/image'
 import { redirect, useRouter } from 'next/navigation'
 import { useEffect } from 'react'
 
+type Props = {
+    booking: BookingInfoType
+}
 
 const ConfirmPage = () => {
     const { stage, setStage, bookingId, paymentId, confirmPayment } = useBookingStore(s => s);
