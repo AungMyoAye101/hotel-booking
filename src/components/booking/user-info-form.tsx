@@ -4,7 +4,7 @@ import { useUpdateUser } from '@/hooks/use-user';
 import { useAuth } from '@/stores/auth-store';
 import { User } from '@/types/user-type';
 import { userSchemaType, userSchmea } from '@/validations/user-schema';
-import { addToast, Button, Input } from '@heroui/react'
+import { addToast, Button, Card, CardBody, CardFooter, CardHeader, Input } from '@heroui/react'
 import { zodResolver } from '@hookform/resolvers/zod';
 import React from 'react'
 import { useForm } from 'react-hook-form';
@@ -34,85 +34,89 @@ const UserInfoForm = () => {
         })
     }
     return (
-        <section className='bg-white rounded-lg border border-slate-200 shadow-md  p-6  space-y-4'>
-            <h1 className='head-1'>Guest information</h1>
-            <form className='grid grid-cols-1  md:grid-cols-2 gap-4'
-                onSubmit={handleSubmit(onSubmit)}
-            >
-                <Input
-                    {...register('name')}
-                    isInvalid={!!errors.name}
-                    errorMessage={errors.name?.message}
-                    type='text'
-                    placeholder='Your name'
-                    label="Name"
-                    labelPlacement='outside'
-                    radius='sm'
-                    className='md:col-span-2'
+        <Card className='p-4'>
+            <CardHeader className='head-1'>
+                Guest information
+            </CardHeader>
+            <CardBody>
+                <form className='grid grid-cols-1  md:grid-cols-2 gap-4'
+                    onSubmit={handleSubmit(onSubmit)}
+                >
+                    <Input
+                        {...register('name')}
+                        isInvalid={!!errors.name}
+                        errorMessage={errors.name?.message}
+                        type='text'
+                        placeholder='Your name'
+                        label="Name"
+                        labelPlacement='outside'
+                        radius='sm'
+                        className='md:col-span-2'
 
-                />
-                <Input
-                    {...register('email')}
-                    isInvalid={!!errors.email}
-                    errorMessage={errors.email?.message}
-                    type='email'
-                    placeholder='example@gmail.com'
-                    label="Email"
-                    labelPlacement='outside'
-                    radius='sm'
+                    />
+                    <Input
+                        {...register('email')}
+                        isInvalid={!!errors.email}
+                        errorMessage={errors.email?.message}
+                        type='email'
+                        placeholder='example@gmail.com'
+                        label="Email"
+                        labelPlacement='outside'
+                        radius='sm'
 
-                />
-                <Input
-                    {...register('phone')}
-                    isInvalid={!!errors.phone}
-                    errorMessage={errors.phone?.message}
-                    type='text'
-                    placeholder='phone'
-                    label="Phone"
-                    labelPlacement='outside'
-                    radius='sm'
-
-
-                />
-                <Input
-                    {...register('city')}
-                    isInvalid={!!errors.city}
-                    errorMessage={errors.city?.message}
-                    type='text'
-                    placeholder='city'
-                    label="City"
-                    labelPlacement='outside'
-                    radius='sm'
-
-                />
-                <Input
-                    {...register('country')}
-                    isInvalid={!!errors.country}
-                    errorMessage={errors.country?.message}
-                    type='text'
-                    placeholder='country'
-                    label="Country"
-                    labelPlacement='outside'
-                    radius='sm'
-
-                />
-                <Button
-                    isLoading={isPending}
-                    type='submit'
-                    variant='bordered'
-                    color='primary'
-                    radius='sm'
-                    className='md:col-span-2'>
-                    Submit
-                </Button>
-            </form>
+                    />
+                    <Input
+                        {...register('phone')}
+                        isInvalid={!!errors.phone}
+                        errorMessage={errors.phone?.message}
+                        type='text'
+                        placeholder='phone'
+                        label="Phone"
+                        labelPlacement='outside'
+                        radius='sm'
 
 
-            <div>
-                <input type='checkbox' /> Save your details for next time
-            </div>
+                    />
+                    <Input
+                        {...register('city')}
+                        isInvalid={!!errors.city}
+                        errorMessage={errors.city?.message}
+                        type='text'
+                        placeholder='city'
+                        label="City"
+                        labelPlacement='outside'
+                        radius='sm'
 
-        </section >
+                    />
+                    <Input
+                        {...register('country')}
+                        isInvalid={!!errors.country}
+                        errorMessage={errors.country?.message}
+                        type='text'
+                        placeholder='country'
+                        label="Country"
+                        labelPlacement='outside'
+                        radius='sm'
+
+                    />
+                    <Button
+                        isLoading={isPending}
+                        type='submit'
+                        variant='bordered'
+                        color='primary'
+                        radius='sm'
+                        className='md:col-span-2'>
+                        Submit
+                    </Button>
+                </form>
+            </CardBody>
+            <CardFooter>
+                <label>
+                    <input type='checkbox' /> Save your details for next time
+                </label>
+            </CardFooter>
+        </Card>
+
     )
 }
 

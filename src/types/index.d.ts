@@ -87,6 +87,8 @@ export type BookingInfoType = {
         adddress: string,
         city: string,
         name: string,
+        star: number,
+        rating: number,
         photo: photoType
     }
     quantity: number,

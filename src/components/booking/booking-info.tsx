@@ -1,72 +1,71 @@
 'use client'
 
-import { useGetBookingById } from "@/hooks/use-booking"
+
 import { BookingInfoType, BookingType } from "@/types"
-import { Check, DollarSign, Star } from "lucide-react"
+import { Check, CircleDollarSign, DollarSign, MapPin, Star } from "lucide-react"
 import Image from "next/image"
+import FiveStars from "../star"
 type Props = {
     booking: BookingInfoType,
     isLoading: boolean
 }
 const BookingInfo = ({ booking, isLoading }: Props) => {
+    if (isLoading) {
+        return <p>Loading,,,</p>
+    }
 
     return (
-        <div className='max-w-sm bg-white rounded-lg border border-slate-200 shadow-md h-fit overflow-hidden'>
+        <div className='w-full max-w-md mx-auto bg-white rounded-lg border-2 border-slate-300 shadow-md h-fit overflow-hidden'>
+            <div className="relative w-full aspect-video">
 
-            <Image
-                src="/hotel-hero.png"
-                alt="Booking Information"
-                width={400}
-                height={400}
-                className="aspect-video"
-            />
+
+                <Image
+                    src="/hotel-hero.png"
+                    alt="Booking Information"
+                    fill
+                    className="aspect-video"
+                />
+                <div className="absolute left-0 bottom-0 p-2 text-white font-semibold text-shadow bg-black/10">
+                    <h1 className="head-1">
+                        {booking.hotel.name}
+                    </h1>
+                    <p className="flex items-center gap-1">
+                        <MapPin size={18} />  {booking.hotel.adddress}
+                    </p>
+                    <FiveStars count={booking.hotel.star} />
+                </div>
+            </div>
             <div className="p-4 space-y-2">
-                <h1 className="head-1">
-                    {booking.hotel.name}
-                </h1>
-                <p>
-                    {booking.hotel.adddress}
-                </p>
-                <div className="flex items-center gap-1">
-                    <Star fill=" oklch(79.5% 0.184 86.047)" size={16} className="text-yellow-500" />
-                    <Star fill=" oklch(79.5% 0.184 86.047)" size={16} className="text-yellow-500" />
-                    <Star fill=" oklch(79.5% 0.184 86.047)" size={16} className="text-yellow-500" />
 
-                    <Star fill=" oklch(79.5% 0.184 86.047)" size={16} className="text-yellow-500" />
-                    <Star fill=" oklch(79.5% 0.184 86.047)" size={16} className="text-yellow-500" />
-                    <p>(120 reviews)</p>
-                </div>
 
-                <div className="flex justify-between gap-4">
-                    <span>Check In </span>
-                    <span>{new Date(booking.checkIn).toDateString()}</span>
-                </div>
-                <div className="flex justify-between gap-4">
+
+                <div className="grid grid-cols-2 gap-4  place-content-between">
+                    <span>Name </span>
+                    <span className="font-semibold text-end"> {booking.user.name} </span>
+                    <span >Check In </span>
+                    <span className="font-semibold  text-end">{new Date(booking.checkIn).toDateString()}</span>
+
                     <span>Check Out </span>
-                    <span>{new Date(booking.checkOut).toDateString()}</span>
-                </div>
-                <div className="flex justify-between gap-4">
+                    <span className="font-semibold text-end">{new Date(booking.checkOut).toDateString()}</span>
                     <span>Guests </span>
-                    <span>2 </span>
+                    <span className="font-semibold text-end"> 2 </span>
+
+                    <span>Room </span>
+                    <span className="font-semibold text-end">{booking.room.name} </span>
+
                 </div>
-                <div className="h-0.5 w-full bg-slate-600/70 my-1"></div>
-                <div className="flex justify-between gap-4">
-                    <span className="text-lg font-medium">Total price</span>
-                    <span className="font-semibold">$ {booking.totalPrice}</span>
+                <div className="flex justify-between gap-4 text-lg  py-2 border-t border-slate-700">
+                    <span >Total price</span>
+                    <span className="font-semibold text-end text-2xl text-amber-600">$ {booking.totalPrice}</span>
                 </div>
-                <div className="flex justify-between gap-4">
-                    <span>Taxes and fees </span>
-                    <span>$15 </span>
-                </div>     <div className="flex justify-between gap-4">
-                    <span>Limited time offer </span>
-                    <span>-$15</span>
-                </div>
-                <div className="flex gap-1 text-sm">
-                    <DollarSign />
-                    You're getting the best price! <br />
+
+
+                <div className="flex gap-1 text-sm text-slate-800">
+                    <CircleDollarSign />
+                    You're getting the best price!
                     we guarantee it.
                 </div>
-                <div className="flex gap-1 text-sm">
+                <div className="flex gap-1 text-sm p-2 bg-green-100 rounded">
                     <Check className="text-green-500" />
                     Free cancellation
                 </div>
