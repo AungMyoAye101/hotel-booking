@@ -5,12 +5,17 @@ import { Check, CircleDollarSign, DollarSignIcon } from 'lucide-react'
 import BookingInfo from '../booking/booking-info'
 import { useGetBookingById } from '@/hooks/use-booking';
 import { Card, CardBody } from '@heroui/react';
+import BookingLoading from '../booking/booking-loading';
 
 type Props = {
     bookingId: string
 }
 const Payment = ({ bookingId }: Props) => {
     const { data: booking, isLoading } = useGetBookingById(bookingId)
+
+    if (isLoading) {
+        return <BookingLoading />
+    }
 
     return (
         <section className='space-y-6'>
@@ -48,7 +53,7 @@ const Payment = ({ bookingId }: Props) => {
 
                 </div>
 
-                <BookingInfo booking={booking!} isLoading={isLoading} />
+                <BookingInfo booking={booking!} />
             </div>
 
         </section>

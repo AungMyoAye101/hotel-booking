@@ -5,6 +5,7 @@ type ParamsType = {
 }
 const page = async ({ params }: { params: Promise<ParamsType> }) => {
     const bookingId = (await params).id
+    if (!bookingId) return;
 
     return (
         <>

@@ -1,12 +1,12 @@
 'use client';
 
 import { useCreatePayment } from '@/hooks/use-payment';
-import { useBookingStore } from '@/stores/booking-store';
+
 import { PaymentMethodType } from '@/types';
 import { Button, Card, CardBody, DatePicker, Input } from '@heroui/react'
-import { Banknote } from 'lucide-react';
+
 import Image from 'next/image';
-import { redirect, useRouter } from 'next/navigation';
+
 import { useState } from 'react';
 
 type Props = {
@@ -58,7 +58,7 @@ const PaymentDetailsForm = ({ bookingId, userId, amount }: Props) => {
 
                                         />
                                         <div className='text-center'>
-                                            <h1 className=' font-medium'>Card/debait card</h1>
+                                            <h1 className=' font-medium'>Card / debait card</h1>
                                             <p className='text-sm'>Pay with card</p>
                                         </div>
                                     </div>
@@ -118,7 +118,7 @@ const PaymentDetailsForm = ({ bookingId, userId, amount }: Props) => {
 
                         </label>
                     </div>
-                    {
+                    {/* {
                         payment === "CARD" &&
                         <div className='py-4 space-y-4'>
                             <Input type='text' placeholder='123 456 789' label="Card number" labelPlacement='outside' radius='sm' />
@@ -134,11 +134,15 @@ const PaymentDetailsForm = ({ bookingId, userId, amount }: Props) => {
                                 <input type='checkbox' id='input-2' /> I agree to the cancellation policy and terms
                             </label>
                         </div>
-                    }
+                    } */}
 
 
-                    <Button variant='solid' color='primary' radius='sm' fullWidth
-
+                    <Button
+                        isLoading={isPending}
+                        variant='solid'
+                        color='primary'
+                        radius='sm'
+                        fullWidth
                         onPress={() => handleSubmit()}
                     >Proceed to Payment</Button>
                 </div>
