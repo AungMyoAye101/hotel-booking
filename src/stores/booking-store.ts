@@ -1,4 +1,5 @@
 import { create } from "zustand";
+import { persist } from "zustand/middleware";
 
 
 type stageType = 1 | 2 | 3;
@@ -17,20 +18,26 @@ type BookingStore = {
 
 }
 
-export const useBookingStore = create<BookingStore>((set) => ({
-    stage: 1,
-    bookingId: null,
-    paymentId: null,
-    isPaid: false,
+export const useBookingStore = create<BookingStore>()(
+    persist(
+        (set) => ({
+            stage: 1,
+            bookingId: null,
+            paymentId: null,
+            isPaid: false,
+            setStage: (stage: stageType) => set({ stage }),
+            setBookingId: (id: string) => set({ bookingId: id }),
+            setPaymentId: (id: string) => set({ paymentId: id }),
+            confirmPayment: (status: boolean) => set({ isPaid: true }),
+            reset: () => set({
+                stage: 1,
+                bookingId: null,
+                paymentId: null,
+                isPaid: false,
+            })
+        }), {
+        name: "booking"
+    }
 
-    setStage: (stage: stageType) => set({ stage }),
-    setBookingId: (id: string) => set({ bookingId: id }),
-    setPaymentId: (id: string) => set({ paymentId: id }),
-    confirmPayment: (status: boolean) => set({ isPaid: true }),
-    reset: () => set({
-        stage: 1,
-        bookingId: null,
-        paymentId: null,
-        isPaid: false,
-    })
-}))
+    )
+)

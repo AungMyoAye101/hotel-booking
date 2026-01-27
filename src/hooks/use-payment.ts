@@ -23,14 +23,15 @@ export const useCreatePayment = () => {
 }
 export const useConfirmPayment = () => {
     const { setStage, confirmPayment } = useBookingStore.getState()
-    const router = useRouter()
+
+
     return useMutation({
         mutationKey: ['confirm_payment'],
         mutationFn: confirmPaymentService,
         onSuccess: (data) => {
             setStage(3)
             confirmPayment(true)
-            router.push(`/booking/${data._id}/complete`)
+
         },
         onError: (error) => {
             console.log(error)

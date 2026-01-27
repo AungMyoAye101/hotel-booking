@@ -1,41 +1,54 @@
 "use client"
+import FiveStars from '@/components/star'
+import { useGetBookingById } from '@/hooks/use-booking'
 import { useConfirmPayment } from '@/hooks/use-payment'
 import { useAuth } from '@/stores/auth-store'
 import { useBookingStore } from '@/stores/booking-store'
 import { BookingInfoType, BookingStatus } from '@/types'
 import { Button } from '@heroui/button'
 import { Card } from '@heroui/react'
+import { MapPin } from 'lucide-react'
 import Image from 'next/image'
-import { redirect, useRouter } from 'next/navigation'
+import { useRouter } from 'next/navigation'
 import { useEffect } from 'react'
 
+
 type Props = {
-    booking: BookingInfoType
+    bookingId: string
 }
 
 const ConfirmPage = () => {
-    const { stage, setStage, bookingId, paymentId, confirmPayment } = useBookingStore(s => s);
-    const user = useAuth(s => s.user)
-    const router = useRouter()
-    console.log(bookingId, paymentId, stage)
-    useEffect(() => {
-        if (!paymentId) {
-            router.push(`/booking/${bookingId}`)
-        }
-    }, [paymentId, router])
+    const { stage, setStage, paymentId, bookingId, confirmPayment } = useBookingStore(s => s);
+    if (!bookingId) return;
+    const { data: booking, isLoading, error } = useGetBookingById(bookingId)
 
+
+    if (isLoading) {
+        return <p>Loading..........</p>
+    }
+
+
+
+    const router = useRouter()
+
+
+
+    // ==================Update payment status ============
     const { mutate, isPending } = useConfirmPayment()
     const handleSubmit = () => {
-        if (bookingId && paymentId && user?._id) {
+        if (booking && paymentId && booking.user._id) {
             mutate({
                 bookingId,
-                userId: user?._id,
+                userId: booking.user?._id,
                 paymentId,
+            }, {
+                onSuccess: (data) => {
+                    router.push(`/booking/${bookingId}/complete`)
+                }
             })
         }
-
-
     }
+
     return (
         <div>
             <div className="max-w-6xl mx-auto px-4 py-6">
@@ -45,74 +58,73 @@ const ConfirmPage = () => {
                     {/* LEFT CONTENT */}
                     <div className="lg:col-span-2 space-y-6">
                         {/* Hotel Info */}
-                        <Card className="p-5">
+                        <Card className="p-4">
                             <div className="flex gap-4">
                                 <Image
-                                    src={"/hotel-hero.png"}
-                                    alt={'hotel naeme'}
-                                    width={120}
-                                    height={90}
-                                    className="rounded-lg object-cover"
+                                    src={'/hotel-bg.png'}
+                                    alt={'hotel photo'}
+                                    width={200}
+                                    height={160}
+                                    className="rounded-lg object-cover aspect-video"
                                 />
 
-                                <div className="flex-1">
-                                    <h2 className="text-lg font-semibold">Yangon Hotel</h2>
-                                    <p className="text-sm text-muted">
-                                        yangon, Myanmar
+                                <div className="flex-1 space-y-4">
+                                    <h2 className="text-lg font-semibold">{booking?.hotel.name}</h2>
+                                    <p className="text-sm text-muted flex items-center ap-1">
+                                        <MapPin size={16} />
+                                        {booking?.hotel.adddress},
+                                        <span className='font-semibold'>
+                                            {booking?.hotel.city}
+                                        </span>
+
                                     </p>
 
-                                    <div className="flex items-center gap-2 mt-1">
-                                        <span className="text-sm font-medium">
-                                            ⭐ 8
-                                        </span>
-                                        <span className="text-sm text-muted">
-                                            (4-star hotel)
-                                        </span>
-                                    </div>
+                                    <FiveStars count={booking?.hotel.star || 0} />
+                                    <p className='text-sm'>Rating <span className='font-semibold'>{booking?.hotel.rating}/10</span></p>
                                 </div>
                             </div>
                         </Card>
 
                         {/* Stay Details */}
-                        <Card className="p-5">
+                        <Card className="p-4">
                             <h3 className="font-semibold mb-4">Your stay</h3>
 
                             <div className="grid grid-cols-2 gap-4 text-sm">
                                 <div>
                                     <p className="text-muted">Check-in</p>
-                                    <p className="font-medium">
-                                        {new Date().toDateString()}
+                                    <p className="font-semibold">
+                                        {new Date(booking?.checkIn!).toDateString()}
                                     </p>
                                 </div>
 
                                 <div>
                                     <p className="text-muted">Check-out</p>
-                                    <p className="font-medium">
-                                        {new Date().toDateString()}
+                                    <p className="font-semibold">
+                                        {new Date(booking?.checkOut!).toDateString()}
                                     </p>
                                 </div>
 
                                 <div>
                                     <p className="text-muted">Guests</p>
-                                    <p className="font-medium">
+                                    <p className="font-semibold">
                                         2 guest(s)
                                     </p>
                                 </div>
 
                                 <div>
                                     <p className="text-muted">Room</p>
-                                    <p className="font-medium">
-                                        {/* {typeof booking.roomId === "string"
-                    ? "Standard Room"
-                    : booking.roomId.name} */}
-                                        Deluxe room
+                                    <p className="font-semibold">
+
+                                        {
+                                            booking?.room.name
+                                        }
                                     </p>
                                 </div>
                             </div>
                         </Card>
 
                         {/* Policy */}
-                        <Card className="p-5 bg-muted/30">
+                        <Card className="p-4 bg-success-50">
                             <h3 className="font-semibold mb-2">Cancellation policy</h3>
                             <p className="text-sm text-muted">
                                 Free cancellation before check-in date. No refund after stay begins.
@@ -128,31 +140,31 @@ const ConfirmPage = () => {
                             <div className="space-y-3 text-sm">
                                 <div className="flex justify-between">
                                     <span>Room price</span>
-                                    <span>$ 300</span>
+                                    <span className='font-semibold'>$ {booking?.room.price}</span>
                                 </div>
 
                                 <div className="flex justify-between">
-                                    <span>Guests</span>
-                                    <span>x 2</span>
+                                    <span>Quantity</span>
+                                    <span className='font-semibold'>x {booking?.quantity}</span>
                                 </div>
 
                                 <div className="flex justify-between">
                                     <span>Taxes & fees</span>
-                                    <span>Included</span>
+                                    <span className='font-semibold'>Included</span>
                                 </div>
 
                                 <hr />
 
-                                <div className="flex justify-between font-semibold text-base">
+                                <div className="flex justify-between font-semibold text-lg">
                                     <span>Total</span>
-                                    <span>$1000</span>
+                                    <span className='font-semibold'>${booking?.totalPrice}</span>
                                 </div>
                             </div>
 
                             <Button
                                 isLoading={isPending}
                                 color="primary"
-                                size="lg"
+                                radius='sm'
                                 className="w-full mt-6"
                                 onPress={handleSubmit}
                             >

@@ -92,7 +92,7 @@ export type BookingInfoType = {
         photo: photoType
     }
     quantity: number,
-    room: { name: string }
+    room: Partial<RoomType>,
     status: BookingStatus
     totalPrice: number,
     user: { _id: string, name: string }

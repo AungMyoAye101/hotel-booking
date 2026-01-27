@@ -1,7 +1,9 @@
-import React from 'react'
+
 import ConfirmPage from './component'
 
 const page = () => {
+
+
     return (
         <>
             <ConfirmPage />
