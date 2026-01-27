@@ -1,10 +1,10 @@
 import { apiClient } from "@/hooks/axios-api";
-import { APIResponse, createPaymentType, PaymentType } from "@/types";
+import { APIResponse, createPaymentType, PaymentType, PaymentCreateType } from "@/types";
 
 
 export const createPayment = async (payment: createPaymentType) => {
 
-    const { data } = await apiClient.post<APIResponse<{ payment: PaymentType }>>(
+    const { data } = await apiClient.post<APIResponse<{ payment: PaymentCreateType }>>(
         '/payment/create', payment
     )
     if (!data.success) {

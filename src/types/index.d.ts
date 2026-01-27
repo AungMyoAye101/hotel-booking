@@ -62,7 +62,7 @@ export type BookingType = {
 
 }
 export type PaymentMethodType = "MOBILE_BANKING" | "CARD" | "BANK"
-export type PaymentType = {
+export type PaymentCreateType = {
     _id: string,
     bookingId: string,
     userId: string,
@@ -98,7 +98,7 @@ export type BookingInfoType = {
     user: { _id: string, name: string }
 
 }
-export type PaymentStatusType = "PAID" | "PENDING" | "FAUILED";
+export type PaymentStatusType = "PAID" | "PENDING" | "FAILED";
 
 export type PaymentType = {
     _id: string,
