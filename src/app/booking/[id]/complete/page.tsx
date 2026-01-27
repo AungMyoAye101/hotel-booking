@@ -1,19 +1,34 @@
 'use client'
 
+import { useGetPaymentById } from '@/hooks/use-payment'
+import { useAuth } from '@/stores/auth-store'
 import { useBookingStore } from '@/stores/booking-store'
-import { Badge, Button, Card, Chip } from '@heroui/react'
+import { Badge, Button, Card, Chip, user } from '@heroui/react'
 import { CheckCircle2 } from 'lucide-react'
-import { useRouter } from 'next/navigation'
-import React, { useEffect } from 'react'
+import { usePathname, useRouter } from 'next/navigation'
+import { useEffect } from 'react'
 
 const page = () => {
-    const { paymentId, isPaid, reset } = useBookingStore(s => s)
+    const { paymentId, isPaid, reset, bookingId, } = useBookingStore(s => s)
+    const user = useAuth(s => s.user)
     const router = useRouter()
+    const path = usePathname();
+
     useEffect(() => {
         if (!paymentId && !isPaid) {
             router.replace('/booking')
         }
-    }, [paymentId, router])
+        if (path !== `/booking/${bookingId}/complete`) {
+            reset();
+        }
+    }, [paymentId, router, path])
+
+
+
+    const { data: payment, isLoading } = useGetPaymentById(paymentId!);
+    if (isLoading) {
+        return <p>Loading....</p>
+    }
 
     return (
         <div className="max-w-3xl mx-auto px-4 py-8">
@@ -33,21 +48,56 @@ const page = () => {
                 </p>
 
                 {/* Booking Reference */}
-                <div className="bg-muted/40 rounded-lg p-4">
-                    <p className="text-sm text-muted">Booking ID</p>
-                    <p className="font-mono font-medium">123</p>
+                <div className='bg-white rounded-md shadow space-y-4 w-full px-4 py-6 max-w-sm mx-auto border border-slate-200'>
+                    <h1 className='font-semibold text-lg mb-2'>Payment Details</h1>
+                    <div className='grid grid-cols-2 gap-4 '>
+                        <span className='text-start'>
+                            Hotel
+                        </span>
+                        <span className='font-semibold text-end'>
+                            {payment?.bookingId?.hotelId?.name}
+                        </span>
+                        <span className='text-start'>
+                            CheckIn
+                        </span>
+                        <span className='font-semibold text-end'>
+                            {new Date(payment?.bookingId.checkIn).toLocaleDateString()}
+                        </span>
+                        <span className='text-start'>
+                            CheckOut
+                        </span>
+                        <span className='font-semibold text-end'>
+                            {new Date(payment?.bookingId.checkOut).toLocaleDateString()}
+                        </span>
+                        <span className='text-start'>
+                            Amount
+                        </span>
+                        <span className='font-semibold text-end'>
+                            {payment?.amount} $
+                        </span>
+                        <span className='text-start'>
+                            PaidAt
+                        </span>
+                        <span className='font-semibold text-end'>
+                            {new Date(payment?.paidAt!).toDateString()}
+                        </span>
+                        <span className='text-start'>
+                            Payment Method
+                        </span>
+                        <span className='font-semibold text-end'>
+                            {payment?.paymentMethod!}
+                        </span>
+
+                    </div>
+
                 </div>
 
                 {/* Actions */}
                 <div className="flex flex-col sm:flex-row gap-3 justify-center pt-4">
-                    <Button
-                        variant="bordered"
-                        onPress={() => router.push("/my-bookings")}
-                    >
-                        View my bookings
-                    </Button>
+
 
                     <Button
+                        variant="bordered"
                         color="primary"
                         onPress={() => {
                             reset();
@@ -55,6 +105,13 @@ const page = () => {
                         }}
                     >
                         Back to home
+                    </Button>
+                    <Button
+
+                        color="primary"
+                        onPress={() => router.push(`/user/${user?._id}/bookings`)}
+                    >
+                        View my bookings
                     </Button>
                 </div>
 

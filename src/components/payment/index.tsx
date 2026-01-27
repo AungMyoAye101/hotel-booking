@@ -30,11 +30,13 @@ const Payment = ({ bookingId }: Props) => {
                 <div className="space-y-6 ">
 
                     <UserInfoForm />
-                    <PaymentDetailsForm
+                    {booking && <PaymentDetailsForm
                         bookingId={bookingId}
                         userId={booking?.user._id!}
                         amount={booking?.totalPrice!}
                     />
+                    }
+
                     <Card className='p-4'>
                         <CardBody className='space-y-4' >
                             <div className="head-1 flex gap-2 items-center">

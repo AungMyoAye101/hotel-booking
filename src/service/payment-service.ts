@@ -24,10 +24,21 @@ export const confirmPaymentService = async (payment: confirmPaymentType) => {
     const { data } = await apiClient.put<APIResponse<any>>(
         '/payment/update', payment
     )
-    console.log(data)
+
     if (!data.success) {
         throw new Error("Failed to confirm payment.")
     }
 
     return data.result;
+}
+
+export const getPaymentById = async (id: string) => {
+    const { data } = await apiClient.get<APIResponse<{ payment: PaymentType }>>(
+        `/payment/${id}`
+    )
+    if (!data.success) {
+        throw new Error(data.message || "Failed to get payment.")
+    }
+
+    return data.result.payment;
 }

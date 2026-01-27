@@ -98,3 +98,35 @@ export type BookingInfoType = {
     user: { _id: string, name: string }
 
 }
+export type PaymentStatusType = "PAID" | "PENDING" | "FAUILED";
+
+export type PaymentType = {
+    _id: string,
+    bookingId: {
+        _id: string,
+        hotelId: {
+            _id: string,
+            name: string,
+            city: string
+        },
+        checkIn: Date,
+        checkOut: Date
+    },
+    userId: { _id: string, name: string },
+    status: PaymentStatusType,
+    paymentMethod: PaymentMethodType,
+    amount: number,
+    paidAt: Date
+
+}
+
+export type ReceiptType = {
+    receiptNo: string,
+    userId: string,
+    paymentId: string,
+    bookingId: string,
+    status: PaymentStatusType,
+    paymentMethod: PaymentMethodType,
+    amount: number,
+    paidAt: Date,
+}

@@ -64,7 +64,7 @@ const Signup = () => {
 
     }
     return (
-        <section className='h-screen flex justify-end items-center'>
+        <section className='h-screen flex justify-end items-center p-4'>
             <Image
                 src={'/hotel-bg.png'}
                 alt='hotel photo'
