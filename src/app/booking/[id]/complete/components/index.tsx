@@ -27,6 +27,7 @@ const Complete = () => {
 
 
     const { data: payment, isLoading } = useGetPaymentById(paymentId!);
+
     if (isLoading) {
         return <Loading />
     }
@@ -110,7 +111,10 @@ const Complete = () => {
                     <Button
 
                         color="primary"
-                        onPress={() => router.push(`/user/${user?._id}/bookings`)}
+                        onPress={() => {
+                            reset();
+                            router.push(`/user/${user?._id}/bookings`)
+                        }}
                     >
                         View my bookings
                     </Button>

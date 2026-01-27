@@ -98,7 +98,7 @@ const AvaliableRooms = ({ hotelId }: Props) => {
             totalPrice: price * quantity,
             status: 'PENDING' as BookingStatus,
             checkIn: now,
-            checkOut: new Date(now.getMonth() + 1),
+            checkOut: now,
 
         }
         mutate(bookingData, {

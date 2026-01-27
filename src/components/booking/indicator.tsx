@@ -6,7 +6,7 @@ const Indicator = () => {
     const stage = useBookingStore(s => s.stage)
 
     return (
-        <div className='bg-amber-200 relative h-fit '>
+        <div className=' relative h-fit '>
 
 
             <Progress aria-label='progress' value={stage === 2 ? 50 : stage === 3 ? 100 : 0} color='primary' radius='sm' />
