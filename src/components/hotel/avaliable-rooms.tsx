@@ -1,6 +1,6 @@
 'use client'
 
-import { useMemo, useState, useCallback } from 'react'
+import { useMemo, useState, useCallback, FormEvent } from 'react'
 import { useRouter, useSearchParams } from 'next/navigation'
 import Image from 'next/image'
 import Link from 'next/link'
@@ -17,7 +17,7 @@ import {
 } from '@heroui/react'
 
 import { BedDouble, Check, UsersRound } from 'lucide-react'
-import { parseDate, CalendarDate } from '@internationalized/date'
+import { parseDate, CalendarDate, getLocalTimeZone } from '@internationalized/date'
 
 import { useGetAvaliableRoom } from '@/hooks/use-hotel'
 import { useCreateBooking } from '@/hooks/use-booking'
@@ -26,6 +26,7 @@ import { useAuth } from '@/stores/auth-store'
 import RoomCardLoading from '../loading/room-loading'
 import Empty from '../empty'
 import { BookingStatus } from '@/types'
+import { useUpdateParams } from '@/hooks/use-params'
 
 /* ---------------------------------- types --------------------------------- */
 
@@ -41,7 +42,42 @@ type DateRange = {
 /* -------------------------------- component ------------------------------- */
 
 const AvaliableRooms = ({ hotelId }: Props) => {
-    const searchParams = useSearchParams()
+    const { updateParams, searchParams } = useUpdateParams();
+
+    const todayISO = useMemo(
+        () => new Date().toISOString().split('T')[0],
+        []
+    )
+
+    const tomorrowISO = useMemo(() => {
+        const d = new Date()
+        d.setDate(d.getDate() + 1)
+        return d.toISOString().split('T')[0]
+    }, [])
+    const checkIn = searchParams.get('checkIn') ?? todayISO;
+    const checkOut = searchParams.get('checkOut') ?? tomorrowISO;
+
+    const [value, setValue] = useState({
+        start: parseDate(checkIn.split("T")[0]),
+        end: parseDate(checkOut.split("T")[0]),
+    });
+
+    const [guest, setGuest] = useState(searchParams.get('guest') ?? 1)
+    console.log(value)
+    const getCalendarValue = () => {
+        if (!checkIn || !checkOut) return null;
+        try {
+            return {
+                start: parseDate(checkIn.split("T")[0]),
+                end: parseDate(checkOut.split("T")[0]),
+            }
+
+        } catch (error) {
+            console.warn(error);
+            return null;
+        }
+    }
+
     const router = useRouter()
     const { isAuthenticated, user } = useAuth()
 
@@ -54,74 +90,79 @@ const AvaliableRooms = ({ hotelId }: Props) => {
 
     /* ----------------------------- date helpers ----------------------------- */
 
-    const todayISO = useMemo(
-        () => new Date().toISOString().split('T')[0],
-        []
-    )
 
-    const tomorrowISO = useMemo(() => {
-        const d = new Date()
-        d.setDate(d.getDate() + 1)
-        return d.toISOString().split('T')[0]
-    }, [])
 
-    const safeParse = (value: string | null): CalendarDate | null => {
-        try {
-            return value ? parseDate(value) : null
-        } catch {
-            return null
+    const handleChange = (range: any) => {
+        if (range?.start && range?.end) {
+            // 3. Convert HeroUI objects to UTC ISO Strings for the URL/Backend
+            const utcCheckIn = range.start.toDate(getLocalTimeZone()).toISOString();
+            const utcCheckOut = range.end.toDate(getLocalTimeZone()).toISOString();
+
+            updateParams({
+                checkIn: utcCheckIn,
+                checkOut: utcCheckOut,
+            });
         }
-    }
-
+    };
     /* ------------------------------ date state ------------------------------ */
 
-    const [dateRange, setDateRange] = useState<DateRange>({
-        start: safeParse(searchParams.get('checkIn') ?? todayISO),
-        end: safeParse(searchParams.get('checkOut') ?? tomorrowISO)
-    })
+
 
     /* --------------------------- create booking ----------------------------- */
 
     const { mutate, isPending } = useCreateBooking()
 
-    const now = new Date()
-    const handleCreateBooking = (roomId: string, quantity: number, price: number) => {
-        if (!isAuthenticated || !user?._id || !dateRange.start || !dateRange.end) {
-            return
-        }
 
-        const bookingData = {
-            userId: user._id,
-            hotelId,
-            roomId,
-            quantity,
-            totalPrice: price * quantity,
-            status: 'PENDING' as BookingStatus,
-            checkIn: now,
-            checkOut: now,
+    // const handleCreateBooking = (roomId: string, quantity: number, price: number) => {
+    //     if (!isAuthenticated || !user?._id || !dateRange.start || !dateRange.end) {
+    //         return
+    //     }
 
-        }
-        mutate(bookingData, {
-            onSuccess(data) {
-                router.push(`/booking/${data._id}`)
-            },
-        })
-    }
+    //     const bookingData = {
+    //         userId: user._id,
+    //         hotelId,
+    //         roomId,
+    //         quantity,
+    //         totalPrice: price * quantity,
+    //         status: 'PENDING' as BookingStatus,
+    //         checkIn: now,
+    //         checkOut: now,
+
+    //     }
+    //     mutate(bookingData, {
+    //         onSuccess(data) {
+    //             router.push(`/booking/${data._id}`)
+    //         },
+    //     })
+    // }
 
 
 
     /* ---------------------------------- ui ---------------------------------- */
+
+    const onFliter = () => {
+        const utcCheckIn = value.start.toDate(getLocalTimeZone()).toISOString();
+        const utcCheckOut = value.end.toDate(getLocalTimeZone()).toISOString();
+        updateParams({
+            checkIn: utcCheckIn,
+            checkOut: utcCheckOut,
+            guest: guest.toString()
+        })
+    }
 
     return (
         <section className="py-4 space-y-4 mb-6">
             <h1 className="head-1">Available Rooms</h1>
 
             {/* Filters */}
-            <div className="flex flex-col sm:flex-row gap-2">
+            <div
+
+                className="flex flex-col sm:flex-row gap-2">
                 <DateRangePicker
+                    name='dateRange'
                     aria-label="Date range"
-                    value={dateRange}
-                    onChange={setDateRange}
+                    value={value}
+                    onChange={setValue}
                 />
 
                 <Input
@@ -129,9 +170,14 @@ const AvaliableRooms = ({ hotelId }: Props) => {
                     placeholder="Guests"
                     startContent={<UsersRound size={16} />}
                     aria-label="Guests"
+                    defaultValue={String(Number(guest) || 1)}
+                    onChange={(e) => setGuest(e.target.value)}
                 />
 
-                <Button color="primary">Apply</Button>
+                <Button
+                    onPress={() => onFliter()}
+                    color="primary"
+                >Apply</Button>
             </div>
 
             {/* Empty state */}
