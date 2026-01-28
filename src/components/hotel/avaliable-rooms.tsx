@@ -28,6 +28,7 @@ import Empty from '../empty'
 import { BookingStatus } from '@/types'
 import { useUpdateParams } from '@/hooks/use-params'
 
+
 /* ---------------------------------- types --------------------------------- */
 
 type Props = {
@@ -39,7 +40,7 @@ type DateRange = {
     end: CalendarDate | null
 }
 
-/* -------------------------------- component ------------------------------- */
+
 
 const AvaliableRooms = ({ hotelId }: Props) => {
     const { updateParams, searchParams } = useUpdateParams();
@@ -54,64 +55,34 @@ const AvaliableRooms = ({ hotelId }: Props) => {
         d.setDate(d.getDate() + 1)
         return d.toISOString().split('T')[0]
     }, [])
+
     const checkIn = searchParams.get('checkIn') ?? todayISO;
     const checkOut = searchParams.get('checkOut') ?? tomorrowISO;
 
-    const [value, setValue] = useState({
+
+
+    const [value, setValue] = useState<any>({
         start: parseDate(checkIn.split("T")[0]),
         end: parseDate(checkOut.split("T")[0]),
     });
 
-    const [guest, setGuest] = useState(searchParams.get('guest') ?? 1)
-    console.log(value)
-    const getCalendarValue = () => {
-        if (!checkIn || !checkOut) return null;
-        try {
-            return {
-                start: parseDate(checkIn.split("T")[0]),
-                end: parseDate(checkOut.split("T")[0]),
-            }
+    const guest = Number(searchParams.get('guest')) ?? 1
+    const [count, setCount] = useState(guest);
+    const [quantity, setQuantity] = useState(1)
 
-        } catch (error) {
-            console.warn(error);
-            return null;
-        }
-    }
 
     const router = useRouter()
     const { isAuthenticated, user } = useAuth()
 
     /* ----------------------------- fetch rooms ----------------------------- */
 
-    const { data: rooms = [], isLoading } = useGetAvaliableRoom(hotelId, {
-        page: 1,
-        limit: 10
-    })
-
-    /* ----------------------------- date helpers ----------------------------- */
-
-
-
-    const handleChange = (range: any) => {
-        if (range?.start && range?.end) {
-            // 3. Convert HeroUI objects to UTC ISO Strings for the URL/Backend
-            const utcCheckIn = range.start.toDate(getLocalTimeZone()).toISOString();
-            const utcCheckOut = range.end.toDate(getLocalTimeZone()).toISOString();
-
-            updateParams({
-                checkIn: utcCheckIn,
-                checkOut: utcCheckOut,
-            });
+    const { data: rooms = [], isLoading, isError, error } = useGetAvaliableRoom(hotelId,
+        {
+            checkIn,
+            checkOut,
+            guest
         }
-    };
-    /* ------------------------------ date state ------------------------------ */
-
-
-
-    /* --------------------------- create booking ----------------------------- */
-
-    const { mutate, isPending } = useCreateBooking()
-
+    )
 
     // const handleCreateBooking = (roomId: string, quantity: number, price: number) => {
     //     if (!isAuthenticated || !user?._id || !dateRange.start || !dateRange.end) {
@@ -137,17 +108,20 @@ const AvaliableRooms = ({ hotelId }: Props) => {
     // }
 
 
-
-    /* ---------------------------------- ui ---------------------------------- */
-
     const onFliter = () => {
         const utcCheckIn = value.start.toDate(getLocalTimeZone()).toISOString();
         const utcCheckOut = value.end.toDate(getLocalTimeZone()).toISOString();
-        updateParams({
+        const params = {
             checkIn: utcCheckIn,
             checkOut: utcCheckOut,
-            guest: guest.toString()
-        })
+            guest: count.toString()
+        }
+        updateParams(params);
+
+    }
+
+    const handleNavigate = (roomId: string, quantity: number) => {
+        router.push(`/booking?room=${roomId}&quantity=${quantity.toString()}`)
     }
 
     return (
@@ -171,10 +145,11 @@ const AvaliableRooms = ({ hotelId }: Props) => {
                     startContent={<UsersRound size={16} />}
                     aria-label="Guests"
                     defaultValue={String(Number(guest) || 1)}
-                    onChange={(e) => setGuest(e.target.value)}
+                    onChange={(e) => setCount(Number(e.target.value))}
                 />
 
                 <Button
+                    isLoading={isLoading}
                     onPress={() => onFliter()}
                     color="primary"
                 >Apply</Button>
@@ -211,6 +186,40 @@ const AvaliableRooms = ({ hotelId }: Props) => {
                                         <div className='flex justify-between'>
                                             <h2 className="head-1 truncate">{room.name}</h2>
 
+
+                                            <Select
+                                                aria-label='quantity select box'
+                                                variant='bordered'
+                                                color='secondary'
+                                                radius='sm'
+                                                fullWidth={false}
+                                                size='sm'
+                                                selectedKeys={[quantity.toString()]}
+                                                onSelectionChange={(keys) => {
+                                                    const val = [...keys][0]
+                                                    setQuantity(Number(val))
+                                                }}
+                                            >
+                                                {
+                                                    Array.from({ length: room.totalRooms }).map((_, i) => {
+                                                        const val = (i + 1).toString();
+                                                        return (
+                                                            < SelectItem
+                                                                key={val}
+                                                                textValue={val}
+                                                            >
+                                                                {val}
+
+                                                            </SelectItem>
+                                                        )
+
+
+                                                    })
+                                                }
+
+                                            </Select>
+
+
                                         </div>
 
 
@@ -246,10 +255,11 @@ const AvaliableRooms = ({ hotelId }: Props) => {
                                                 }
                                             >
                                                 <Button
-                                                    onPress={() => handleCreateBooking(room._id, 1, room.price)}
+
                                                     color="primary"
                                                     radius="sm"
-                                                    isDisabled={!isAuthenticated || isPending}
+                                                    onPress={() => handleNavigate(room._id, quantity)}
+
                                                 >
                                                     Reserve
                                                 </Button>
@@ -262,7 +272,7 @@ const AvaliableRooms = ({ hotelId }: Props) => {
                     ))
                 )}
             </div>
-        </section>
+        </section >
     )
 }
 

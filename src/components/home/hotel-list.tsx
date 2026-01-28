@@ -96,7 +96,7 @@ export default function HotelCardList({ hotels }: { hotels: hotelType[] }) {
                                                 as={Link}
                                                 href={`/hotel/${hotel._id}`}
 
-                                                radius="full"
+                                                radius="sm"
                                                 variant="solid"
                                                 color="primary"
                                                 className="py-2 mb-2 px-6">

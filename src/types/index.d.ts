@@ -20,6 +20,14 @@ export type QueryType = {
     search?: string,
     sort?: 'asc' | 'desc'
 }
+
+export type AvaliableRoomsType = {
+    checkIn?: string,
+    checkOut?: string,
+    guest?: number,
+    page?: number,
+    limit?: number,
+}
 export type Bed_Types = "king" | "queen" | "full" | "twin" | "single";
 export type RoomType = {
     _id: string,

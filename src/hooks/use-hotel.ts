@@ -1,7 +1,7 @@
 'use client';
 
 import { getAvaliableRooms, getHotelDetails } from "@/service/hotel-service"
-import { QueryType } from "@/types";
+import { AvaliableRoomsType, QueryType } from "@/types";
 import { useQuery } from "@tanstack/react-query"
 
 export const useHotelDetail = (hotelId: string) => {
@@ -11,7 +11,7 @@ export const useHotelDetail = (hotelId: string) => {
         enabled: !!hotelId
     })
 }
-export const useGetAvaliableRoom = (hotelId: string, param: QueryType) => {
+export const useGetAvaliableRoom = (hotelId: string, param: AvaliableRoomsType) => {
     return useQuery({
         queryKey: ['rooms', hotelId, param],
         queryFn: () => getAvaliableRooms(hotelId, param),
