@@ -3,11 +3,13 @@
 import { useCreateBooking } from '@/hooks/use-booking';
 import { useUpdateUser } from '@/hooks/use-user';
 import { useAuth } from '@/stores/auth-store';
+import { useBookingStore } from '@/stores/booking-store';
 import { BookingRoomType } from '@/types';
 import { User } from '@/types/user-type';
 import { userSchemaType, userSchmea } from '@/validations/user-schema';
 import { addToast, Button, Card, CardBody, CardFooter, CardHeader, Input } from '@heroui/react'
 import { zodResolver } from '@hookform/resolvers/zod';
+import { useRouter } from 'next/navigation';
 import React from 'react'
 import { useForm } from 'react-hook-form';
 type Props = {
@@ -60,7 +62,11 @@ const UserInfoForm = ({
             ...data
 
         }
-        mutate(bookingData)
+        mutate(bookingData, {
+            onSuccess: (data) => {
+
+            }
+        })
 
     }
 

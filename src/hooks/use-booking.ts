@@ -1,11 +1,15 @@
 import { createBooking, getBookingById } from "@/service/booking-service"
+import { useBookingStore } from "@/stores/booking-store"
 import { BookingType } from "@/types"
 import { addToast } from "@heroui/react"
 import { useMutation, useQueries, useQuery, useQueryClient } from "@tanstack/react-query"
 import { useRouter } from "next/navigation"
 
 export const useCreateBooking = () => {
-    const queryClient = useQueryClient()
+    const queryClient = useQueryClient();
+    const router = useRouter();
+    const { setStage, setBookingId } = useBookingStore.getState()
+
     return useMutation({
         mutationKey: ['create_booking'],
         mutationFn: createBooking,
@@ -16,7 +20,9 @@ export const useCreateBooking = () => {
                 color: 'success'
 
             })
-
+            setStage(2);
+            setBookingId(data._id);
+            router.push(`/booking/${data._id}/confirm`)
         },
         onError: (error
         ) => {
@@ -26,6 +32,7 @@ export const useCreateBooking = () => {
                 color: 'danger'
 
             })
+
         }
     })
 }
