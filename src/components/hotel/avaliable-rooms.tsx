@@ -20,7 +20,7 @@ import { BedDouble, Check, UsersRound } from 'lucide-react'
 import { parseDate, CalendarDate, getLocalTimeZone } from '@internationalized/date'
 
 import { useGetAvaliableRoom } from '@/hooks/use-hotel'
-import { useCreateBooking } from '@/hooks/use-booking'
+
 import { useAuth } from '@/stores/auth-store'
 
 import RoomCardLoading from '../loading/room-loading'
@@ -35,10 +35,6 @@ type Props = {
     hotelId: string
 }
 
-type DateRange = {
-    start: CalendarDate | null
-    end: CalendarDate | null
-}
 
 
 
@@ -121,7 +117,12 @@ const AvaliableRooms = ({ hotelId }: Props) => {
     }
 
     const handleNavigate = (roomId: string, quantity: number) => {
-        router.push(`/booking?room=${roomId}&quantity=${quantity.toString()}`)
+        const params = new URLSearchParams(searchParams.toString())
+        params.set('room', roomId)
+        params.set('checkIn', checkIn)
+        params.set('checkOut', checkOut)
+        params.set('quantity', quantity.toString())
+        router.push(`/booking?${params.toString()}`, { scroll: true })
     }
 
     return (
