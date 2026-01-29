@@ -1,4 +1,4 @@
-import { photoType } from "./hotel-types"
+import { hotelType, photoType } from "./hotel-types"
 
 export interface APIResponse<T> {
     success: boolean,
@@ -29,6 +29,7 @@ export type AvaliableRoomsType = {
     limit?: number,
 }
 export type Bed_Types = "king" | "queen" | "full" | "twin" | "single";
+
 export type RoomType = {
     _id: string,
     name: string,
@@ -40,6 +41,9 @@ export type RoomType = {
     bedTypes: Bed_Types
 }
 
+export interface BookingRoomType extends RoomType {
+    hotelId: Partial<hotelType>,
+}
 export interface TokenPayload {
     id: string,
     email: string,

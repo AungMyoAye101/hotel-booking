@@ -42,27 +42,27 @@ const AvaliableRooms = ({ hotelId }: Props) => {
     const { updateParams, searchParams } = useUpdateParams();
 
     const todayISO = useMemo(
-        () => new Date().toISOString().split('T')[0],
+        () => new Date().toISOString(),
         []
     )
 
     const tomorrowISO = useMemo(() => {
         const d = new Date()
         d.setDate(d.getDate() + 1)
-        return d.toISOString().split('T')[0]
+        return d.toISOString()
     }, [])
 
     const checkIn = searchParams.get('checkIn') ?? todayISO;
     const checkOut = searchParams.get('checkOut') ?? tomorrowISO;
-
-
+    const maxPeople = Number(searchParams.get('guest'));
+    const guest = maxPeople < 1 ? 1 : maxPeople
 
     const [value, setValue] = useState<any>({
         start: parseDate(checkIn.split("T")[0]),
         end: parseDate(checkOut.split("T")[0]),
     });
 
-    const guest = Number(searchParams.get('guest')) ?? 1
+
     const [count, setCount] = useState(guest);
     const [quantity, setQuantity] = useState(1)
 
@@ -76,32 +76,13 @@ const AvaliableRooms = ({ hotelId }: Props) => {
         {
             checkIn,
             checkOut,
-            guest
+            guest,
         }
     )
+    console.log(error)
+    console.log(checkIn, "in", checkOut, "out", guest)
 
-    // const handleCreateBooking = (roomId: string, quantity: number, price: number) => {
-    //     if (!isAuthenticated || !user?._id || !dateRange.start || !dateRange.end) {
-    //         return
-    //     }
 
-    //     const bookingData = {
-    //         userId: user._id,
-    //         hotelId,
-    //         roomId,
-    //         quantity,
-    //         totalPrice: price * quantity,
-    //         status: 'PENDING' as BookingStatus,
-    //         checkIn: now,
-    //         checkOut: now,
-
-    //     }
-    //     mutate(bookingData, {
-    //         onSuccess(data) {
-    //             router.push(`/booking/${data._id}`)
-    //         },
-    //     })
-    // }
 
 
     const onFliter = () => {

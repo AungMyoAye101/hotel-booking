@@ -1,8 +1,8 @@
 import { apiClient } from "@/hooks/axios-api"
-import { APIResponse, RoomType } from "@/types"
+import { APIResponse, BookingRoomType } from "@/types"
 
 export const getRoomById = async (roomId: string) => {
-    const { data } = await apiClient.get<APIResponse<{ room: RoomType }>>(
+    const { data } = await apiClient.get<APIResponse<{ room: BookingRoomType }>>(
         `/room/${roomId}`
     )
     if (!data.success) {
