@@ -61,15 +61,6 @@ const BookingInfo = ({ booking }: Props) => {
                         </div>
 
 
-                        <div className="flex gap-1 text-sm text-slate-800">
-                            <CircleDollarSign />
-                            You're getting the best price!
-                            we guarantee it.
-                        </div>
-                        <div className="flex gap-1 text-sm p-2 bg-green-100 rounded">
-                            <Check className="text-green-500" />
-                            Free cancellation
-                        </div>
 
 
                     </div>

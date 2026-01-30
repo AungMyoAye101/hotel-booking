@@ -20,8 +20,15 @@ const CreateBooking = () => {
     }
     return (
         <section className="px-4 py-6 flex flex-col md:flex-row gap-4">
-            <BookingDetail room={room!} />
-            <Card className='p-4'>
+            <BookingDetail
+                room={room!}
+                checkIn={new Date(checkIn!).toISOString()}
+                checkOut={new Date(checkOut!).toISOString()}
+                quantity={Number(quantity)}
+                price={room?.price!}
+
+            />
+            <Card className='p-4 flex-1 h-fit'>
                 <CardBody className='space-y-4' >
 
                     <h1 className="text-3xl font-semibold">Secure your booking</h1>
@@ -39,22 +46,6 @@ const CreateBooking = () => {
 
                     />
 
-
-
-                    <div className="head-1 flex gap-2 items-center">
-                        <CircleDollarSign size={26} />
-                        Free Cancellation
-                    </div>
-                    <p>
-                        Book now and pay later!
-                        You can cancel your reservation free of charge up to 24 hours before check-in.
-                        No hidden fees, no upfront payment required.
-                    </p>
-                    <p
-                        className="flex gap-1 p-2 bg-green-100 rounded-sm text-sm">
-                        <Check className="text-green-500" />
-                        You're booking is protect by SSL encryption.
-                    </p>
 
                 </CardBody>
             </Card>
