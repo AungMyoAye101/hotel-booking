@@ -2,8 +2,6 @@
 
 import { Card, CardBody } from "@heroui/react";
 import UserInfoForm from "./user-info-form";
-import { Check, CircleDollarSign } from "lucide-react";
-import Image from "next/image";
 import { useGetRoomById } from "@/hooks/use-room";
 import { useParams, useSearchParams } from "next/navigation";
 import BookingDetail from "./booking-detail";

@@ -15,14 +15,14 @@ const Complete = () => {
     const router = useRouter()
     const path = usePathname();
 
-    useEffect(() => {
-        if (!paymentId && !isPaid) {
-            router.replace('/booking')
-        }
-        if (path !== `/booking/${bookingId}/complete`) {
-            reset();
-        }
-    }, [paymentId, router, path])
+    // useEffect(() => {
+    //     if (!paymentId && !isPaid) {
+    //         router.replace('/booking')
+    //     }
+    //     if (path !== `/booking/${bookingId}/complete`) {
+    //         reset();
+    //     }
+    // }, [paymentId, router, path])
 
 
 
@@ -31,12 +31,12 @@ const Complete = () => {
     if (isLoading) {
         return <Loading />
     }
-
+    console.log(payment, "pay")
     return (
         <div className="max-w-3xl mx-auto px-4 py-8">
 
 
-            <Card className="p-8 text-center space-y-6">
+            <Card className="p-8 text-center space-y-4">
                 {/* Success Icon */}
                 <Button color='success' radius='full' size='lg' className='mx-auto' isIconOnly><CheckCircle2 className='text-white' /></Button>
                 {/* Heading */}
@@ -45,19 +45,31 @@ const Complete = () => {
                 </h1>
 
                 <p className="text-muted max-w-md mx-auto">
-                    Your payment was successful and your booking is now confirmed.
+                    Your payment was added  successful and your booking is now confirmed.
                     A confirmation email has been sent to you.
                 </p>
 
                 {/* Booking Reference */}
-                <div className='bg-white rounded-md shadow space-y-4 w-full px-4 py-6 max-w-sm mx-auto border border-slate-200'>
+                <div className='bg-white rounded-lg shadow-md space-y-4 w-full p-6 max-w-md mx-auto border border-slate-200'>
                     <h1 className='font-semibold text-lg mb-2'>Payment Details</h1>
-                    <div className='grid grid-cols-2 gap-4 '>
+                    <div className='grid grid-cols-2 gap-4 text-sm'>
+                        <span className='text-start'>
+                            Name
+                        </span>
+                        <span className='font-semibold text-end'>
+                            {payment?.bookingId.name}
+                        </span>
                         <span className='text-start'>
                             Hotel
                         </span>
                         <span className='font-semibold text-end'>
                             {payment?.bookingId?.hotelId?.name}
+                        </span>
+                        <span className='text-start'>
+                            City
+                        </span>
+                        <span className='font-semibold text-end'>
+                            {payment?.bookingId?.hotelId?.city}
                         </span>
                         <span className='text-start'>
                             CheckIn
@@ -106,7 +118,7 @@ const Complete = () => {
                             router.push("/");
                         }}
                     >
-                        Back to home
+                        Download PDF
                     </Button>
                     <Button
 

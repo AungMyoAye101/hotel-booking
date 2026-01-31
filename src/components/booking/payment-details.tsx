@@ -23,7 +23,6 @@ const PaymentDetailsForm = ({ bookingId, userId, amount }: Props) => {
         mutate({
             bookingId,
             userId,
-
             paymentMethod: payment,
             amount,
         },

@@ -114,8 +114,10 @@ export type PaymentStatusType = "PAID" | "PENDING" | "FAILED";
 
 export type PaymentType = {
     _id: string,
+
     bookingId: {
         _id: string,
+        name: string,
         hotelId: {
             _id: string,
             name: string,

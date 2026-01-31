@@ -4,7 +4,7 @@ import React from 'react'
 const Loading = () => {
     return (
         <section className='min-h-screen flex justify-center items-center'>
-            <Card className='p-4 w-full max-w-md'>
+            <Card className='p-4 w-full max-w-lg'>
                 <div className='flex flex-col justify-center items-center gap-2'>
                     <Skeleton className='w-20 h-20 rounded-full' />
                     <Skeleton className='w-60 h-6 rounded' />
