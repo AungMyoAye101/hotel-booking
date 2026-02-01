@@ -8,12 +8,13 @@ import axios, { AxiosError } from "axios";
 
 
 export const apiClient = axios.create({
-    baseURL: BASE_URL || "http://localhost:5000/api/v1",
+    baseURL: "/api",
     withCredentials: true
 });
 
 apiClient.interceptors.request.use(config => {
     const token = useAuth.getState().token;
+    console.log(token, "api")
 
     if (token) {
         config.headers.Authorization = `Bearer ${token}`
@@ -98,7 +99,3 @@ apiClient.interceptors.response.use(
 )
 
 
-export const api = axios.create({
-    baseURL: "/api/server",
-    withCredentials: true
-})

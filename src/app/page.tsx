@@ -5,9 +5,6 @@ import Hero from "@/components/home/hero";
 import Promotion from "@/components/home/promotion";
 import About from "@/components/home/about";
 import Testmonial from "@/components/home/testmonial";
-import { refresh, serverFetch } from "@/hooks/api";
-import { APIResponse } from "@/types";
-import { hotelType } from "@/types/hotel-types";
 
 export default async function Home() {
 

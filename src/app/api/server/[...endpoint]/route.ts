@@ -1,6 +1,6 @@
 import axios, { AxiosError } from "axios";
 import { NextRequest, NextResponse } from "next/server";
-console.log("running")
+import { cookies } from "next/headers";
 async function handler(req: NextRequest): Promise<NextResponse> {
     const { pathname, search } = req.nextUrl;
 
@@ -16,7 +16,13 @@ async function handler(req: NextRequest): Promise<NextResponse> {
 
 
     }
-    const headers = { "Content-Type": "application/json" };
+    const cookieStore = await cookies();
+    const access_token = cookieStore.get("access_token")?.value;
+
+    const headers: Record<string, string> = { "Content-Type": "application/json" };
+    if (access_token) {
+        headers.Authorization = `Bearer ${access_token}`;
+    }
 
     let body;
     if (req.method !== "GET" && req.method !== "HEAD") {
@@ -36,7 +42,10 @@ async function handler(req: NextRequest): Promise<NextResponse> {
             data: body,
             validateStatus: () => true,
         })
-        return NextResponse.json({ data: response.data }, { status: response.status })
+        return NextResponse.json(
+            { data: response.data },
+            { status: response.status }
+        )
     } catch (error) {
         const axiosErr = error as AxiosError;
         return NextResponse.json({

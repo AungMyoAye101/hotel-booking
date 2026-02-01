@@ -30,10 +30,6 @@ export default async function RootLayout({
   children: React.ReactNode;
 }>) {
 
-  const headerList = await headers();
-
-  const accessToken = headerList.get('x-internal-access-token') || (await cookies()).get('access_token')?.value;
-
   return (
     <html lang="en">
       <body>
@@ -42,7 +38,7 @@ export default async function RootLayout({
 
           <Header />
           <div className="max-w-7xl mx-auto">
-            <AuthInitializer token={accessToken} />
+            <AuthInitializer />
             {children}
           </div>
           <Footer />

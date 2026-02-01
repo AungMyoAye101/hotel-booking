@@ -1,4 +1,4 @@
-import { api, apiClient } from "@/hooks/axios-api"
+import { apiClient } from "@/hooks/axios-api"
 import { APIResponse, AvaliableRoomsType, QueryType, RoomType } from "@/types"
 import { hotelType } from "@/types/hotel-types"
 
@@ -25,7 +25,7 @@ export const getAvaliableRooms = async (hotelId: string, params: AvaliableRoomsT
 //=============get all hotel =========
 
 export const getAllHotels = async () => {
-    const { data } = await api.get('/hotel');
+    const { data } = await apiClient.get('/server/hotel');
 
     console.log(data);
     return data;

@@ -1,9 +1,11 @@
 
 'use client';
 
+import { apiClient } from '@/hooks/axios-api';
 import { BASE_URL } from '@/lib';
 import { useAuth } from '@/stores/auth-store';
 import { APIResponse, AuthResType } from '@/types';
+import { User } from '@/types/user-type';
 import { loginSchema, type loginType } from '@/validations/auth-schema';
 import { addToast, Button, Card, CardBody, CardHeader, Form, Input } from '@heroui/react'
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -29,15 +31,18 @@ const Login = () => {
     const onSubmit = async (fields: loginType) => {
         setIsLoading(true)
         try {
-            const { data } = await axios.post<APIResponse<any>>('/api/login', fields)
+            const { data } = await apiClient.post<APIResponse<{
+                token: string,
+                user: Partial<User>
+            }>>('/server/auth/login', fields)
+
+            console.log(data)
+
+            setToken(data.result.token || '')
             addToast({
                 title: data.message || "login success.",
                 color: 'success'
             })
-            console.log(data)
-            setUser(data.result.user)
-            setToken(data.result.token || '')
-
             reset()
             router.push('/')
             return data.result;
