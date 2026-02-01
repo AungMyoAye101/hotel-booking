@@ -97,3 +97,8 @@ apiClient.interceptors.response.use(
     }
 )
 
+
+export const api = axios.create({
+    baseURL: "/api/server",
+    withCredentials: true
+})

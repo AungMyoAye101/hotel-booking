@@ -7,6 +7,7 @@ import { APIResponse, AuthResType } from '@/types';
 import { loginSchema, type loginType } from '@/validations/auth-schema';
 import { addToast, Button, Card, CardBody, CardHeader, Form, Input } from '@heroui/react'
 import { zodResolver } from '@hookform/resolvers/zod';
+import axios from 'axios';
 import { Eye, EyeClosed, EyeOff, Lock, Mail } from 'lucide-react';
 import Image from 'next/image'
 import Link from 'next/link';
@@ -25,35 +26,21 @@ const Login = () => {
         resolver: zodResolver(loginSchema)
     })
 
-    const onSubmit = async (data: loginType) => {
+    const onSubmit = async (fields: loginType) => {
         setIsLoading(true)
         try {
-            const res = await fetch(`${BASE_URL}/auth/login`, {
-                method: "POST",
-                headers: {
-                    "Content-type": "application/json"
-                },
-                body: JSON.stringify(data),
-                credentials: "include",
-            })
-            const responseData: APIResponse<AuthResType> = await res.json()
-            if (!res.ok) {
-                addToast({
-                    title: responseData.message || "Faild to login.",
-                    color: 'danger'
-                })
-                throw new Error(responseData.message || "Faild to login.")
-            }
+            const { data } = await axios.post<APIResponse<any>>('/api/login', fields)
             addToast({
-                title: responseData.message || "login success.",
+                title: data.message || "login success.",
                 color: 'success'
             })
-            setUser(responseData.result.user)
-            setToken(responseData.result.token || '')
+            console.log(data)
+            setUser(data.result.user)
+            setToken(data.result.token || '')
 
             reset()
             router.push('/')
-            return responseData.result;
+            return data.result;
         } catch (error: unknown) {
             console.warn(error)
             throw new Error("login failed.")
