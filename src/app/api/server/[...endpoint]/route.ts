@@ -1,6 +1,9 @@
 import axios, { AxiosError } from "axios";
 import { NextRequest, NextResponse } from "next/server";
 import { cookies } from "next/headers";
+import { APIResponse } from "@/types";
+import next from "next";
+import { revalidatePath } from "next/cache";
 async function handler(req: NextRequest): Promise<NextResponse> {
     const { pathname, search } = req.nextUrl;
 
@@ -33,17 +36,28 @@ async function handler(req: NextRequest): Promise<NextResponse> {
 
     }
     try {
-
-        const response = await axios.request({
-            baseURL: BASE_URL,
-            url: endpoint,
+        console.log(BASE_URL + endpoint)
+        // const response = await axios.request({
+        //     baseURL: BASE_URL,
+        //     url: endpoint,
+        //     method: req.method,
+        //     headers,
+        //     data: body,
+        //     validateStatus: () => true,
+        // })
+        const response = await fetch(BASE_URL + endpoint, {
             method: req.method,
             headers,
-            data: body,
-            validateStatus: () => true,
+            body,
+            credentials: "include"
         })
+        console.log(response)
+        if (!response.ok) {
+            throw new Error("Failed")
+        }
+        const data: APIResponse<any> = await response.json()
         return NextResponse.json(
-            { data: response.data },
+            data,
             { status: response.status }
         )
     } catch (error) {

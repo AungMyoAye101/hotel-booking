@@ -25,8 +25,8 @@ export const getAvaliableRooms = async (hotelId: string, params: AvaliableRoomsT
 //=============get all hotel =========
 
 export const getAllHotels = async () => {
-    const { data } = await apiClient.get('/server/hotel');
+    const { data } = await apiClient.get<APIResponse<{ hotels: hotelType[] }>>('/server/hotel');
 
-    console.log(data);
-    return data;
+
+    return data.result.hotels;
 }
