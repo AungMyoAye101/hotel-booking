@@ -2,75 +2,111 @@ import axios, { AxiosError } from "axios";
 import { NextRequest, NextResponse } from "next/server";
 import { cookies } from "next/headers";
 import { APIResponse } from "@/types";
-import next from "next";
-import { revalidatePath } from "next/cache";
-async function handler(req: NextRequest): Promise<NextResponse> {
+import { error } from "console";
+
+
+const BASE_URL = process.env.BASE_URL;
+let refreshing: Promise<Response> | null = null;
+
+
+const refreshToken = async () => {
+    if (!refreshing) {
+        refreshing = fetch(BASE_URL + '/auth/refresh', {
+            method: "POST",
+            headers: {
+                "Content-type": "application/json",
+
+            },
+            credentials: "include",
+            cache: "no-store"
+        }).finally(refreshing = null)
+    }
+
+    return refreshing;
+}
+
+async function forward(req: NextRequest) {
     const { pathname, search } = req.nextUrl;
 
     const endpoint = pathname.replace('/api/server', "") + search;
 
-    const BASE_URL = process.env.BASE_URL;
 
+
+
+    const cookieStore = await cookies();
+    const access_token = cookieStore.get("access_token")?.value;
+
+    const headers: Record<string, string> =
+    {
+        "Content-Type": "application/json"
+    };
+
+    if (access_token) {
+        headers.Authorization = `Bearer ${access_token}`;
+    }
+
+    let body;
+    if (!["GET", "HEAD"].includes(req.method)) {
+
+        body = await req.json();
+
+    }
+
+    return fetch(BASE_URL + endpoint, {
+        method: req.method,
+        headers,
+        body,
+        credentials: "include"
+    })
+
+}
+
+const handler = async (req: NextRequest) => {
     if (!BASE_URL) {
         return NextResponse.json(
             { error: "API_URL environment variable is not set" },
             { status: 500 }
         );
 
-
-    }
-    const cookieStore = await cookies();
-    const access_token = cookieStore.get("access_token")?.value;
-
-    const headers: Record<string, string> = { "Content-Type": "application/json" };
-    if (access_token) {
-        headers.Authorization = `Bearer ${access_token}`;
     }
 
-    let body;
-    if (req.method !== "GET" && req.method !== "HEAD") {
-        try {
-            body = await req.json();
-        } catch (error) { }
+    let response = await forward(req);
 
 
-    }
-    try {
-        console.log(BASE_URL + endpoint)
-        // const response = await axios.request({
-        //     baseURL: BASE_URL,
-        //     url: endpoint,
-        //     method: req.method,
-        //     headers,
-        //     data: body,
-        //     validateStatus: () => true,
-        // })
-        const response = await fetch(BASE_URL + endpoint, {
-            method: req.method,
-            headers,
-            body,
-            credentials: "include"
-        })
-        console.log(response)
-        if (!response.ok) {
-            throw new Error("Failed")
+    // ===========unauthorized error handle===========
+
+    if (response.status === 401) {
+        const refresh = await refreshToken();
+        if (refresh.ok) {
+            response = await forward(req);
+        } else {
+            const res = NextResponse.json({
+                error: "Session expired",
+            }, { status: 401 });
+
+            res.cookies.delete("refresh_token");
+            res.cookies.delete("access_token");
+            return res;
         }
-        const data: APIResponse<any> = await response.json()
-        return NextResponse.json(
-            data,
-            { status: response.status }
-        )
-    } catch (error) {
-        const axiosErr = error as AxiosError;
-        return NextResponse.json({
-            error: axiosErr.response?.data || axiosErr.message
-        },
-            { status: axiosErr.response?.status || 500 })
     }
 
+    const data = await response.json()
+    console.log(data, "datata")
+    const res = NextResponse.json(data, { status: response.status })
+
+    response.headers.forEach((value, key) => {
+        if (key.toLowerCase() === "set-cookie") {
+            res.headers.append("set-cookie", value)
+        }
+    })
+    res.headers.set("content-type", "application/json");
+    console.log(res, "in server")
+    return res;
+}
 
 
 
-};
+
+
 
 export { handler as GET, handler as POST, handler as PUT, handler as DELETE }

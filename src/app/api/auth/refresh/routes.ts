@@ -7,7 +7,7 @@ export async function POST(req: NextRequest) {
     const access_token = cookieStore.get("access_token")?.value;
 
     const refresh_token = cookieStore.get("refresh_token")?.value;
-    console.log(BASE_URL);
+
     if (!refresh_token && !access_token) {
         return NextResponse.json({
             message: "user sign out "

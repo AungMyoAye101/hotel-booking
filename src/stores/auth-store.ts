@@ -7,7 +7,7 @@ type AuthType = {
     isAuthenticated: boolean,
     setUser: (user: User) => void,
     setToken: (token: string) => void,
-    reset: () => void
+    logout: () => void
 }
 
 export const useAuth = create<AuthType>((set) => ({
@@ -16,7 +16,7 @@ export const useAuth = create<AuthType>((set) => ({
     isAuthenticated: false,
     setUser: (user: User) => set({ user, isAuthenticated: true }),
     setToken: (token: string) => set({ token, isAuthenticated: true }),
-    reset: () => set({
+    logout: () => set({
         user: null,
         token: null,
         isAuthenticated: false,
