@@ -1,7 +1,7 @@
 
 'use client';
 
-import { apiClient } from '@/hooks/axios-api';
+import { api, apiClient } from '@/hooks/axios-api';
 import { BASE_URL } from '@/lib';
 import { useAuth } from '@/stores/auth-store';
 import { APIResponse, AuthResType } from '@/types';
@@ -31,12 +31,14 @@ const Login = () => {
     const onSubmit = async (fields: loginType) => {
         setIsLoading(true)
         try {
-            const { data } = await apiClient.post<APIResponse<{
+            const { data } = await api.post<APIResponse<{
                 token: string,
                 user: Partial<User>
-            }>>('/server/auth/login', fields)
+            }>>('/auth/login', fields, {
+                withCredentials: true
+            })
 
-            console.log(data)
+            console.log(data, "ddd")
 
             setToken(data.result.token || '')
             addToast({

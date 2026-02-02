@@ -11,6 +11,10 @@ export const apiClient = axios.create({
     baseURL: "/api",
     withCredentials: true
 });
+export const api = axios.create({
+    baseURL: "/api",
+    withCredentials: true
+});
 
 apiClient.interceptors.request.use(config => {
     const token = useAuth.getState().token;
