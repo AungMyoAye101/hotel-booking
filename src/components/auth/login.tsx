@@ -1,8 +1,7 @@
 
 'use client';
 
-import { api, apiClient } from '@/hooks/axios-api';
-import { BASE_URL } from '@/lib';
+import { login } from '@/hooks/use-auth';
 import { useAuth } from '@/stores/auth-store';
 import { APIResponse, AuthResType } from '@/types';
 import { User } from '@/types/user-type';
@@ -10,7 +9,8 @@ import { loginSchema, type loginType } from '@/validations/auth-schema';
 import { addToast, Button, Card, CardBody, CardHeader, Form, Input } from '@heroui/react'
 import { zodResolver } from '@hookform/resolvers/zod';
 import axios from 'axios';
-import { Eye, EyeClosed, EyeOff, Lock, Mail } from 'lucide-react';
+
+import { Eye, EyeOff, Lock, Mail } from 'lucide-react';
 import Image from 'next/image'
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
@@ -31,14 +31,8 @@ const Login = () => {
     const onSubmit = async (fields: loginType) => {
         setIsLoading(true)
         try {
-            const { data } = await api.post<APIResponse<{
-                token: string,
-                user: Partial<User>
-            }>>('/auth/login', fields, {
-                withCredentials: true
-            })
-
-            console.log(data, "ddd")
+            const data = await login(fields);
+            console.log(data, 'login')
 
             setToken(data.result.token || '')
             addToast({

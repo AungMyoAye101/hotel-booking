@@ -79,8 +79,6 @@ const AvaliableRooms = ({ hotelId }: Props) => {
             guest,
         }
     )
-    console.log(error)
-    console.log(checkIn, "in", checkOut, "out", guest)
 
 
 
@@ -150,12 +148,13 @@ const AvaliableRooms = ({ hotelId }: Props) => {
                             <CardBody className="p-2">
                                 <div className="flex flex-col sm:flex-row gap-4">
                                     {/* Image */}
-                                    <div className="relative w-full md:max-w-sm aspect-video">
+                                    <div className="relative  w-full md:max-w-sm  aspect-video">
                                         <Image
                                             src={room.photo?.secure_url ?? '/hotel-hero.png'}
                                             alt={room.name}
                                             fill
-                                            className="aspect-video rounded-lg"
+
+                                            className=" rounded-lg"
                                         />
                                         <div className="absolute left-1 bottom-1 bg-yellow-100 px-2 py-1 flex items-center gap-1 text-sm">
                                             <Check className="text-green-600" size={14} />
@@ -166,42 +165,45 @@ const AvaliableRooms = ({ hotelId }: Props) => {
                                     {/* Info */}
                                     <div className="flex-1 space-y-2 p-4">
                                         <div className='flex justify-between'>
-                                            <h2 className="head-1 truncate">{room.name}</h2>
+                                            <h2 className="head-1 truncate line-clamp-1 text-wrap">{room.name}</h2>
+
+                                            <div className=''>
 
 
-                                            <Select
-                                                aria-label='quantity select box'
-                                                variant='bordered'
-                                                color='secondary'
-                                                radius='sm'
-                                                fullWidth={false}
-                                                size='sm'
-                                                selectedKeys={[quantity.toString()]}
-                                                onSelectionChange={(keys) => {
-                                                    const val = [...keys][0]
-                                                    setQuantity(Number(val))
-                                                }}
-                                            >
-                                                {
-                                                    Array.from({ length: room.totalRooms }).map((_, i) => {
-                                                        const val = (i + 1).toString();
-                                                        return (
-                                                            < SelectItem
-                                                                key={val}
-                                                                textValue={val}
-                                                            >
-                                                                {val}
+                                                <Select
+                                                    aria-label='quantity select box'
+                                                    variant='bordered'
+                                                    color='secondary'
+                                                    radius='sm'
+                                                    fullWidth={false}
 
-                                                            </SelectItem>
-                                                        )
+                                                    selectedKeys={[quantity.toString()]}
+                                                    onSelectionChange={(keys) => {
+                                                        const val = [...keys][0]
+                                                        setQuantity(Number(val))
+                                                    }}
+                                                    className='w-12'
+                                                >
+                                                    {
+                                                        Array.from({ length: room.totalRooms }).map((_, i) => {
+                                                            const val = (i + 1).toString();
+                                                            return (
+                                                                < SelectItem
+                                                                    key={val}
+                                                                    textValue={val}
+                                                                >
+                                                                    {val}
 
-
-                                                    })
-                                                }
-
-                                            </Select>
+                                                                </SelectItem>
+                                                            )
 
 
+                                                        })
+                                                    }
+
+                                                </Select>
+
+                                            </div>
                                         </div>
 
 

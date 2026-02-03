@@ -1,9 +1,18 @@
 'use client'
 
+import { useHotelDetail } from '@/hooks/use-hotel'
 import { Button, Textarea } from '@heroui/react'
 import { Star } from 'lucide-react'
 import React from 'react'
+export const Hotel = ({ hotelId }: { hotelId: string }) => {
+    "use client";
 
+    const { data, isLoading, error } = useHotelDetail(hotelId)
+    console.log(data, "d", error)
+    return (
+        <div>Hotel</div>
+    )
+}
 const HotelReview = () => {
     return (
         <form className="min-w-75 max-w-sm  space-y-3 rounded-lg bg-white shadow-md h-fit px-4 py-6 border border-slate-200">
@@ -22,5 +31,7 @@ const HotelReview = () => {
         </form>
     )
 }
+
+
 
 export default HotelReview

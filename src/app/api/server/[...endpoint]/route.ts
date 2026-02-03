@@ -91,7 +91,7 @@ const handler = async (req: NextRequest) => {
     }
 
     const data = await response.json()
-    console.log(data, "datata")
+
     const res = NextResponse.json(data, { status: response.status })
 
     response.headers.forEach((value, key) => {
@@ -100,7 +100,7 @@ const handler = async (req: NextRequest) => {
         }
     })
     res.headers.set("content-type", "application/json");
-    console.log(res, "in server")
+
     return res;
 }
 
