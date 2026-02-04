@@ -7,11 +7,21 @@ import api from '@/hooks/axios-api';
 import { useAuth } from '@/stores/auth-store';
 import { APIResponse } from '@/types';
 import { useQuery } from '@tanstack/react-query';
+import { useEffect } from 'react';
 
 
-import { useEffect, useRef } from 'react';
 
-export default function AuthInitializer() {
+export default function AuthInitializer({ token }: { token: string | undefined }) {
+    const setAuth = useAuth(s => s.setIsAuth)
+
+
+    useEffect(() => {
+        if (token) {
+
+            setAuth();
+        }
+    }, [token])
+
     // const initialized = useRef(false);
     // const setToken = useAuth(state => state.setToken);
     // const setUser = useAuth(state => state.setUser);

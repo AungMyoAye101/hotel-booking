@@ -1,8 +1,11 @@
+import { useGetBookingById } from '@/hooks/use-booking'
 import { useGetRoomById } from '@/hooks/use-room'
 import { BookingRoomType } from '@/types'
 import { Card, CardBody, CardHeader } from '@heroui/react'
 import { BedDouble, Check, CircleDollarSign, Map, MapPin } from 'lucide-react'
 import Image from 'next/image'
+import { useParams } from 'next/navigation'
+import { useRouter } from 'next/router'
 
 type Props = {
     room: BookingRoomType,
@@ -12,20 +15,18 @@ type Props = {
     price: number
 
 }
-const BookingDetail = ({
-    room,
-    checkIn,
-    checkOut,
-    quantity,
-    price
-
-}: Props) => {
-
+const BookingDetail = () => {
+    const bookingId = useParams().id;
+    console.log(bookingId)
+    // const { data: booking, isLoading, error } = useGetBookingById(bookingId)
+    // if (isLoading) {
+    //     return <p>Loading...</p>
+    // }
 
     return (
         <section className='w-full md:max-w-sm space-y-4'>
 
-
+            {/* 
             <Card >
                 <CardBody>
 
@@ -57,10 +58,10 @@ const BookingDetail = ({
                     </div>
 
                 </CardBody>
-            </Card>
+            </Card> */}
 
             {/* room detail  */}
-
+            {/* 
             <Card >
                 <CardHeader className='pb-0'>
                     <h1 className='font-semibold'>
@@ -76,10 +77,10 @@ const BookingDetail = ({
                         <span className='text-warning-500 text-lg font-semibold'>$ {room.price} </span> / night
                     </div>
                 </CardBody>
-            </Card>
+            </Card> */}
 
             {/* Booking info */}
-            <Card >
+            {/* <Card >
                 <CardHeader className='pb-0'>
                     <h1 className='font-semibold'>
                         Your Booking Information
@@ -106,10 +107,10 @@ const BookingDetail = ({
 
 
                 </CardBody>
-            </Card>
+            </Card> */}
 
             {/* Promotion */}
-            <Card>
+            {/* <Card>
                 <CardBody >
                     <div className="head-1 flex gap-2 items-center">
                         <CircleDollarSign size={26} />
@@ -124,9 +125,9 @@ const BookingDetail = ({
                         className="flex gap-1 p-2 bg-green-100 rounded-sm text-sm">
                         <Check className="text-green-500" />
                         You're booking is protect by SSL encryption.
-                    </p>
+                    </p> */}
 
-                    {/* <div className="flex gap-1 text-sm text-slate-800">
+            {/* <div className="flex gap-1 text-sm text-slate-800">
                         <CircleDollarSign />
                         You're getting the best price!
                         we guarantee it.
@@ -135,8 +136,8 @@ const BookingDetail = ({
                         <Check className="text-green-500" />
                         Free cancellation
                     </div> */}
-                </CardBody>
-            </Card>
+            {/* </CardBody>
+            </Card> */}
 
         </section >
     )

@@ -37,6 +37,11 @@ export async function POST(req: NextRequest) {
             result: data.result.user
 
         });
+        response.cookies.set("access_token", data.result.token, {
+            httpOnly: true,
+            sameSite: "lax",
+            maxAge: 15 * 60
+        })
 
         if (token.length > 0) {
             token.forEach(cookie => {

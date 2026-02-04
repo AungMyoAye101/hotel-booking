@@ -27,6 +27,7 @@ import RoomCardLoading from '../loading/room-loading'
 import Empty from '../empty'
 import { BookingStatus } from '@/types'
 import { useUpdateParams } from '@/hooks/use-params'
+import { useCreateBooking } from '@/hooks/use-booking'
 
 
 /* ---------------------------------- types --------------------------------- */
@@ -40,7 +41,7 @@ type Props = {
 
 const AvaliableRooms = ({ hotelId }: Props) => {
     const { updateParams, searchParams } = useUpdateParams();
-
+    const userId = useAuth(s => s.user?._id);
     const todayISO = useMemo(
         () => new Date().toISOString(),
         []
@@ -95,13 +96,24 @@ const AvaliableRooms = ({ hotelId }: Props) => {
 
     }
 
-    const handleNavigate = (roomId: string, quantity: number) => {
-        const params = new URLSearchParams(searchParams.toString())
-        params.set('room', roomId)
-        params.set('checkIn', checkIn)
-        params.set('checkOut', checkOut)
-        params.set('quantity', quantity.toString())
-        router.push(`/booking?${params.toString()}`, { scroll: true })
+    const { mutate, isPending } = useCreateBooking()
+    const handleCreateBooking = (roomId: string, quantity: number, price: number) => {
+        if (!userId) {
+            throw new Error("You are not aunticated yet.")
+        }
+
+
+        const bookingData = {
+            userId,
+            hotelId,
+            roomId,
+            quantity,
+            totalPrice: price * quantity,
+            checkIn,
+            checkOut,
+        }
+
+        mutate(bookingData)
     }
 
     return (
@@ -239,10 +251,10 @@ const AvaliableRooms = ({ hotelId }: Props) => {
                                                 }
                                             >
                                                 <Button
-
+                                                    isLoading={isPending}
                                                     color="primary"
                                                     radius="sm"
-                                                    onPress={() => handleNavigate(room._id, quantity)}
+                                                    onPress={() => handleCreateBooking(room._id, quantity, room.price)}
 
                                                 >
                                                     Reserve

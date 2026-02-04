@@ -5,7 +5,7 @@ import "./globals.css";
 import { Providers } from "./provider";
 import Header from "@/components/header";
 import Footer from "@/components/footer";
-import { cookies, headers } from "next/headers";
+import { cookies } from "next/headers";
 import AuthInitializer from "@/components/auth/auth-provider";
 
 
@@ -29,6 +29,7 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const refresh_token = (await cookies()).get("refresh_token")?.value;
 
   return (
     <html lang="en">
@@ -38,7 +39,7 @@ export default async function RootLayout({
 
           <Header />
           <div className="max-w-7xl mx-auto">
-            <AuthInitializer />
+            <AuthInitializer token={refresh_token} />
             {children}
           </div>
           <Footer />

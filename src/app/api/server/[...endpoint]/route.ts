@@ -1,8 +1,7 @@
-import axios, { AxiosError } from "axios";
+
 import { NextRequest, NextResponse } from "next/server";
 import { cookies } from "next/headers";
-import { APIResponse } from "@/types";
-import { error } from "console";
+
 
 
 const BASE_URL = process.env.BASE_URL;
@@ -48,9 +47,10 @@ async function forward(req: NextRequest) {
     let body;
     if (!["GET", "HEAD"].includes(req.method)) {
 
-        body = await req.json();
+        body = JSON.stringify(await req.json());
 
     }
+
 
     return fetch(BASE_URL + endpoint, {
         method: req.method,

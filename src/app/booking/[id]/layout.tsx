@@ -1,4 +1,5 @@
 
+import BookingDetail from '@/components/booking/booking-detail'
 import Indicator from '@/components/booking/indicator'
 import { ReactNode } from 'react'
 
@@ -10,9 +11,15 @@ const layout = ({ children }: Props) => {
     return (
         <div className="py-24 space-y-6 px-4">
             <Indicator />
-            {
-                children
-            }
+            <div>
+                <BookingDetail />
+                <div>
+                    {
+                        children
+                    }
+                </div>
+            </div>
+
         </div>
     )
 }

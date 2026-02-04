@@ -4,7 +4,7 @@ import { createBookingType } from "@/validations/booking-schema";
 
 
 export const createBooking = async (booking: createBookingType) => {
-    console.log(booking)
+
 
     const { data } = await api.post<APIResponse<{ booking: BookingType }>>(
         '/booking/create', booking
