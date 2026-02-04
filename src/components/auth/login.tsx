@@ -31,7 +31,10 @@ const Login = () => {
     const onSubmit = async (fields: loginType) => {
         setIsLoading(true)
         try {
-            const data = await login(fields);
+            const { data } = await axios.post<APIResponse<{
+                token: string,
+                user: User
+            }>>('/api/auth/login', fields, { withCredentials: true })
             console.log(data, 'login')
 
             setToken(data.result.token || '')
