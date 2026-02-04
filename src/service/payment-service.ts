@@ -1,10 +1,10 @@
-import { apiClient } from "@/hooks/axios-api";
+import api from "@/hooks/axios-api";
 import { APIResponse, createPaymentType, PaymentType, PaymentCreateType } from "@/types";
 
 
 export const createPayment = async (payment: createPaymentType) => {
 
-    const { data } = await apiClient.post<APIResponse<{ payment: PaymentCreateType }>>(
+    const { data } = await api.post<APIResponse<{ payment: PaymentCreateType }>>(
         '/payment/create', payment
     )
     if (!data.success) {
@@ -21,7 +21,7 @@ type confirmPaymentType = {
 }
 
 export const confirmPaymentService = async (payment: confirmPaymentType) => {
-    const { data } = await apiClient.put<APIResponse<any>>(
+    const { data } = await api.put<APIResponse<any>>(
         '/payment/update', payment
     )
 
@@ -33,7 +33,7 @@ export const confirmPaymentService = async (payment: confirmPaymentType) => {
 }
 
 export const getPaymentById = async (id: string) => {
-    const { data } = await apiClient.get<APIResponse<{ payment: PaymentType }>>(
+    const { data } = await api.get<APIResponse<{ payment: PaymentType }>>(
         `/payment/${id}`
     )
     if (!data.success) {

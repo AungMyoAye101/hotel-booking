@@ -1,5 +1,5 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
-import { apiClient } from "./axios-api"
+import api from "./axios-api"
 import { APIResponse } from "@/types"
 import { User } from "@/types/user-type"
 import { currentUser, updateUser } from "@/service/user-service"
@@ -11,7 +11,7 @@ export const useGetUserById = (id: string) => {
         queryKey: ['user_id', id],
         queryFn: async () => {
             try {
-                const { data } = await apiClient.get<APIResponse<{ user: User }>>(`/users/${id}`)
+                const { data } = await api.get<APIResponse<{ user: User }>>(`/users/${id}`)
                 return data.result.user;
             } catch (error) {
                 console.warn(error)

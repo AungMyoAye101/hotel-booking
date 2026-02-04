@@ -7,7 +7,7 @@ export async function POST(req: NextRequest) {
     }
     try {
         const fields = await req.json();
-        console.log(fields)
+
         const res = await fetch(
             BASE_URL + '/auth/login', {
             method: "POST",
@@ -20,7 +20,7 @@ export async function POST(req: NextRequest) {
         );
 
         const data = await res.json();
-        console.log(data, "in server")
+
         if (!res.ok) {
             return NextResponse.json(
                 { message: data.message || "Login failed" },
@@ -28,20 +28,24 @@ export async function POST(req: NextRequest) {
             );
         }
 
-        const refresh_token = res.headers.get('set-cookie');
+        const token = res.headers.getSetCookie();
 
-        const response = NextResponse.json(data);
 
-        if (refresh_token) {
-            response.headers.set("set-cookie", refresh_token);
+        const response = NextResponse.json({
+
+            message: data.message,
+            result: data.result.user
+
+        });
+
+        if (token.length > 0) {
+            token.forEach(cookie => {
+                response.headers.append("set-cookie", cookie)
+            })
+
         }
-        response.cookies.set('access_token', data.result.token, {
-            httpOnly: true,
-            secure: process.env.NODE_ENV === "production",
-            sameSite: "lax",
-            path: "/",
-            maxAge: 60 * 15, // 15 min
-        })
+
+
         return response;
     } catch (error) {
 

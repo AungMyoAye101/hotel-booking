@@ -3,7 +3,7 @@ import { APIResponse, AvaliableRoomsType, QueryType, RoomType } from "@/types"
 import { hotelType } from "@/types/hotel-types"
 
 export const getHotelDetails = async (hotelId: string) => {
-    console.log(hotelId)
+
     const { data } = await api.get<APIResponse<{ hotel: hotelType }>>(`/hotel/${hotelId}`)
     if (!data.success) {
         throw new Error("Faild to get hotel details")

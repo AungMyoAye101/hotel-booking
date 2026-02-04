@@ -18,7 +18,7 @@ import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 
 const Login = () => {
-    const { setToken, setUser } = useAuth(s => s)
+    const setUser = useAuth(s => s.setUser)
     const [isLoading, setIsLoading] = useState(false)
     const [isVisible, setIsVisible] = useState<boolean>(false)
 
@@ -31,13 +31,9 @@ const Login = () => {
     const onSubmit = async (fields: loginType) => {
         setIsLoading(true)
         try {
-            const { data } = await axios.post<APIResponse<{
-                token: string,
-                user: User
-            }>>('/api/auth/login', fields, { withCredentials: true })
+            const { data } = await axios.post<APIResponse<User>>('/api/auth/login', fields, { withCredentials: true })
             console.log(data, 'login')
-
-            setToken(data.result.token || '')
+            setUser(data.result)
             addToast({
                 title: data.message || "login success.",
                 color: 'success'

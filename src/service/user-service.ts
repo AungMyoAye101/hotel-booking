@@ -1,10 +1,10 @@
-import { apiClient } from "@/hooks/axios-api";
+import api from "@/hooks/axios-api";
 import { APIResponse } from "@/types";
 import { User } from "@/types/user-type";
 
 export const currentUser = async () => {
     try {
-        const { data } = await apiClient.get<APIResponse<{ user: User }>>(`/auth/me`)
+        const { data } = await api.get<APIResponse<{ user: User }>>(`/auth/me`)
         console.log(data)
         return data.result.user;
     } catch (error) {
@@ -18,7 +18,7 @@ type updateUserType = {
 }
 export const updateUser = async ({ id, user }: updateUserType) => {
     try {
-        const { data } = await apiClient.put<APIResponse<{ user: User }>>(
+        const { data } = await api.put<APIResponse<{ user: User }>>(
             `/users/${id}`, user
         )
         if (!data.success) {
