@@ -23,7 +23,9 @@ export const useGetUserById = (id: string) => {
 export const useGetMe = () => {
     return useQuery({
         queryKey: ['me',],
-        queryFn: currentUser
+        queryFn: currentUser,
+        retry: 1,
+        staleTime: 15 * 60
 
     })
 }

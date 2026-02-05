@@ -1,7 +1,7 @@
 import { createBooking, getBookingById } from "@/service/booking-service"
 
 import { addToast } from "@heroui/react"
-import { useMutation, useQueries, useQuery, useQueryClient } from "@tanstack/react-query"
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
 import { useRouter } from "next/navigation"
 
 export const useCreateBooking = () => {

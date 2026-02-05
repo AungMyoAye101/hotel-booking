@@ -29,11 +29,9 @@ async function forward(req: NextRequest) {
 
     const endpoint = pathname.replace('/api/server', "") + search;
 
-
-
-
     const cookieStore = await cookies();
     const access_token = cookieStore.get("access_token")?.value;
+    const refresh_token = cookieStore.get("refresh_token")?.value;
 
     const headers: Record<string, string> =
     {
@@ -42,6 +40,11 @@ async function forward(req: NextRequest) {
 
     if (access_token) {
         headers.Authorization = `Bearer ${access_token}`;
+    }
+    if (endpoint.startsWith('/auth/me')) {
+        if (refresh_token) {
+            headers.cookie = 'refresh_token=' + refresh_token;
+        }
     }
 
     let body;
