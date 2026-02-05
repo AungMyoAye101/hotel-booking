@@ -59,7 +59,7 @@ export type MetaType = {
     hasNext: boolean
 }
 
-export type BookingStatus = "PENDING" | "CONFIRMED" | "STAYED" | "CANCELLED" | "EXPIRED";
+export type BookingStatus = "DRAFT" | "PENDING" | "CONFIRMED" | "STAYED" | "CANCELLED" | "EXPIRED";
 
 export type BookingType = {
     _id: string,
@@ -72,6 +72,15 @@ export type BookingType = {
     checkIn: Date,
     checkOut: Date,
 
+}
+export type UpdateBookingType = {
+
+    name: string,
+    email: string,
+    city: string,
+    country: string,
+    phone: string,
+    status: BookingStatus
 }
 export type PaymentMethodType = "MOBILE_BANKING" | "CARD" | "BANK"
 export type PaymentCreateType = {
@@ -92,7 +101,12 @@ export type createPaymentType = {
 }
 
 export type BookingInfoType = {
-    _id: string
+    _id: string,
+    name?: string,
+    email?: string,
+    city?: string,
+    country?: string,
+    phone?: string,
     checkIn: Date,
     checkOut: Date
     hotel: {
@@ -107,7 +121,7 @@ export type BookingInfoType = {
     room: Partial<RoomType>,
     status: BookingStatus
     totalPrice: number,
-    user: { _id: string, name: string }
+    user: string
 
 }
 export type PaymentStatusType = "PAID" | "PENDING" | "FAILED";

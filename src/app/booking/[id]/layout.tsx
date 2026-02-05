@@ -1,4 +1,5 @@
 
+import Booking from '@/components/booking/booking'
 import BookingDetail from '@/components/booking/booking-detail'
 import Indicator from '@/components/booking/indicator'
 import { ReactNode } from 'react'
@@ -8,20 +9,7 @@ type Props = {
 }
 
 const layout = ({ children }: Props) => {
-    return (
-        <div className="py-24 space-y-6 px-4">
-            <Indicator />
-            <div>
-                <BookingDetail />
-                <div>
-                    {
-                        children
-                    }
-                </div>
-            </div>
-
-        </div>
-    )
+    return <Booking>{children}</Booking>
 }
 
 export default layout

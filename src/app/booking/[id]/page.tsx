@@ -1,17 +1,13 @@
+import UserInfoForm from "@/components/booking/user-info-form"
 import Payment from "@/components/payment"
 
 type ParamsType = {
     id: string
 }
-const page = async ({ params }: { params: Promise<ParamsType> }) => {
-    const bookingId = (await params).id
-    if (!bookingId) return;
+const page = async () => {
 
-    return (
-        <>
-            <Payment bookingId={bookingId} />
-        </>
-    )
+
+    return <UserInfoForm />
 }
 
 export default page

@@ -2,6 +2,6 @@ import CreateBooking from "@/components/booking/create-booking"
 
 
 const page = () => {
-    return <CreateBooking />
+    // return <CreateBooking />
 }
 export default page

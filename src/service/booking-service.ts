@@ -1,5 +1,5 @@
 import api from "@/hooks/axios-api";
-import { APIResponse, BookingInfoType, BookingType } from "@/types";
+import { APIResponse, BookingInfoType, BookingType, UpdateBookingType } from "@/types";
 import { createBookingType } from "@/validations/booking-schema";
 
 
@@ -17,9 +17,12 @@ export const createBooking = async (booking: createBookingType) => {
     return data.result.booking;
 }
 
-export const updateBooking = async (booking: BookingType) => {
+type updateBookingParam = {
+    bookingId: string, booking: UpdateBookingType
+}
+export const updateBooking = async ({ bookingId, booking }: updateBookingParam) => {
     const { data } = await api.put<APIResponse<{ booking: BookingType }>>(
-        `/booking/update/${booking._id}`, booking
+        `/booking/update/${bookingId}`, booking
     )
 
 

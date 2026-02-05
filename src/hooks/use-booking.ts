@@ -1,4 +1,4 @@
-import { createBooking, getBookingById } from "@/service/booking-service"
+import { createBooking, getBookingById, updateBooking } from "@/service/booking-service"
 
 import { addToast } from "@heroui/react"
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
@@ -6,8 +6,8 @@ import { useRouter } from "next/navigation"
 
 export const useCreateBooking = () => {
     const queryClient = useQueryClient();
-    const router = useRouter();
 
+    const router = useRouter();
 
     return useMutation({
         mutationKey: ['create_booking'],
@@ -42,6 +42,35 @@ export const useGetBookingById = (bookingId: string) => {
         queryFn: () => getBookingById(bookingId),
         enabled: !!bookingId,
 
+    })
+
+}
+
+export const useUpdateBooking = () => {
+    const router = useRouter();
+    return useMutation({
+        mutationKey: ['update_booking'],
+        mutationFn: updateBooking,
+        onSuccess: (data) => {
+
+            addToast({
+                title: "Update booking successful.",
+                color: 'success'
+
+            })
+
+            router.push(`/booking/${data._id}/payment`, { scroll: false })
+        },
+        onError: (error
+        ) => {
+            console.log(error)
+            addToast({
+                title: "Failed to create booking .",
+                color: 'danger'
+
+            })
+
+        }
     })
 
 }

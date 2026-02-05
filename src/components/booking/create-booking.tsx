@@ -18,14 +18,14 @@ const CreateBooking = () => {
     }
     return (
         <section className="px-4 py-6 flex flex-col md:flex-row gap-4">
-            <BookingDetail
+            {/* <BookingDetail
                 room={room!}
                 checkIn={new Date(checkIn!).toISOString()}
                 checkOut={new Date(checkOut!).toISOString()}
                 quantity={Number(quantity)}
                 price={room?.price!}
 
-            />
+            /> */}
             <Card className='p-4 flex-1 h-fit'>
                 <CardBody className='space-y-4' >
 

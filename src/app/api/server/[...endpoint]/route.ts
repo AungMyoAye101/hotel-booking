@@ -8,17 +8,17 @@ const BASE_URL = process.env.BASE_URL;
 let refreshing: Promise<Response> | null = null;
 
 
-const refreshToken = async () => {
+const refreshToken = async (refreshToken: string) => {
     if (!refreshing) {
         refreshing = fetch(BASE_URL + '/auth/refresh', {
             method: "POST",
             headers: {
                 "Content-type": "application/json",
-
+                "cookie": refreshToken
             },
             credentials: "include",
             cache: "no-store"
-        }).finally(refreshing = null)
+        }).finally(() => (refreshing = null))
     }
 
     return refreshing;
@@ -41,11 +41,11 @@ async function forward(req: NextRequest) {
     if (access_token) {
         headers.Authorization = `Bearer ${access_token}`;
     }
-    if (endpoint.startsWith('/auth/me')) {
-        if (refresh_token) {
-            headers.cookie = 'refresh_token=' + refresh_token;
-        }
+
+    if (refresh_token) {
+        headers.cookie = 'refresh_token=' + refresh_token;
     }
+
 
     let body;
     if (!["GET", "HEAD"].includes(req.method)) {
@@ -72,6 +72,8 @@ const handler = async (req: NextRequest) => {
         );
 
     }
+    const cookieStore = await cookies();
+    const refresh_token = cookieStore.get("refresh_token")?.value;
 
     let response = await forward(req);
 
@@ -79,17 +81,14 @@ const handler = async (req: NextRequest) => {
     // ===========unauthorized error handle===========
 
     if (response.status === 401) {
-        const refresh = await refreshToken();
+        const refresh = await refreshToken(refresh_token ?? "");
         if (refresh.ok) {
             response = await forward(req);
         } else {
-            const res = NextResponse.json({
+            return NextResponse.json({
                 error: "Session expired",
             }, { status: 401 });
 
-            res.cookies.delete("refresh_token");
-            res.cookies.delete("access_token");
-            return res;
         }
     }
 
@@ -97,12 +96,10 @@ const handler = async (req: NextRequest) => {
 
     const res = NextResponse.json(data, { status: response.status })
 
-    response.headers.forEach((value, key) => {
-        if (key.toLowerCase() === "set-cookie") {
-            res.headers.append("set-cookie", value)
-        }
+    response.headers.getSetCookie().forEach(cookie => {
+        res.headers.append('set-cookie', cookie)
     })
-    res.headers.set("content-type", "application/json");
+
 
     return res;
 }
