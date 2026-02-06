@@ -1,51 +1,66 @@
-
 import { NextRequest, NextResponse } from "next/server";
 import { cookies } from "next/headers";
 
-
-
 const BASE_URL = process.env.BASE_URL;
-let refreshing: Promise<Response> | null = null;
 
 
-const refreshToken = async (refreshToken: string) => {
+
+type RefreshResult = {
+    access_token: string;
+    setCookie: string[];
+};
+//=========prevent multiple request from 401 =============
+
+let refreshing: Promise<RefreshResult | null> | null = null;
+
+//============ refresh token logic =========
+
+const refreshToken = async (token: string): Promise<RefreshResult | null> => {
     if (!refreshing) {
-        refreshing = fetch(BASE_URL + '/auth/refresh', {
-            method: "POST",
-            headers: {
-                "Content-type": "application/json",
-                "cookie": refreshToken
-            },
-            credentials: "include",
-            cache: "no-store"
-        }).finally(() => (refreshing = null))
-    }
+        refreshing = (async () => {
+            try {
+                const res = await fetch(BASE_URL + '/auth/refresh', {
+                    method: "POST",
+                    headers: {
+                        "Content-type": "application/json",
+                        "cookie": `refresh_token=${token}`
+                    },
+                    credentials: "include",
+                    cache: "no-store"
+                })
 
+                if (!res.ok) return null;
+                const data = await res.json();
+                console.log(data, "refresh in ")
+
+                return {
+                    access_token: data.result.token,
+                    setCookie: res.headers.getSetCookie()
+                };
+            } finally {
+                refreshing = null;
+            }
+        })();
+
+
+    }
     return refreshing;
 }
 
-async function forward(req: NextRequest) {
+//============= make api request to server ============
+async function forward(req: NextRequest, token?: string) {
     const { pathname, search } = req.nextUrl;
 
     const endpoint = pathname.replace('/api/server', "") + search;
-
-    const cookieStore = await cookies();
-    const access_token = cookieStore.get("access_token")?.value;
-    const refresh_token = cookieStore.get("refresh_token")?.value;
 
     const headers: Record<string, string> =
     {
         "Content-Type": "application/json"
     };
 
-    if (access_token) {
-        headers.Authorization = `Bearer ${access_token}`;
+    if (token) {
+        headers.Authorization = `Bearer ${token}`;
     }
-
-    if (refresh_token) {
-        headers.cookie = 'refresh_token=' + refresh_token;
-    }
-
 
     let body;
     if (!["GET", "HEAD"].includes(req.method)) {
@@ -64,6 +79,8 @@ async function forward(req: NextRequest) {
 
 }
 
+//============= route handler ================
+
 const handler = async (req: NextRequest) => {
     if (!BASE_URL) {
         return NextResponse.json(
@@ -74,16 +91,33 @@ const handler = async (req: NextRequest) => {
     }
     const cookieStore = await cookies();
     const refresh_token = cookieStore.get("refresh_token")?.value;
+    const access_token = cookieStore.get("access_token")?.value;
 
-    let response = await forward(req);
+
+    let response = await forward(req, access_token);
 
 
     // ===========unauthorized error handle===========
 
     if (response.status === 401) {
-        const refresh = await refreshToken(refresh_token ?? "");
-        if (refresh.ok) {
-            response = await forward(req);
+        const refreshed = await refreshToken(refresh_token ?? '');
+
+        if (refreshed) {
+            response = await forward(req, refreshed.access_token);
+
+            const data = response.json();
+
+            const res = NextResponse.json(data, { status: 200 });
+
+            res.cookies.set('access_token', refreshed.access_token, {
+                httpOnly: true,
+                sameSite: 'lax',
+                maxAge: 15 * 60 * 1000
+            })
+            refreshed.setCookie.forEach(cookie => {
+                res.headers.append('set-cookie', cookie)
+            })
+            return res;
         } else {
             return NextResponse.json({
                 error: "Session expired",
@@ -94,14 +128,7 @@ const handler = async (req: NextRequest) => {
 
     const data = await response.json()
 
-    const res = NextResponse.json(data, { status: response.status })
-
-    response.headers.getSetCookie().forEach(cookie => {
-        res.headers.append('set-cookie', cookie)
-    })
-
-
-    return res;
+    return NextResponse.json(data, { status: 200 });
 }
 
 

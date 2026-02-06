@@ -1,6 +1,7 @@
 "use server";
 import { NextRequest, NextResponse } from "next/server";
 const BASE_URL = process.env.BASE_URL;
+
 export async function POST(req: NextRequest) {
     if (!BASE_URL) {
         throw new Error("Base url is required.")
@@ -40,17 +41,16 @@ export async function POST(req: NextRequest) {
         response.cookies.set("access_token", data.result.token, {
             httpOnly: true,
             sameSite: "lax",
-            maxAge: 15 * 60
+            maxAge: 15 * 60 * 1000
         })
 
         if (token.length > 0) {
             token.forEach(cookie => {
                 response.headers.append("set-cookie", cookie)
             })
-
         }
 
-
+        console.log(data)
         return response;
     } catch (error) {
 

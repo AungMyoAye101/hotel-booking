@@ -13,7 +13,7 @@ import { useRef } from "react";
 export default function HotelCardList() {
 
     const { data: hotels, isLoading, error } = useGetAllHotels();
-    console.log(hotels)
+
 
 
     const containerRef = useRef<HTMLDivElement>(null);

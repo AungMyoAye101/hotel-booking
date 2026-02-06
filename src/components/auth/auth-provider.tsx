@@ -15,6 +15,7 @@ import { useEffect } from 'react';
 export default function AuthInitializer({ token }: { token: string | undefined }) {
     const { setUser } = useAuth(s => s)
     const { data: user, error } = useGetMe()
+    console.log(token, user)
 
     useEffect(() => {
         if (user) {

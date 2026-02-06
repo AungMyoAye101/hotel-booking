@@ -92,13 +92,22 @@ const PaymentDetailsForm = () => {
                                 </div>
                             </CardBody>
                         </Card>
-                        <input type="radio" checked={payment === "MOBILE_BANKING"} name='payment' id='mobile' onChange={() => setPayment("MOBILE_BANKING")} className='hidden' />
+                        <input
+                            type="radio"
+                            checked={payment === "MOBILE_BANKING"}
+                            name='payment'
+                            id='mobile'
+                            onChange={() => setPayment("MOBILE_BANKING")}
+                            className='hidden'
+                        />
                     </label>
 
                     <label htmlFor='bank'>
 
 
-                        <Card className={`${payment === 'BANK' ? 'bg-success-50 border-2 border-success-400' : 'bg-deafult'}  w-44 h-36 flex items-center justify-center`} >
+                        <Card
+                            className={`${payment === 'BANK' ? 'bg-success-50 border-2 border-success-400' : 'bg-deafult'} 
+                         w-44 h-36 flex items-center justify-center`} >
                             <CardBody >
                                 <div className={`flex flex-col items-center gap-2 `} >
                                     <Image
@@ -110,7 +119,9 @@ const PaymentDetailsForm = () => {
 
                                     />
                                     <div className='text-center'>
-                                        <h1 className='text-lg font-medium'>Bank Transfer</h1>
+                                        <h1 className='text-lg font-medium'>
+                                            Bank Transfer
+                                        </h1>
                                         <p className='text-sm'>Pay via bank</p>
                                     </div>
                                 </div>
