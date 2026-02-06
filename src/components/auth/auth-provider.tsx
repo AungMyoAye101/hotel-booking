@@ -12,18 +12,22 @@ import { useEffect } from 'react';
 
 
 
-export default function AuthInitializer({ token }: { token: string | undefined }) {
-    const { setUser } = useAuth(s => s)
-    const { data: user, error } = useGetMe()
-    console.log(token, user)
+export default function AuthInitializer() {
+    const { setUser, logout } = useAuth(s => s)
+    const { data: user, isSuccess, isError } = useGetMe()
+
 
     useEffect(() => {
-        if (user) {
-            setUser(user)
+        if (isSuccess) {
+            if (user) {
+                setUser(user)
+            }
         }
-    }, [token, user])
-    if (error) {
-        console.warn(error)
-    }
+        if (isError) {
+            logout()
+        }
+
+    }, [isSuccess, isError])
+
     return null;
 }

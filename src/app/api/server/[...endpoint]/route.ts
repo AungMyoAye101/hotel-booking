@@ -31,7 +31,6 @@ const refreshToken = async (token: string): Promise<RefreshResult | null> => {
 
                 if (!res.ok) return null;
                 const data = await res.json();
-                console.log(data, "refresh in ")
 
                 return {
                     access_token: data.result.token,
@@ -48,7 +47,7 @@ const refreshToken = async (token: string): Promise<RefreshResult | null> => {
 }
 
 //============= make api request to server ============
-async function forward(req: NextRequest, token?: string) {
+async function forward(req: NextRequest, accessToken?: string, refreshToken?: string) {
     const { pathname, search } = req.nextUrl;
 
     const endpoint = pathname.replace('/api/server', "") + search;
@@ -58,8 +57,11 @@ async function forward(req: NextRequest, token?: string) {
         "Content-Type": "application/json"
     };
 
-    if (token) {
-        headers.Authorization = `Bearer ${token}`;
+    if (accessToken) {
+        headers.Authorization = `Bearer ${accessToken}`;
+    }
+    if (refreshToken) {
+        headers.cookie = `refresh_token=${refreshToken}`;
     }
 
     let body;
@@ -94,7 +96,7 @@ const handler = async (req: NextRequest) => {
     const access_token = cookieStore.get("access_token")?.value;
 
 
-    let response = await forward(req, access_token);
+    let response = await forward(req, access_token, refresh_token);
 
 
     // ===========unauthorized error handle===========
@@ -103,7 +105,7 @@ const handler = async (req: NextRequest) => {
         const refreshed = await refreshToken(refresh_token ?? '');
 
         if (refreshed) {
-            response = await forward(req, refreshed.access_token);
+            response = await forward(req, refreshed.access_token, refresh_token);
 
             const data = response.json();
 

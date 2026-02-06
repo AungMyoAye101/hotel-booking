@@ -5,7 +5,7 @@ import { User } from "@/types/user-type";
 export const currentUser = async () => {
     try {
         const { data } = await api.get<APIResponse<{ user: User }>>(`/auth/me`)
-        console.log(data)
+
         return data.result.user;
     } catch (error) {
         console.warn(error)
