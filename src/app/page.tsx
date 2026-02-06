@@ -8,7 +8,6 @@ import Testmonial from "@/components/home/testmonial";
 
 export default async function Home() {
 
-  // const data = await serverFetch<APIResponse<{ hotels: hotelType[] }>>('/hotel')
 
   return (
     <section className="max-w-7xl mx-auto px-4">

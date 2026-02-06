@@ -17,6 +17,7 @@ const BookingDetail = ({ booking }: Props) => {
     return (
         <section className='w-full md:max-w-sm space-y-4'>
 
+            {/* hotel details */}
 
             <Card >
                 <CardBody>
@@ -32,7 +33,7 @@ const BookingDetail = ({ booking }: Props) => {
                     </div>
                     <div className='space-y-1 py-2'>
                         <h1 className='head-1'>
-                            {/* {booking?.hotelId.name} */}
+                            {booking?.hotel?.name}
                             Name
 
                         </h1>
@@ -40,23 +41,17 @@ const BookingDetail = ({ booking }: Props) => {
                         <p className='flex gap-1 text-sm items-center '>
 
                             <MapPin size={16} />
-                            {/* {room.hotelId.address} */}
+                            {booking?.hotel?.adddress}
                             Address
 
                         </p>
                         <p className='flex flex-wrap items-center  gap-1'>
                             <Map size={16} />
                             <span className='font-semibold'>
-
+                                {booking?.hotel.city}
                             </span>
-                            {/* {room.hotelId.city} */}
-                            city ;
-                            <span className='font-semibold'>
-                                {/* 
-                                {room.hotelId.country} */}
+                            city
 
-                                Country
-                            </span>
                         </p>
                     </div>
 
@@ -64,8 +59,8 @@ const BookingDetail = ({ booking }: Props) => {
             </Card>
 
             {/* room detail  */}
-            {/* 
-            <Card >
+
+            <Card className='border border-warning-400'>
                 <CardHeader className='pb-0'>
                     <h1 className='font-semibold'>
                         Room Details
@@ -73,17 +68,21 @@ const BookingDetail = ({ booking }: Props) => {
 
                 </CardHeader>
                 <CardBody className='py-2 space-y-1'>
-                    <h2 className='head-1'>{room.name}</h2>
-                    <p className='flex gap-1 items-center '>  <BedDouble size={16} />Bed Type : {room.bedTypes}
+                    <h2 className='head-1'>{booking?.room?.name}</h2>
+                    <p className='flex gap-1 items-center '>
+                        <BedDouble size={16} />
+                        Bed Type : {booking?.room?.bedTypes}
                     </p>
                     <div>
-                        <span className='text-warning-500 text-lg font-semibold'>$ {room.price} </span> / night
+                        <span className='text-warning-500 text-lg font-semibold'>
+                            $ {booking?.room?.price}
+                        </span> / night
                     </div>
                 </CardBody>
-            </Card> */}
+            </Card>
 
             {/* Booking info */}
-            <Card >
+            <Card className='border border-success-400'>
                 <CardHeader className='pb-0'>
                     <h1 className='font-semibold'>
                         Your Booking Information
@@ -103,9 +102,9 @@ const BookingDetail = ({ booking }: Props) => {
                         <p>Quantity </p>
                         <p className='font-semibold'>{booking.quantity}</p>
                     </div>
-                    <div className='bg-slate-200 p-2 rounded flex-col gap-2'>
+                    <div className='bg-slate-200 p-2 rounded flex-col gap-2 border border-warning-400'>
                         <p>Price</p>
-                        <p className='font-semibold text-warning-500'>{booking.totalPrice} $</p>
+                        <p className='font-semibold text-xl text-amber-500'>{booking.totalPrice} $</p>
                     </div>
 
 

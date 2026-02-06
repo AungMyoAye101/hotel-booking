@@ -10,8 +10,7 @@ import { useEffect } from 'react'
 import Loading from './loading'
 
 const Complete = () => {
-    const { paymentId, isPaid, reset, bookingId, } = useBookingStore(s => s)
-    const user = useAuth(s => s.user)
+
     const router = useRouter()
     const path = usePathname();
 
@@ -26,12 +25,9 @@ const Complete = () => {
 
 
 
-    const { data: payment, isLoading } = useGetPaymentById(paymentId!);
 
-    if (isLoading) {
-        return <Loading />
-    }
-    console.log(payment, "pay")
+
+
     return (
         <div className="max-w-3xl mx-auto px-4 py-8">
 
@@ -50,7 +46,7 @@ const Complete = () => {
                 </p>
 
                 {/* Booking Reference */}
-                <div className='bg-white rounded-lg shadow-md space-y-4 w-full p-6 max-w-md mx-auto border border-slate-200'>
+                {/* <div className='bg-white rounded-lg shadow-md space-y-4 w-full p-6 max-w-md mx-auto border border-slate-200'>
                     <h1 className='font-semibold text-lg mb-2'>Payment Details</h1>
                     <div className='grid grid-cols-2 gap-4 text-sm'>
                         <span className='text-start'>
@@ -104,10 +100,10 @@ const Complete = () => {
 
                     </div>
 
-                </div>
+                </div> */}
 
                 {/* Actions */}
-                <div className="flex flex-col sm:flex-row gap-3 justify-center pt-4">
+                {/* <div className="flex flex-col sm:flex-row gap-3 justify-center pt-4">
 
 
                     <Button
@@ -130,7 +126,7 @@ const Complete = () => {
                     >
                         View my bookings
                     </Button>
-                </div>
+                </div> */}
 
                 {/* Footer Note */}
                 <p className="text-xs text-muted pt-4">

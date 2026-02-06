@@ -90,7 +90,8 @@ export type PaymentCreateType = {
     paymentMethod: PaymentMethodType
     status: "PENDING" | "PAID" | "FAILED",
     amount: number,
-    paidAt: Date
+    paidAt: Date,
+
 }
 
 export type createPaymentType = {
@@ -98,6 +99,7 @@ export type createPaymentType = {
     userId: string,
     paymentMethod: PaymentMethodType,
     amount: number,
+    payNow: boolean
 }
 
 export type BookingInfoType = {
@@ -121,7 +123,10 @@ export type BookingInfoType = {
     room: Partial<RoomType>,
     status: BookingStatus
     totalPrice: number,
-    user: string
+    user: {
+        _id: string,
+        name?: string,
+    }
 
 }
 export type PaymentStatusType = "PAID" | "PENDING" | "FAILED";

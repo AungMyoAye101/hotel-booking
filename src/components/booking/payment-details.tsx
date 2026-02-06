@@ -1,30 +1,32 @@
 'use client';
 
+import { useGetBookingById } from '@/hooks/use-booking';
 import { useCreatePayment } from '@/hooks/use-payment';
 
 import { PaymentMethodType } from '@/types';
 import { Button, Card, CardBody, CardHeader, DatePicker, Input } from '@heroui/react'
 
 import Image from 'next/image';
+import { useParams } from 'next/navigation';
 
 import { useState } from 'react';
 
-type Props = {
-    bookingId: string,
-    userId: string,
-    amount: number
-}
+
 
 const PaymentDetailsForm = () => {
+    const bookingId = useParams().id;
 
+    const { data: booking, isLoading, error } = useGetBookingById(bookingId as string)
 
     const { mutate, isPending } = useCreatePayment()
     const handleSubmit = () => {
+        if (!booking) return;
         mutate({
-            // bookingId,
-            // userId,
-            // paymentMethod: payment,
-            // amount,
+            bookingId: booking?._id,
+            userId: booking?.user?._id,
+            paymentMethod: payment,
+            amount: booking?.totalPrice,
+            payNow: true
         },
         )
 

@@ -1,9 +1,14 @@
 'use client'
 import { useBookingStore } from '@/stores/booking-store'
+import { BookingStatus } from '@/types'
 import { Chip, Progress } from '@heroui/react'
 
-const Indicator = () => {
-    const stage = useBookingStore(s => s.stage)
+type Prop = {
+    status: BookingStatus
+}
+
+const Indicator = ({ status }: Prop) => {
+    const stage = status === "PENDING" ? 2 : status === "CONFIRMED" ? 3 : 1
 
     return (
         <div className=' relative h-fit '>

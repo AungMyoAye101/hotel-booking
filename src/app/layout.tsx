@@ -29,7 +29,7 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const refresh_token = (await cookies()).get("refresh_token")?.value;
+
 
   return (
     <html lang="en">
@@ -39,7 +39,7 @@ export default async function RootLayout({
 
           <Header />
           <div className="max-w-7xl mx-auto">
-            <AuthInitializer token={refresh_token} />
+            <AuthInitializer />
             {children}
           </div>
           <Footer />
