@@ -24,7 +24,9 @@ const Booking = ({ children }: { children: ReactNode }) => {
           <Indicator status={booking?.status} />
           <main className="flex flex-col md:flex-row gap-6">
 
-            <BookingDetail booking={booking} />
+            {
+              booking.status !== "CONFIRMED" && <BookingDetail booking={booking} />
+            }
 
 
             <div className="flex-1">
