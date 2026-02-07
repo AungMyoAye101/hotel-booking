@@ -4,7 +4,7 @@ import { useGetBookingById } from '@/hooks/use-booking';
 import { useCreatePayment } from '@/hooks/use-payment';
 
 import { PaymentMethodType } from '@/types';
-import { Button, Card, CardBody, CardHeader, DatePicker, Input } from '@heroui/react'
+import { Button, Card, CardBody, CardHeader, cn, DatePicker, Input, Radio, RadioGroup } from '@heroui/react'
 
 import Image from 'next/image';
 import { useParams } from 'next/navigation';
@@ -15,7 +15,22 @@ import { useState } from 'react';
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { PaymentInput, paymentSchema } from '@/validations/payment-schmea';
-const mobileBanks = ["KBZPay", "WavePay", "AyaPay", "CBPay"];
+const mobileBanks = [
+    {
+        name: "KBZ pay",
+        image: "/kbz.webp"
+    },
+    {
+        name: "AYA pay",
+        image: "/aya.webp"
+    },
+    {
+        name: "WAVE pay",
+        image: "/wave.webp"
+    },
+
+];
+
 const paymentMethodOptions = [
     {
         method: "CARD",
@@ -56,6 +71,7 @@ const PaymentDetailsForm = () => {
 
     }
     const [payment, setPayment] = useState<PaymentMethodType>('CARD')
+    const [mobile, setMobile] = useState("KBZ pay")
 
     return (
         <section>
@@ -118,7 +134,7 @@ const PaymentDetailsForm = () => {
                     {
                         payment === "CARD" &&
                         <div className='py-4 space-y-4 my-4'>
-                            <Input type='text' placeholder='123 456 789' label="Card number" labelPlacement='outside' radius='sm' />
+                            <Input type='text' placeholder='1111 2222 3333 4444' label="Card number" labelPlacement='outside' radius='sm' />
                             <div className='flex justify-between gap-4'>
 
                                 <DatePicker label='Expired date' labelPlacement='outside' radius='sm' />
@@ -129,24 +145,74 @@ const PaymentDetailsForm = () => {
                     }
 
                     {
-                        payment === "MOBILE_BANKING" && <div className="grid grid-cols-2 gap-4 py-4">
-                            {mobileBanks.map((bank) => (
-                                <Card
-                                    key={bank}
-                                    isPressable
+                        payment === "MOBILE_BANKING" &&
+                        <div className='space-y-4 py-4  my-4'>
+                            <Input type='text' placeholder='name' label="Account name" labelPlacement='outside' radius='sm' />
 
-                                    className={`p-4 text-center border-2 border-primary`}
-                                    shadow='sm'
+                            <div className='space-y-2'>
+                                <p className='text-sm'>Choose a provider</p>
+                                <div className="flex gap-2">
+                                    {mobileBanks.map((bank) => (
+                                        <Card
+                                            key={bank.name}
+                                            isPressable
+                                            onPress={() => setMobile(bank.name)}
+                                            className={`p-0 overflow-hidden border-2 ${mobile === bank.name ? 'border-success' : ' border-primary-100'}`}
+                                            shadow='sm'
 
-                                >
-                                    {bank}
-                                </Card>
-                            ))}
+                                        >
+                                            <Image
+                                                src={bank.image}
+                                                alt={bank.name + "icon"}
+                                                width={45}
+                                                height={45}
+                                                className='object-cover aspect-square'
+                                            />
+
+
+                                        </Card>
+                                    ))}
+                                </div>
+                            </div>
+
                         </div>
                     }
 
-                    <div className='my-4'>
+                    {
+                        payment === "BANK" &&
+                        <div className='flex flex-col gap-4 py-4  my-4'>
+                            <Input type='text' placeholder='name' label="Account name" labelPlacement='outside' radius='sm' />
+                            <Input type='text' placeholder='1111 2222 3333 4444' label="Card number" labelPlacement='outside' radius='sm' />
 
+                        </div>
+                    }
+                    <div className='my-4 space-y-4'>
+                        <RadioGroup orientation="horizontal" >
+                            <Radio value={"paynow"}
+                                size='sm'
+                                classNames={{
+                                    base: cn(
+                                        'mr-2 flex item-center gap-2  py-1.5 px-3  rounded-lg bg-slate-200 border-transparent',
+                                        "data-[selected=true]:border-primary data-[selected=true]:bg-primary-100",
+                                    )
+                                }}
+
+
+                            >Pay Now</Radio>
+                            <Radio value={"payAtProperty"}
+                                size='sm'
+                                classNames={{
+                                    base: cn(
+                                        'flex item-center gap-2  py-1.5 px-3   rounded-lg bg-slate-200 border-transparent',
+                                        "data-[selected=true]:border-primary data-[selected=true]:bg-primary-100",
+                                    )
+                                }}
+
+                            >
+                                Pay at property
+
+                            </Radio>
+                        </RadioGroup>
 
                         <label htmlFor='secure' className=' flex items-center  gap-1'>
                             <input type='checkbox' id='secure' />

@@ -31,7 +31,7 @@ const refreshToken = async (token: string): Promise<RefreshResult | null> => {
 
                 if (!res.ok) return null;
                 const data = await res.json();
-
+                console.log("refreshed")
                 return {
                     access_token: data.result.token,
                     setCookie: res.headers.getSetCookie()
