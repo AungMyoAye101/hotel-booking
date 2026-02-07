@@ -90,19 +90,19 @@ const BookingDetail = ({ booking }: Props) => {
 
                 </CardHeader>
                 <CardBody className='pt-2 pb-4 grid grid-cols-2 gap-2'>
-                    <div className='bg-slate-200 p-2 rounded flex-col gap-2'>
+                    <div className='bg-slate-200 p-2 rounded-lg flex-col gap-2'>
                         <p>Check In </p>
                         <p className='font-semibold'>{new Date(booking.checkIn).toDateString()}</p>
                     </div>
-                    <div className='bg-slate-200 p-2 rounded flex-col gap-2'>
+                    <div className='bg-slate-200 p-2 rounded-lg flex-col gap-2'>
                         <p>Check Out </p>
                         <p className='font-semibold'>{new Date(booking.checkOut).toDateString()}</p>
                     </div>
-                    <div className='bg-slate-200 p-2 rounded flex-col gap-2'>
+                    <div className='bg-slate-200 p-2 rounded-lg flex-col gap-2'>
                         <p>Quantity </p>
                         <p className='font-semibold'>{booking.quantity}</p>
                     </div>
-                    <div className='bg-slate-200 p-2 rounded flex-col gap-2 border border-warning-400'>
+                    <div className='bg-slate-200 p-2 rounded-lg flex-col gap-2 border border-warning-400'>
                         <p>Price</p>
                         <p className='font-semibold text-xl text-amber-500'>{booking.totalPrice} $</p>
                     </div>
