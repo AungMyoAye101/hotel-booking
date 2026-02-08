@@ -17,12 +17,11 @@ type Props = {
 const BookingInfo = () => {
     const { bookingId } = useParams()
     const { data: booking, isLoading } = useGetBookingById(bookingId as string)
-
     if (isLoading) {
-        return <section className="flex justify-center mt-14 ">
-            <div className="w-full max-w-sm">
+        return <section className="flex justify-center mt-14 w-full min-h-screen">
+            <div className="w-full max-w-sm space-y-4">
 
-                <Skeleton className="w-full max-w-md rounded-lg " />
+                <Skeleton className="w-full h-96 max-w-md rounded-lg " />
                 <div className="flex gap-4">
                     <Skeleton className="h-12 w-full rounded" />
                     <Skeleton className="h-12 w-full rounded" />
