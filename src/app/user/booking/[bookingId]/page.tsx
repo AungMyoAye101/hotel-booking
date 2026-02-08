@@ -3,7 +3,7 @@ import BookingInfo from '@/components/booking/booking-info'
 
 const page = () => {
     return (
-        <section className='mt-24 '>
+        <section className='min-h-screen flex justify-center py-12 mt-12'>
             <BookingInfo />
         </section>
     )
