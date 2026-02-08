@@ -48,11 +48,14 @@ export const useGetBookingById = (bookingId: string) => {
 
 export const useUpdateBooking = () => {
     const router = useRouter();
+    const qc = useQueryClient()
     return useMutation({
         mutationKey: ['update_booking'],
         mutationFn: updateBooking,
         onSuccess: (data) => {
-
+            qc.invalidateQueries({
+                queryKey: ['booking_by_id', data._id]
+            })
             addToast({
                 title: "Update booking successful.",
                 color: 'success'

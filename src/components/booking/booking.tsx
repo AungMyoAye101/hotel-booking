@@ -2,8 +2,9 @@
 import { ReactNode } from "react"
 import BookingDetail from "./booking-detail"
 import Indicator from "./indicator"
-import { useParams, useRouter } from "next/navigation";
+import { useParams } from "next/navigation";
 import { useGetBookingById } from "@/hooks/use-booking";
+import BookingLoading from "./booking-loading";
 
 
 
@@ -11,11 +12,10 @@ import { useGetBookingById } from "@/hooks/use-booking";
 const Booking = ({ children }: { children: ReactNode }) => {
   const bookingId = useParams().id;
 
-  const { data: booking, isLoading, error } = useGetBookingById(bookingId as string)
+  const { data: booking, isLoading } = useGetBookingById(bookingId as string)
 
-  console.log(booking)
   if (isLoading) {
-    return <p>loading...</p>
+    return <BookingLoading />
   }
   return (
     <section className="py-24 space-y-6 px-4">

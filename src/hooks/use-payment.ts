@@ -5,14 +5,16 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
 import { useRouter } from "next/navigation"
 
 export const useCreatePayment = () => {
-
-    const router = useRouter()
+    const qc = useQueryClient();
+    const router = useRouter();
     return useMutation({
         mutationKey: ['create_payment'],
         mutationFn: createPayment,
         onSuccess: (data) => {
-
-            router.replace(`/booking/${data.bookingId}/complete`)
+            qc.invalidateQueries({
+                queryKey: ['booking_by_id', data._id]
+            })
+            router.push(`/booking/${data.bookingId}/complete`)
         },
         onError: (error) => {
             console.log(error)

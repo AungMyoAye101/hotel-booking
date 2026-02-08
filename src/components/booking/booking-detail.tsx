@@ -48,7 +48,7 @@ const BookingDetail = ({ booking }: Props) => {
                         <p className='flex flex-wrap items-center  gap-1'>
                             <Map size={16} />
                             <span className='font-semibold'>
-                                {booking?.hotel.city}
+                                {booking?.hotel?.city}
                             </span>
                             city
 
@@ -71,7 +71,7 @@ const BookingDetail = ({ booking }: Props) => {
                     <h2 className='head-1'>{booking?.room?.name}</h2>
                     <p className='flex gap-1 items-center '>
                         <BedDouble size={16} />
-                        Bed Type : {booking?.room?.bedTypes}
+                        Bed Type : {booking?.room?.bedType}
                     </p>
                     <div>
                         <span className='text-warning-500 text-lg font-semibold'>

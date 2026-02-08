@@ -92,7 +92,7 @@ const PaymentDetailsForm = () => {
                         {
                             paymentMethodOptions.map(value => (
                                 <Card
-
+                                    key={value.method}
                                     isPressable
                                     onPress={() => setPayment(value.method as PaymentMethodType)}
                                     className={`

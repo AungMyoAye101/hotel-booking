@@ -38,7 +38,7 @@ export type RoomType = {
     hotelId: string,
     totalRooms: number,
     photo?: photoType,
-    bedTypes: Bed_Types
+    bedType: Bed_Types
 }
 
 export interface BookingRoomType extends RoomType {

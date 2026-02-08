@@ -5,8 +5,11 @@ import LoadingSpinner from "@/components/ui/spinner";
 
 const Loading = () => {
     return (
-        <section className="h-screen bg-white/60 flex justify-center items-center">
+        <section className="h-screen w-full bg-white/60 flex justify-center items-center">
+
+
             <LoadingSpinner />
+
         </section>
     )
 }
