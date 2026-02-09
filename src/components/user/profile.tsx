@@ -1,7 +1,15 @@
 "use client";
 
-import { Avatar, Card, CardBody, CardHeader, Divider, Tab, Tabs, } from '@heroui/react'
-
+import {
+    Avatar,
+    Card,
+    CardBody,
+    CardHeader,
+    Divider,
+    Skeleton,
+    Tab,
+    Tabs,
+} from '@heroui/react'
 import UserInfoInput from './user-input';
 import { useGetUserById } from '@/hooks/use-user';
 
@@ -12,10 +20,11 @@ type props = {
 const Profile = ({ id }: props) => {
 
     const { data: user, isLoading } = useGetUserById(id);
+
     if (isLoading) {
-        return <p>Loading....</p>
+        return <Skeleton className='rounded-lg mx-auto w-full h-screen max-w-5xl ' />
     }
-    console.log(user)
+
     return (
         <Card className="rounded-2xl shadow-md border border-slate-200">
             {/* Header */}

@@ -25,8 +25,7 @@ const BookingDetail = ({ booking }: Props) => {
                             src={'/hotel-bg.png'}
                             alt="hotel photo"
                             fill
-                            width={400}
-                            height={260}
+
                             className='rounded-lg'
                         />
                     </div>

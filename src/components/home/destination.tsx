@@ -23,7 +23,7 @@ const Destination = () => {
                 <Button isIconOnly
                     variant='solid'
                     radius="full"
-                    className="absolute left-0 top-1/2 bottom-1/2 z-10"
+                    className="absolute left-0 top-1/2 bottom-1/2 z-20"
                     onPress={() => handleSlide(false)}
                 ><ArrowLeft /></Button>
 
@@ -32,16 +32,16 @@ const Destination = () => {
                     className='flex gap-4 overflow-hidden overflow-x-scroll no-scrollbar px-4'>
                     {
                         Array(4).fill(null).map((_, i) => (
-                            <Card key={i} radius='sm' className='min-w-xs'>
+                            <Card key={i} radius='sm' shadow='sm' className='min-w-xs border border-slate-300'>
                                 <CardBody className='p-0'>
                                     <Image
                                         src={'/hotel-bg.png'}
                                         alt='hotel image'
-                                        width={300}
-                                        height={240}
-                                        className='aspect-video rounded-md'
+                                        width={400}
+                                        height={260}
+                                        className=' rounded-md w-full object-cover '
                                     />
-                                    <div className='flex flex-col gap-2 p-4'>
+                                    <div className='flex flex-col gap-1 p-4'>
                                         <h1 className='text-lg font-bold'>Yangon</h1>
                                         <p className=''>120 + hotels</p>
                                         <Button variant='bordered' className='text-primary border-primary bg-blue-50'>

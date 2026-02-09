@@ -1,18 +1,17 @@
 'use client';
 
 import { useGetAllHotels } from "@/hooks/use-hotel";
-import { hotelType } from "@/types/hotel-types";
-import { Card, CardBody, Button, Chip } from "@heroui/react";
+import { Card, CardBody, Button, Chip, Skeleton } from "@heroui/react";
 import { ArrowLeft, ArrowRight, Star } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { useRef } from "react";
 
-// { hotels }: { hotels: hotelType[] }
+
 
 export default function HotelCardList() {
 
-    const { data: hotels, isLoading, error } = useGetAllHotels();
+    const { data: hotels, isLoading, isError, error } = useGetAllHotels();
 
 
 
@@ -29,6 +28,36 @@ export default function HotelCardList() {
 
     }
 
+    if (isLoading) {
+        return <section className="flex overflow-hidden flex-nowrap gap-4">
+            {
+                Array(6).fill(null).map((_, i) => (
+                    <Card key={i} className=" min-w-xs w-full max-w-sm ">
+                        <CardBody className="p-0">
+                            <Skeleton className="w-full h-52 rounded-lg" />
+                            <div className="space-y-2 p-4">
+                                <div className="flex justify-between">
+                                    <Skeleton className="w-32 h-6 rounded-lg" />
+                                    <Skeleton className="w-24 h-6 rounded-lg" />
+                                </div>
+                                <Skeleton className="w-32 h-6 rounded-lg" />
+                                <Skeleton className="w-32 h-6 rounded-lg" />
+                                <div className="flex justify-between">
+                                    <Skeleton className="w-32 h-6 rounded-lg" />
+                                    <Skeleton className="w-20 h-6 rounded-lg" />
+                                </div>
+                            </div>
+                        </CardBody>
+                    </Card>
+                ))
+            }
+        </section>
+    }
+
+    if (isError || !hotels) {
+        console.warn(error?.message)
+        throw new Error("Failed to load hotels.")
+    }
     return (
         <section className="py-12 space-y-6 ">
             <h2 className="head-1 text-black">Featured stays</h2>
@@ -47,7 +76,7 @@ export default function HotelCardList() {
                     className="flex gap-4 overflow-hidden overflow-x-scroll no-scrollbar px-4">
 
                     {
-                        hotels && hotels.map(hotel => (
+                        hotels.map(hotel => (
                             <Card
                                 className="min-w-xs border-2 border-slate-200"
                                 shadow='sm'

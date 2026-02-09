@@ -50,6 +50,7 @@ const paymentMethodOptions = [
     },
 ]
 
+const cardRegex = /^\d{4} \d{4} \d{4} \d{4}$/;
 type Prop = {
     booking: BookingInfoType
 }
@@ -152,11 +153,44 @@ const PaymentDetailsForm = ({ booking }: Prop) => {
                     {
                         payment === "CARD" &&
                         <div className='py-4 space-y-4 my-4'>
-                            <Input type='text' placeholder='1111 2222 3333 4444' label="Card number" labelPlacement='outside' radius='sm' />
+                            <Input type='text'
+                                placeholder='xxxx xxxx xxxx xxxx'
+                                label="Card number"
+                                labelPlacement='outside'
+                                radius='sm'
+                                isRequired
+                                validate={(value) => {
+                                    if (!cardRegex.test(value)) return "Invalid card number"
+                                }}
+                            />
                             <div className='flex justify-between gap-4'>
 
-                                <DatePicker label='Expired date' labelPlacement='outside' radius='sm' />
-                                <Input type='text' placeholder='CVC' label="Security code" labelPlacement='outside' radius='sm' />
+                                <Input
+                                    type='text'
+                                    name='expired'
+                                    label='Expired date'
+                                    labelPlacement='outside'
+                                    placeholder='MM/YY'
+                                    radius='sm'
+                                    isRequired
+                                    validate={(value) => {
+                                        const regex = /^(0[1-9]|1[0-2])\.\d{2}$/;
+                                        if (!regex.test(value)) return "Use MM.YY format";
+                                        return null;
+                                    }}
+                                />
+                                <Input type='text'
+                                    placeholder='CVC'
+                                    label="Security code"
+                                    labelPlacement='outside'
+                                    radius='sm'
+                                    isRequired
+                                    validate={(value) => {
+                                        if (value.length !== 3 || typeof Number(value) !== "number") {
+                                            return "Invalid CVC fromat."
+                                        }
+                                    }}
+                                />
                             </div>
 
                         </div>
@@ -165,7 +199,16 @@ const PaymentDetailsForm = ({ booking }: Prop) => {
                     {
                         payment === "MOBILE_BANKING" &&
                         <div className='space-y-4 py-4  my-4'>
-                            <Input type='text' placeholder='name' label="Account name" labelPlacement='outside' radius='sm' />
+                            <Input
+                                type='text'
+                                placeholder='name'
+                                label="Account name"
+                                labelPlacement='outside'
+                                radius='sm'
+                                isRequired
+                                validate={(value) => {
+                                    if (value.length < 2) return "Name is too short"
+                                }} />
 
                             <div className='space-y-2'>
                                 <p className='text-sm'>Choose a provider</p>
@@ -199,8 +242,27 @@ const PaymentDetailsForm = ({ booking }: Prop) => {
                     {
                         payment === "BANK" &&
                         <div className='flex flex-col gap-4 py-4  my-4'>
-                            <Input type='text' placeholder='name' label="Account name" labelPlacement='outside' radius='sm' />
-                            <Input type='text' placeholder='1111 2222 3333 4444' label="Card number" labelPlacement='outside' radius='sm' />
+                            <Input
+                                type='text'
+                                placeholder='name'
+                                label="Account name"
+                                labelPlacement='outside'
+                                radius='sm'
+                                isRequired
+                                validate={(value) => {
+                                    if (value.length < 2) return "Name is too short"
+                                }} />
+                            <Input
+                                type='text'
+                                placeholder='xxxx xxxx xxxx xxxx'
+                                label="Card number"
+                                labelPlacement='outside'
+                                radius='sm'
+                                isRequired
+                                validate={(value) => {
+                                    if (!cardRegex.test(value)) return "Invalid card number"
+                                }}
+                            />
 
                         </div>
                     }
