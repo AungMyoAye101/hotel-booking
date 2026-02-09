@@ -4,17 +4,15 @@ import { useGetBookingById } from '@/hooks/use-booking';
 import { useCreatePayment } from '@/hooks/use-payment';
 
 import { PaymentMethodType } from '@/types';
-import { Button, Card, CardBody, CardHeader, cn, DatePicker, Input, Radio, RadioGroup } from '@heroui/react'
+import { addToast, Button, Card, CardBody, CardHeader, cn, DatePicker, Input, Radio, RadioGroup } from '@heroui/react'
 
 import Image from 'next/image';
 import { useParams } from 'next/navigation';
 
 import { useState } from 'react';
 
+import { createPaymentSchema, PaymentInput, paymentSchema } from '@/validations/payment-schmea';
 
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { PaymentInput, paymentSchema } from '@/validations/payment-schmea';
 const mobileBanks = [
     {
         name: "KBZ pay",
@@ -56,23 +54,39 @@ const PaymentDetailsForm = () => {
 
     const { data: booking, isLoading, error } = useGetBookingById(bookingId as string)
 
-    const { mutate, isPending } = useCreatePayment()
-    const handleSubmit = () => {
-        if (!booking) return;
-        mutate({
-            bookingId: booking?._id,
-            userId: booking?.user?._id,
-            paymentMethod: payment,
-            amount: booking?.totalPrice,
-            payNow: true
-        },
-        )
+
+    //react hook form 
 
 
-    }
+
     const [payment, setPayment] = useState<PaymentMethodType>('CARD')
+    const [payNow, setPayNow] = useState("paynow")
+    const { mutate, isPending } = useCreatePayment()
+
+
+
+
     const [mobile, setMobile] = useState("KBZ pay")
 
+    const handlePayment = () => {
+        if (!booking) return;
+        const paymentData = {
+            bookingId: booking._id,
+            userId: booking.user._id,
+            paymentMethod: payment,
+            amount: booking.totalPrice,
+            payNow: payNow === "paynow" ? true : false
+        }
+
+        const { success, error, data } = createPaymentSchema.safeParse(paymentData);
+        console.log(data)
+        if (!success) {
+            addToast({
+                title: error.issues.map(e => e.message),
+                color: "danger"
+            })
+        }
+    }
     return (
         <section>
 
@@ -187,9 +201,15 @@ const PaymentDetailsForm = () => {
                         </div>
                     }
                     <div className='my-4 space-y-4'>
-                        <RadioGroup orientation="horizontal" >
-                            <Radio value={"paynow"}
+                        <RadioGroup orientation="horizontal"
+                            value={payNow}
+                            onValueChange={setPayNow}
+                        >
+                            <Radio
+
+                                value={"paynow"}
                                 size='sm'
+
                                 classNames={{
                                     base: cn(
                                         'mr-2 flex item-center gap-2  py-1.5 px-3  rounded-lg bg-slate-200 border-transparent',
@@ -235,7 +255,7 @@ const PaymentDetailsForm = () => {
                         color='primary'
                         radius='sm'
                         fullWidth
-                        onPress={() => handleSubmit()}
+                        onPress={() => handlePayment()}
                     >Proceed to Payment</Button>
 
                 </CardBody>

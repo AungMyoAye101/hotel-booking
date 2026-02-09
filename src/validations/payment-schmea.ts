@@ -1,5 +1,12 @@
 
-import { z } from "zod";
+import * as z from "zod";
+export const createPaymentSchema = z.object({
+    bookingId: z.string("Booking id is required."),
+    userId: z.string("user id is required."),
+    paymentMethod: z.enum(['CARD', 'MOBILE_BANKING', 'BANK'], "Invalid payment method."),
+    amount: z.number().positive(),
+    payNow: z.boolean(),
+})
 
 export const paymentSchema = z.discriminatedUnion("method", [
     z.object({
@@ -23,3 +30,4 @@ export const paymentSchema = z.discriminatedUnion("method", [
 ]);
 
 export type PaymentInput = z.infer<typeof paymentSchema>;
+export type CreatePaymentType = z.infer<typeof createPaymentSchema>

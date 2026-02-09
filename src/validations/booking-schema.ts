@@ -33,17 +33,9 @@ export const bookingSchema = z.object({
     quantity: z.
         number("Quantity is required,")
         .positive(),
-    // status: z
-    //     .enum(["PENDING", "CONFIRMED", "STAYED", "CANCELLED", "EXPIRED"])
-    //     .default("PENDING")
-    //     .optional(),
-    // checkIn: z
-    //     .coerce.date().refine((date) => {
-    //         const today = new Date();
-    //         today.setHours(0, 0, 0, 0);
-    //         return date >= today;
-    //     }, "Check-in cannot be in the past."),
-    // checkOut: z.coerce.date()
+    guest: z
+        .number("Guest is required")
+        .positive(),
     checkIn: z
         .iso.datetime("CheckIn must be valid date string.")
         .optional(),

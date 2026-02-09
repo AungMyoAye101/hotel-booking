@@ -108,6 +108,7 @@ const AvaliableRooms = ({ hotelId }: Props) => {
             hotelId,
             roomId,
             quantity,
+            guest,
             totalPrice: price * quantity,
             checkIn,
             checkOut,
@@ -221,7 +222,7 @@ const AvaliableRooms = ({ hotelId }: Props) => {
 
                                         <div className="flex gap-4 text-sm">
                                             <span className="flex items-center gap-1">
-                                                <BedDouble size={16} /> {room.bedTypes} Bed
+                                                <BedDouble size={16} /> {room.bedType} Bed
                                             </span>
                                             <span className="flex items-center gap-1">
                                                 <UsersRound size={16} /> {room.maxPeople} guests
