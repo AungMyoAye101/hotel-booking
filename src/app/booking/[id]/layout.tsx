@@ -1,5 +1,4 @@
 
-import Booking from '@/components/booking/booking'
 import { ReactNode } from 'react'
 
 type Props = {
@@ -7,7 +6,9 @@ type Props = {
 }
 
 const layout = ({ children }: Props) => {
-    return <Booking>{children}</Booking>
+    return <section className="py-24 space-y-6 px-4">
+        {children}
+    </section>
 }
 
 export default layout

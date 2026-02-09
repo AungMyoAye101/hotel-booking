@@ -13,6 +13,7 @@ import {
     Input,
     Select,
     SelectItem,
+    Spinner,
     Tooltip
 } from '@heroui/react'
 
@@ -119,6 +120,11 @@ const AvaliableRooms = ({ hotelId }: Props) => {
 
     return (
         <section className="py-4 space-y-4 mb-6">
+            {
+                isPending && <section className='absolute inset-0 flex justify-center items-center bg-white/70'>
+                    <Spinner size='lg' variant='gradient' />
+                </section>
+            }
             <h1 className="head-1">Available Rooms</h1>
 
             {/* Filters */}

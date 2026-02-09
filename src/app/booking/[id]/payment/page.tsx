@@ -1,8 +1,8 @@
-import PaymentDetailsForm from '@/components/booking/payment-details'
+import { BookingPaymentProvider } from '@/components/booking'
+
 
 
 const page = () => {
-    return <PaymentDetailsForm />
+    return <BookingPaymentProvider />
 }
-
 export default page

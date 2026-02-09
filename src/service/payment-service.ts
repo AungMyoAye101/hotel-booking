@@ -1,10 +1,11 @@
 import api from "@/hooks/axios-api";
 import { APIResponse, createPaymentType, PaymentType, PaymentCreateType } from "@/types";
+import { CreatePaymentType } from "@/validations/payment-schmea";
 
 
-export const createPayment = async (payment: createPaymentType) => {
+export const createPayment = async (payment: CreatePaymentType) => {
 
-    const { data } = await api.post<APIResponse<{ payment: PaymentCreateType }>>(
+    const { data } = await api.post<APIResponse<{ payment: CreatePaymentType }>>(
         '/payment/create', payment
     )
     if (!data.success) {

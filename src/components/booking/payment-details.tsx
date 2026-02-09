@@ -3,7 +3,7 @@
 import { useGetBookingById } from '@/hooks/use-booking';
 import { useCreatePayment } from '@/hooks/use-payment';
 
-import { PaymentMethodType } from '@/types';
+import { BookingInfoType, PaymentMethodType } from '@/types';
 import { addToast, Button, Card, CardBody, CardHeader, cn, DatePicker, Input, Radio, RadioGroup } from '@heroui/react'
 
 import Image from 'next/image';
@@ -11,7 +11,7 @@ import { useParams } from 'next/navigation';
 
 import { useState } from 'react';
 
-import { createPaymentSchema, PaymentInput, paymentSchema } from '@/validations/payment-schmea';
+import { createPaymentSchema, CreatePaymentType, PaymentInput, paymentSchema } from '@/validations/payment-schmea';
 
 const mobileBanks = [
     {
@@ -49,10 +49,12 @@ const paymentMethodOptions = [
         slug: "pay via bank"
     },
 ]
-const PaymentDetailsForm = () => {
-    const bookingId = useParams().id;
 
-    const { data: booking, isLoading, error } = useGetBookingById(bookingId as string)
+type Prop = {
+    booking: BookingInfoType
+}
+const PaymentDetailsForm = ({ booking }: Prop) => {
+
 
 
     //react hook form 
@@ -79,13 +81,15 @@ const PaymentDetailsForm = () => {
         }
 
         const { success, error, data } = createPaymentSchema.safeParse(paymentData);
-        console.log(data)
+
         if (!success) {
             addToast({
                 title: error.issues.map(e => e.message),
                 color: "danger"
             })
         }
+
+        mutate(data as CreatePaymentType)
     }
     return (
         <section>

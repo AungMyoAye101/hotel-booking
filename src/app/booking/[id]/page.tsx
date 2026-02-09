@@ -1,11 +1,11 @@
-import UserInfoForm from "@/components/booking/user-info-form"
+
+import { BookingCreateProvider } from "@/components/booking"
 
 
 
-const page = async () => {
+const page = () => {
 
-
-    return <UserInfoForm />
+    return <BookingCreateProvider />
 }
 
 export default page

@@ -1,10 +1,8 @@
-import React from 'react'
-import Complete from './components'
+import { BookingCompleteProvider } from "@/components/booking"
+
 
 const page = () => {
-    return (
-        <Complete />
-    )
+    return <BookingCompleteProvider />
 }
 
 export default page

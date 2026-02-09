@@ -1,30 +1,20 @@
 'use client';
 
-import { useCreateBooking, useUpdateBooking } from '@/hooks/use-booking';
-import { useUpdateUser } from '@/hooks/use-user';
+import { useUpdateBooking } from '@/hooks/use-booking';
 import { useAuth } from '@/stores/auth-store';
-import { useBookingStore } from '@/stores/booking-store';
-import { BookingRoomType, UpdateBookingType } from '@/types';
-import { User } from '@/types/user-type';
+import { UpdateBookingType } from '@/types';
 import { userSchemaType, userSchmea } from '@/validations/user-schema';
-import { addToast, Button, Card, CardBody, CardFooter, CardHeader, Input } from '@heroui/react'
+import { addToast, Button, Card, CardBody, CardHeader, Input } from '@heroui/react'
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useParams, useRouter } from 'next/navigation';
-import React from 'react'
+import { useParams } from 'next/navigation';
+
 import { useForm } from 'react-hook-form';
-type Props = {
-    roomId: string,
-    hotelId: string,
-    checkIn: string,
-    checkOut: string,
-    quantity: number,
-    price: number,
-}
+
 
 const UserInfoForm = () => {
     const user = useAuth(s => s.user)
-    const isAuthenticated = useAuth(s => s.isAuthenticated)
-    const bookingId = useParams().id as string;
+
+    const bookingId = useParams<{ id: string }>().id;
     const { register, handleSubmit, formState: { errors } } = useForm<userSchemaType>({
         resolver: zodResolver(userSchmea),
         defaultValues: {
@@ -37,17 +27,19 @@ const UserInfoForm = () => {
     })
     const { mutate, isPending } = useUpdateBooking()
     const onSubmit = async (data: userSchemaType) => {
-        if (!bookingId && !data) {
-            return
+        if (!bookingId || !data) {
+            return addToast({
+                title: "Booking Id or data is required.",
+                color: "warning"
+            })
         }
 
 
         const bookingData = {
-
             status: "PENDING",
             ...data
-
         }
+        console.log(bookingData)
         mutate({ bookingId, booking: bookingData as UpdateBookingType })
 
     }
