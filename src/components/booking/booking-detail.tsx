@@ -1,6 +1,4 @@
-import { useGetBookingById } from '@/hooks/use-booking'
-import { useGetRoomById } from '@/hooks/use-room'
-import { BookingInfoType, BookingRoomType } from '@/types'
+import { BookingInfoType } from '@/types'
 import { Card, CardBody, CardHeader } from '@heroui/react'
 import { BedDouble, Check, CircleDollarSign, Map, MapPin } from 'lucide-react'
 import Image from 'next/image'
@@ -27,7 +25,8 @@ const BookingDetail = ({ booking }: Props) => {
                             src={'/hotel-bg.png'}
                             alt="hotel photo"
                             fill
-
+                            width={400}
+                            height={260}
                             className='rounded-lg'
                         />
                     </div>

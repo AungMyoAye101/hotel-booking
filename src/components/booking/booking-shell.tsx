@@ -6,6 +6,7 @@ import { useParams } from "next/navigation";
 import { useGetBookingById } from "@/hooks/use-booking";
 import BookingLoading from "./booking-loading";
 import { BookingInfoType } from "@/types";
+import { Skeleton } from "@heroui/skeleton";
 
 
 type Prop = {
@@ -22,7 +23,15 @@ const BookingShell = ({
   const { data: booking, isLoading, isError, error } = useGetBookingById(bookingId as string)
 
   if (isLoading) {
-    return <BookingLoading />
+    return <section className="flex gap-4 ">
+      <div className="flex flex-col gap-4 ">
+        <Skeleton className="w-sm md:max-w-md h-60 rounded-lg" />
+        <Skeleton className="w-sm md:max-w-md h-60 rounded-lg" />
+        <Skeleton className="w-sm md:max-w-md h-60 rounded-lg" />
+        <Skeleton className="w-sm md:max-w-md h-60 rounded-lg" />
+      </div>
+      <Skeleton className="flex-1 h-100 rounded-lg" />
+    </section>
   }
   if (isError || !booking) {
     console.warn(error)

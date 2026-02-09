@@ -63,7 +63,7 @@ export const useUpdateBooking = () => {
 
             })
 
-            router.replace(`/booking/${data._id}/payment`, { scroll: false })
+            router.push(`/booking/${data._id}/payment`, { scroll: false })
         },
         onError: (error
         ) => {

@@ -2,7 +2,7 @@ import { Star } from 'lucide-react'
 
 
 const FiveStars = ({ count }: { count: number }) => {
-    console.log(count)
+
     return (
         <div className='flex items-center gap-0.5'>
             {

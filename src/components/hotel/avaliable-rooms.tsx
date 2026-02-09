@@ -69,8 +69,8 @@ const AvaliableRooms = ({ hotelId }: Props) => {
     const [quantity, setQuantity] = useState(1)
 
 
-    const router = useRouter()
-    const { isAuthenticated, user } = useAuth()
+
+    const { isAuthenticated } = useAuth()
 
     /* ----------------------------- fetch rooms ----------------------------- */
 
@@ -119,12 +119,8 @@ const AvaliableRooms = ({ hotelId }: Props) => {
     }
 
     return (
-        <section className="py-4 space-y-4 mb-6">
-            {
-                isPending && <section className='absolute inset-0 flex justify-center items-center bg-white/70'>
-                    <Spinner size='lg' variant='gradient' />
-                </section>
-            }
+        <section className="py-4 space-y-4 mb-6 relative">
+
             <h1 className="head-1">Available Rooms</h1>
 
             {/* Filters */}
@@ -153,7 +149,11 @@ const AvaliableRooms = ({ hotelId }: Props) => {
                     color="primary"
                 >Apply</Button>
             </div>
-
+            {
+                isPending && <section className='absolute inset-0  z-10 flex justify-center items-center bg-white/80'>
+                    <Spinner size='lg' variant='spinner' />
+                </section>
+            }
             {/* Empty state */}
             {!isLoading && rooms.length === 0 && <Empty />}
 

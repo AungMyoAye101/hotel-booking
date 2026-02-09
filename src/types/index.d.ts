@@ -123,6 +123,7 @@ export type BookingInfoType = {
     room: Partial<RoomType>,
     status: BookingStatus
     totalPrice: number,
+    guest: number,
     user: {
         _id: string,
         name?: string,

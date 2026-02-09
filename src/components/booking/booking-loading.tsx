@@ -9,10 +9,7 @@ const BookingLoading = () => {
             <Skeleton className="w-60 h-6 rounded-lg" />
             <Skeleton className="w-60 h-6 rounded-lg " />
             <div className="flex flex-col md:flex-row gap-12 ">
-
-
                 <div className="space-y-6 w-full max-w-lg">
-
                     <Skeleton className=" h-96 rounded-lg" />
                     <Skeleton className=" h-96 rounded-lg" />
                     <Skeleton className=" h-40 rounded-lg" />
