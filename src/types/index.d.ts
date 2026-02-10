@@ -164,3 +164,10 @@ export type ReceiptType = {
     amount: number,
     paidAt: Date,
 }
+
+export type ReviewType = {
+    userId: string,
+    hotelId: string,
+    review: string,
+    rating: number,
+}

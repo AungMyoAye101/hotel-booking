@@ -43,6 +43,7 @@ type Props = {
 const AvaliableRooms = ({ hotelId }: Props) => {
     const { updateParams, searchParams } = useUpdateParams();
     const userId = useAuth(s => s.user?._id);
+    console.log(userId, useAuth(s => s.user))
     const todayISO = useMemo(
         () => new Date().toISOString(),
         []
@@ -186,7 +187,7 @@ const AvaliableRooms = ({ hotelId }: Props) => {
                                         <div className='flex justify-between'>
                                             <h2 className="head-1 truncate line-clamp-1 text-wrap">{room.name}</h2>
 
-                                            <div className=''>
+                                            <div >
 
 
                                                 <Select

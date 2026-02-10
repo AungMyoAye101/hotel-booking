@@ -77,7 +77,7 @@ const HotelDetails = ({ hotel }: Props) => {
 
                     </div>
                 </div>
-                <HotelReview />
+                <HotelReview hotelId={hotel._id} />
 
             </div>
         </section>

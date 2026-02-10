@@ -48,7 +48,7 @@ const Header = () => {
                     </Link>
                 </div>
 
-                <div className='hidden sm:flex'>
+                <div className='flex'>
                     {
                         isAuthenticated
 
@@ -86,11 +86,7 @@ const Header = () => {
                     }
 
                 </div>
-                <div className='sm:hidden'>
-                    <Button variant='solid' radius='full' isIconOnly>
-                        <Menu />
-                    </Button>
-                </div>
+
             </nav >
         </header>
     )
