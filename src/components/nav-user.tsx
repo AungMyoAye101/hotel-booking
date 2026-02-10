@@ -1,10 +1,12 @@
 "use client";
+import { useLogout } from "@/hooks/use-auth";
 import { Button } from "@heroui/button"
 import { BookMarked, LogOut, User } from "lucide-react";
 import Link from "next/link"
 
 
 const NavUser = ({ id }: { id: string }) => {
+    const { mutate, isPending } = useLogout()
     return (
         <div className="w-60 p-4 rounded-lg bg-background flex flex-col gap-1">
 
@@ -18,7 +20,12 @@ const NavUser = ({ id }: { id: string }) => {
                 My bookings
             </Button>
 
-            <Button color="danger" radius="sm" startContent={<LogOut size={20} />} className="flex justify-start items-center">
+            <Button
+                isLoading={isPending}
+                onPress={() => mutate()}
+                color="danger"
+                radius="sm" startContent={<LogOut size={20} />}
+                className="flex justify-start items-center">
 
                 Logout
             </Button>

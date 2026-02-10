@@ -1,7 +1,7 @@
 
 'use client';
 
-import { login } from '@/hooks/use-auth';
+
 import { useAuth } from '@/stores/auth-store';
 import { APIResponse, AuthResType } from '@/types';
 import { User } from '@/types/user-type';
@@ -32,7 +32,7 @@ const Login = () => {
         setIsLoading(true)
         try {
             const { data } = await axios.post<APIResponse<User>>('/api/auth/login', fields, { withCredentials: true })
-            console.log(data, 'login')
+
             setUser(data.result)
             addToast({
                 title: data.message || "login success.",
@@ -40,9 +40,13 @@ const Login = () => {
             })
             reset()
             router.push('/')
-            return data.result;
-        } catch (error: unknown) {
+
+        } catch (error: any) {
             console.warn(error)
+            addToast({
+                title: error?.response?.data?.message || "Failed to login.",
+                color: 'danger'
+            })
             throw new Error("login failed.")
         } finally {
             setIsLoading(false)
@@ -50,7 +54,7 @@ const Login = () => {
 
     }
     return (
-        <section className='h-screen flex justify-end items-center'>
+        <section className='h-screen flex justify-center md:justify-end items-center px-4 '>
             <Image
                 src={'/hotel-bg.png'}
                 alt='hotel photo'

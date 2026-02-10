@@ -4,9 +4,11 @@
 import { BASE_URL } from '@/lib';
 import { useAuth } from '@/stores/auth-store';
 import type { APIResponse, AuthResType } from '@/types';
+import { User } from '@/types/user-type';
 import { registerSchema, registerType } from '@/validations/auth-schema';
 import { addToast, Button, Card, CardBody, CardHeader, Form, Input, toast } from '@heroui/react'
 import { zodResolver } from '@hookform/resolvers/zod';
+import axios from 'axios';
 import { Eye, EyeOff, Lock, Mail } from 'lucide-react';
 import Image from 'next/image'
 import Link from 'next/link';
@@ -15,7 +17,7 @@ import React, { useState } from 'react'
 import { useForm } from 'react-hook-form';
 
 const Signup = () => {
-    const { setToken, setUser } = useAuth(s => s)
+    const setUser = useAuth(s => s.setUser)
     const [isLoading, setIsLoading] = useState<boolean>(false);
     const [isVisible, setIsVisible] = useState<boolean>(false);
     const toggleVisible = () => setIsVisible(pre => !pre);
@@ -26,45 +28,33 @@ const Signup = () => {
         resolver: zodResolver(registerSchema)
     })
 
-    const onSubmit = async (data: registerType) => {
+    const onSubmit = async (fields: registerType) => {
         setIsLoading(true)
         try {
-            const res = await fetch(`${BASE_URL}/auth/register`, {
-                method: "POST",
-                headers: {
-                    "Content-type": "application/json"
-                },
-                body: JSON.stringify(data),
-                credentials: "include",
-            })
-            const responseData: APIResponse<AuthResType> = await res.json()
-            if (!res.ok) {
-                addToast({
-                    title: responseData.message || "Faild to create user.",
-                    color: 'danger'
-                })
-                throw new Error(responseData.message || "Faild to create user.")
-            }
+            const { data } = await axios.post<APIResponse<User>>('/api/auth/signup', fields, { withCredentials: true })
+
+            setUser(data.result)
             addToast({
-                title: responseData.message || "Sigup successful.",
+                title: data.message || "User account register successFul.",
                 color: 'success'
             })
-            setUser(responseData.result.user)
-            setToken(responseData.result.token || '')
             reset()
             router.push('/')
-            return responseData.result;
-        } catch (error: unknown) {
 
+        } catch (error: any) {
             console.warn(error)
-            throw new Error("Sigup failed.")
+            addToast({
+                title: error?.response?.data?.message || "Failed to Signup.",
+                color: 'danger'
+            })
+            throw new Error("Signup failed.")
         } finally {
             setIsLoading(false)
         }
 
     }
     return (
-        <section className='h-screen flex justify-end items-center p-4'>
+        <section className='h-screen flex justify-center  md:justify-end items-center p-4'>
             <Image
                 src={'/hotel-bg.png'}
                 alt='hotel photo'

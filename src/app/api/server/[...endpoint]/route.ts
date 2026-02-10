@@ -51,6 +51,7 @@ async function forward(req: NextRequest, accessToken?: string, refreshToken?: st
     const { pathname, search } = req.nextUrl;
 
     const endpoint = pathname.replace('/api/server', "") + search;
+    console.log(endpoint)
 
     const headers: Record<string, string> =
     {
@@ -91,6 +92,7 @@ const handler = async (req: NextRequest) => {
         );
 
     }
+
     const cookieStore = await cookies();
     const refresh_token = cookieStore.get("refresh_token")?.value;
     const access_token = cookieStore.get("access_token")?.value;

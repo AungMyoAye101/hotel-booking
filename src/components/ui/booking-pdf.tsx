@@ -2,6 +2,7 @@
 import { BookingInfoType } from '@/types';
 import { Document, Page, Text, View, StyleSheet, } from '@react-pdf/renderer';
 
+
 type Prop = {
     booking: BookingInfoType
 }
@@ -15,6 +16,7 @@ const styles = StyleSheet.create({
         fontSize: 11,
         fontFamily: "Helvetica",
         color: "#111827",
+        position: 'relative'
     },
 
     header: {
@@ -90,6 +92,7 @@ const BookingPDF = ({ booking }: Prop) => {
     return (
         <Document>
             <Page size="A4" style={styles.page}>
+
                 {/* Header */}
                 <View style={styles.header}>
                     <Text style={styles.brand}>Booking</Text>
@@ -98,6 +101,7 @@ const BookingPDF = ({ booking }: Prop) => {
                         <Text style={{ fontWeight: "bold", marginTop: 4 }}>{booking._id}</Text>
                     </View>
                 </View>
+
 
                 {/* Guest Info */}
                 <View style={styles.section}>
