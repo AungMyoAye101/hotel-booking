@@ -167,8 +167,20 @@ export type ReceiptType = {
 }
 
 export type ReviewType = {
+    _id: string,
+    userId: {
+        _id: string,
+        name: string,
+    },
+
+    review: string,
+    rating: number,
+    createdAt: Date
+}
+export type CreateReviewType = {
     userId: string,
     hotelId: string,
     review: string,
     rating: number,
+
 }

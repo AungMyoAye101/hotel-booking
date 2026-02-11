@@ -1,7 +1,7 @@
 import api from "@/hooks/axios-api";
-import { APIResponse, ReviewType } from "@/types";
+import { APIResponse, CreateReviewType, ReviewType } from "@/types";
 
-export const createReviewService = async (review: ReviewType) => {
+export const createReviewService = async (review: CreateReviewType) => {
     const { data } = await api.post<APIResponse<{ review: ReviewType }>>('/review/create', review)
 
     return data.result;
@@ -11,8 +11,10 @@ export const updateReviewService = async (review: ReviewType) => {
 
     return data.result;
 }
-export const getReviewService = async (hotelId: string) => {
-    const { data } = await api.get<APIResponse<{ reviews: ReviewType[] }>>('/review/' + hotelId)
+export const getReviewsByHotelIdService = async (hotelId: string) => {
+    const { data } = await api.get<APIResponse<ReviewType[]>>('/review/' + hotelId, {
+        params: { limit: 4 }
+    })
 
     return data.result;
 }

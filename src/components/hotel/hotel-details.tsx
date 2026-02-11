@@ -7,6 +7,7 @@ import HotelReview from "./hotel-review"
 import { hotelType } from "@/types/hotel-types"
 import Image from "next/image"
 import { AMENITIES } from "@/utils/amentits"
+import ReviewCard from "./review-card"
 
 
 
@@ -78,8 +79,8 @@ const HotelDetails = ({ hotel }: Props) => {
                     </div>
                 </div>
                 <HotelReview hotelId={hotel._id} />
-
             </div>
+            <ReviewCard hotelId={hotel._id} />
         </section>
     )
 }

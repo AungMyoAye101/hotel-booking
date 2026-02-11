@@ -1,4 +1,5 @@
-import { Card, Input } from '@heroui/react';
+import { Badge, Card, Input } from '@heroui/react';
+import { CheckIcon } from 'lucide-react';
 import Image from 'next/image';
 import { useState } from 'react';
 
@@ -130,27 +131,39 @@ export const MobileBankingInputs = () => {
                 <p className='text-sm'>Choose a provider</p>
                 <div className="flex gap-4">
                     {mobileBanks.map((bank) => (
-                        <Card
+                        <Badge
                             key={bank.name}
-                            isPressable
-                            onPress={() => setMobile(bank.name)}
-                            className={`p-0 overflow-hidden border-2 ${mobile === bank.name
-                                ? 'border-success'
-                                : ' border-primary-100'}
-                                                     `}
-                            shadow='sm'
+                            isOneChar
+                            isInvisible={mobile !== bank.name}
+                            color='success'
+                            content={<CheckIcon className='text-white' />}
+                            placement='top-right'
 
                         >
-                            <Image
-                                src={bank.image}
-                                alt={bank.name + "icon"}
-                                width={45}
-                                height={45}
-                                className='object-cover aspect-square'
-                            />
+                            <Card
+
+                                isPressable
+                                onPress={() => setMobile(bank.name)}
+                                className={`p-0 overflow-hidden border-2 ${mobile === bank.name
+                                    ? 'border-success'
+                                    : ' border-primary-100'}
+                                                     `}
+                                shadow='sm'
+
+                            >
 
 
-                        </Card>
+
+                                <Image
+                                    src={bank.image}
+                                    alt={bank.name + "icon"}
+                                    width={45}
+                                    height={45}
+                                    className='object-cover aspect-square'
+                                />
+
+                            </Card>
+                        </Badge>
                     ))}
                 </div>
             </div>
