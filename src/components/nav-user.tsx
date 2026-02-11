@@ -15,7 +15,7 @@ const NavUser = ({ id }: { id: string }) => {
 
                 Profile
             </Button>
-            <Button as={Link} href="/user/1213" radius="sm" startContent={<BookMarked size={20} />} className="flex justify-start items-center">
+            <Button as={Link} href="/user/booking" radius="sm" startContent={<BookMarked size={20} />} className="flex justify-start items-center">
 
                 My bookings
             </Button>

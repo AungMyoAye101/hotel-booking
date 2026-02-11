@@ -43,3 +43,9 @@ export const getBookingById = async (bookingId: string) => {
 
     return data.result.booking
 }
+
+export const getBookingByUseridService = async (userId: string) => {
+    const { data } = await api.get<APIResponse<{ booking: BookingInfoType[] }>>(`/booking/user/${userId}`)
+
+    return data.result.booking;
+}

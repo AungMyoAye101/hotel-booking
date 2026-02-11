@@ -1,4 +1,4 @@
-import { createBooking, getBookingById, updateBooking } from "@/service/booking-service"
+import { createBooking, getBookingById, getBookingByUseridService, updateBooking } from "@/service/booking-service"
 
 import { addToast } from "@heroui/react"
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
@@ -77,4 +77,13 @@ export const useUpdateBooking = () => {
         }
     })
 
+}
+
+
+export const useGetetBookingByUserId = (userId: string) => {
+    return useQuery({
+        queryKey: ['booking_by_userId', userId],
+        queryFn: () => getBookingByUseridService(userId),
+        enabled: !!userId
+    })
 }
