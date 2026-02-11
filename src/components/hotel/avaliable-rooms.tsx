@@ -1,9 +1,9 @@
 'use client'
 
-import { useMemo, useState, useCallback, FormEvent } from 'react'
-import { useRouter, useSearchParams } from 'next/navigation'
+import { useMemo, useState } from 'react'
+
 import Image from 'next/image'
-import Link from 'next/link'
+
 
 import {
     Button,
@@ -43,7 +43,7 @@ type Props = {
 const AvaliableRooms = ({ hotelId }: Props) => {
     const { updateParams, searchParams } = useUpdateParams();
     const userId = useAuth(s => s.user?._id);
-    console.log(userId, useAuth(s => s.user))
+
     const todayISO = useMemo(
         () => new Date().toISOString(),
         []
@@ -228,15 +228,16 @@ const AvaliableRooms = ({ hotelId }: Props) => {
 
 
                                         <div className="flex gap-4 text-sm">
-                                            <span className="flex items-center gap-1">
-                                                <BedDouble size={16} /> {room.bedType} Bed
+                                            <span className="flex items-center gap-1 capitalize">
+                                                <BedDouble size={16} /> {room.bedTypes} Bed
                                             </span>
                                             <span className="flex items-center gap-1">
                                                 <UsersRound size={16} /> {room.maxPeople} guests
                                             </span>
                                         </div>
 
-                                        <p className="text-danger">{room.totalRooms} rooms left</p>
+                                        <p className="text-danger">
+                                            {room.totalRooms - room.bookedCount!} rooms left</p>
 
                                         <div className="flex justify-between items-end">
                                             <div>

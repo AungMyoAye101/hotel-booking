@@ -131,6 +131,10 @@ const handler = async (req: NextRequest) => {
     }
 
     const data = await response.json()
+    if (!response.ok) {
+        return NextResponse.json(data, { status: data.status });
+    }
+
 
 
     return NextResponse.json(data, { status: 200 });

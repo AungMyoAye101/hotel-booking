@@ -3,13 +3,11 @@ import { APIResponse } from "@/types";
 import { User } from "@/types/user-type";
 
 export const currentUser = async () => {
-    try {
-        const { data } = await api.get<APIResponse<{ user: User }>>(`/auth/me`)
 
-        return data.result.user;
-    } catch (error) {
-        console.warn(error)
-    }
+    const { data } = await api.get<APIResponse<{ user: User }>>(`/auth/me`)
+
+    return data.result.user;
+
 }
 
 type updateUserType = {

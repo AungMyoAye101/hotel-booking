@@ -88,12 +88,10 @@ const UserInfoForm = () => {
                         isInvalid={!!errors.phone}
                         errorMessage={errors.phone?.message}
                         type='text'
-                        placeholder='phone'
+                        placeholder='+959xxxxxxx'
                         label="Phone"
                         labelPlacement='outside'
                         radius='sm'
-
-
                     />
                     <Input
                         {...register('city')}

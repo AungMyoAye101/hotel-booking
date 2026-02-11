@@ -9,25 +9,11 @@ import { addToast, Button, Card, CardBody, CardHeader, cn, DatePicker, Input, Ra
 import Image from 'next/image';
 import { useParams } from 'next/navigation';
 
-import { useState } from 'react';
+import { FormEvent, useState } from 'react';
 
 import { createPaymentSchema, CreatePaymentType, PaymentInput, paymentSchema } from '@/validations/payment-schmea';
+import { BankingInputs, CardInputs, MobileBankingInputs } from './payment-inputs';
 
-const mobileBanks = [
-    {
-        name: "KBZ pay",
-        image: "/kbz.webp"
-    },
-    {
-        name: "AYA pay",
-        image: "/aya.webp"
-    },
-    {
-        name: "WAVE pay",
-        image: "/wave.webp"
-    },
-
-];
 
 const paymentMethodOptions = [
     {
@@ -50,17 +36,11 @@ const paymentMethodOptions = [
     },
 ]
 
-const cardRegex = /^\d{4} \d{4} \d{4} \d{4}$/;
+
 type Prop = {
     booking: BookingInfoType
 }
 const PaymentDetailsForm = ({ booking }: Prop) => {
-
-
-
-    //react hook form 
-
-
 
     const [payment, setPayment] = useState<PaymentMethodType>('CARD')
     const [payNow, setPayNow] = useState("paynow")
@@ -69,9 +49,9 @@ const PaymentDetailsForm = ({ booking }: Prop) => {
 
 
 
-    const [mobile, setMobile] = useState("KBZ pay")
 
-    const handlePayment = () => {
+    const onSubmit = (e: FormEvent) => {
+        e.preventDefault()
         if (!booking) return;
         const paymentData = {
             bookingId: booking._id,
@@ -105,225 +85,129 @@ const PaymentDetailsForm = ({ booking }: Prop) => {
                 </CardHeader>
                 <CardBody>
 
+                    <form onSubmit={onSubmit}>
 
-                    {/* -----------Payment option------------ */}
-                    <div className='flex flex-wrapn justify-between gap-4  '>
-                        {
-                            paymentMethodOptions.map(value => (
-                                <Card
-                                    key={value.method}
-                                    isPressable
-                                    onPress={() => setPayment(value.method as PaymentMethodType)}
-                                    className={`
+
+                        {/* -----------Payment option------------ */}
+                        <div className='flex flex-col sm:flex-row items-center justify-between gap-4  '>
+                            {
+                                paymentMethodOptions.map(value => (
+                                    <Card
+                                        key={value.method}
+                                        isPressable
+                                        onPress={() => setPayment(value.method as PaymentMethodType)}
+                                        className={`
                                     ${payment === value.method ? 'bg-success-50 border-2 border-success-400' : 'bg-deafult'}
-                                     min-w-44 w-full h-36 flex items-center justify-center`} >
-                                    <CardBody >
-                                        <div className={`flex flex-col items-center gap-2 `} >
+                                     min-w-44 w-full max-w-xs h-36 flex items-center justify-center`} >
+                                        <CardBody >
+                                            <div className={`flex flex-col items-center gap-2 `} >
 
 
-                                            <Image
-                                                src={value.image}
-                                                alt={value.method + "icon"}
-                                                width={value.method === "CARD" ? 80 : 60}
-                                                height={value.method === "CARD" ? 80 : 60}
+                                                <Image
+                                                    src={value.image}
+                                                    alt={value.method + "icon"}
+                                                    width={value.method === "CARD" ? 80 : 60}
+                                                    height={value.method === "CARD" ? 80 : 60}
 
 
-                                            />
-                                            <div className='text-center'>
-                                                <h1 className=' font-medium capitalize'>
-                                                    {value.text}
-                                                </h1>
-                                                <p className='text-sm capitalize'>
-                                                    {value.slug}
+                                                />
+                                                <div className='text-center'>
+                                                    <h1 className=' font-medium capitalize'>
+                                                        {value.text}
+                                                    </h1>
+                                                    <p className='text-sm capitalize'>
+                                                        {value.slug}
 
-                                                </p>
+                                                    </p>
+                                                </div>
                                             </div>
-                                        </div>
-                                    </CardBody>
-                                </Card>
+                                        </CardBody>
+                                    </Card>
 
-                            ))
+                                ))
+                            }
+
+
+
+
+
+                        </div>
+                        {
+                            payment === "CARD" &&
+                            <CardInputs />
+
                         }
 
+                        {
+                            payment === "MOBILE_BANKING" &&
+                            <MobileBankingInputs />
+                        }
 
-
-
-
-                    </div>
-                    {
-                        payment === "CARD" &&
-                        <div className='py-4 space-y-4 my-4'>
-                            <Input type='text'
-                                placeholder='xxxx xxxx xxxx xxxx'
-                                label="Card number"
-                                labelPlacement='outside'
-                                radius='sm'
-                                isRequired
-                                validate={(value) => {
-                                    if (!cardRegex.test(value)) return "Invalid card number"
-                                }}
-                            />
-                            <div className='flex justify-between gap-4'>
-
-                                <Input
-                                    type='text'
-                                    name='expired'
-                                    label='Expired date'
-                                    labelPlacement='outside'
-                                    placeholder='MM/YY'
-                                    radius='sm'
-                                    isRequired
-                                    validate={(value) => {
-                                        const regex = /^(0[1-9]|1[0-2])\.\d{2}$/;
-                                        if (!regex.test(value)) return "Use MM.YY format";
-                                        return null;
-                                    }}
-                                />
-                                <Input type='text'
-                                    placeholder='CVC'
-                                    label="Security code"
-                                    labelPlacement='outside'
-                                    radius='sm'
-                                    isRequired
-                                    validate={(value) => {
-                                        if (value.length !== 3 || typeof Number(value) !== "number") {
-                                            return "Invalid CVC fromat."
-                                        }
-                                    }}
-                                />
-                            </div>
-
-                        </div>
-                    }
-
-                    {
-                        payment === "MOBILE_BANKING" &&
-                        <div className='space-y-4 py-4  my-4'>
-                            <Input
-                                type='text'
-                                placeholder='name'
-                                label="Account name"
-                                labelPlacement='outside'
-                                radius='sm'
-                                isRequired
-                                validate={(value) => {
-                                    if (value.length < 2) return "Name is too short"
-                                }} />
-
-                            <div className='space-y-2'>
-                                <p className='text-sm'>Choose a provider</p>
-                                <div className="flex gap-2">
-                                    {mobileBanks.map((bank) => (
-                                        <Card
-                                            key={bank.name}
-                                            isPressable
-                                            onPress={() => setMobile(bank.name)}
-                                            className={`p-0 overflow-hidden border-2 ${mobile === bank.name ? 'border-success' : ' border-primary-100'}`}
-                                            shadow='sm'
-
-                                        >
-                                            <Image
-                                                src={bank.image}
-                                                alt={bank.name + "icon"}
-                                                width={45}
-                                                height={45}
-                                                className='object-cover aspect-square'
-                                            />
-
-
-                                        </Card>
-                                    ))}
-                                </div>
-                            </div>
-
-                        </div>
-                    }
-
-                    {
-                        payment === "BANK" &&
-                        <div className='flex flex-col gap-4 py-4  my-4'>
-                            <Input
-                                type='text'
-                                placeholder='name'
-                                label="Account name"
-                                labelPlacement='outside'
-                                radius='sm'
-                                isRequired
-                                validate={(value) => {
-                                    if (value.length < 2) return "Name is too short"
-                                }} />
-                            <Input
-                                type='text'
-                                placeholder='xxxx xxxx xxxx xxxx'
-                                label="Card number"
-                                labelPlacement='outside'
-                                radius='sm'
-                                isRequired
-                                validate={(value) => {
-                                    if (!cardRegex.test(value)) return "Invalid card number"
-                                }}
-                            />
-
-                        </div>
-                    }
-                    <div className='my-4 space-y-4'>
-                        <RadioGroup orientation="horizontal"
-                            value={payNow}
-                            onValueChange={setPayNow}
-                        >
-                            <Radio
-
-                                value={"paynow"}
-                                size='sm'
-
-                                classNames={{
-                                    base: cn(
-                                        'mr-2 flex item-center gap-2  py-1.5 px-3  rounded-lg bg-slate-200 border-transparent',
-                                        "data-[selected=true]:border-primary data-[selected=true]:bg-primary-100",
-                                    )
-                                }}
-
-
-                            >Pay Now</Radio>
-                            <Radio value={"payAtProperty"}
-                                size='sm'
-                                classNames={{
-                                    base: cn(
-                                        'flex item-center gap-2  py-1.5 px-3   rounded-lg bg-slate-200 border-transparent',
-                                        "data-[selected=true]:border-primary data-[selected=true]:bg-primary-100",
-                                    )
-                                }}
-
+                        {
+                            payment === "BANK" &&
+                            <BankingInputs />
+                        }
+                        <div className='my-4 space-y-2'>
+                            <RadioGroup orientation="horizontal"
+                                value={payNow}
+                                onValueChange={setPayNow}
                             >
-                                Pay at property
+                                <Radio
 
-                            </Radio>
-                        </RadioGroup>
+                                    value={"paynow"}
+                                    size='sm'
 
-                        <label htmlFor='secure' className=' flex items-center  gap-1'>
-                            <input type='checkbox' id='secure' />
-                            <span className='text-sm '>
-                                Secure and encrypted
-                            </span>
+                                    classNames={{
+                                        base: cn(
+                                            'mr-2 flex item-center gap-2  py-1.5 px-3  rounded-lg bg-slate-200 border-transparent',
+                                            "data-[selected=true]:border-primary data-[selected=true]:bg-primary-100",
+                                        )
+                                    }}
 
-                        </label>
-                        <label htmlFor='terms' className=' flex items-center gap-1'>
-                            <input type='checkbox' id='terms' />
-                            <span className='text-sm '>
-                                I agree to the cancellation policy and terms
-                            </span>
 
-                        </label>
-                    </div>
-                    <Button
-                        isLoading={isPending}
-                        variant='solid'
-                        color='primary'
-                        radius='sm'
-                        fullWidth
-                        onPress={() => handlePayment()}
-                    >Proceed to Payment</Button>
+                                >Pay Now</Radio>
+                                <Radio value={"payAtProperty"}
+                                    size='sm'
+                                    classNames={{
+                                        base: cn(
+                                            'flex item-center gap-2  py-1.5 px-3   rounded-lg bg-slate-200 border-transparent',
+                                            "data-[selected=true]:border-primary data-[selected=true]:bg-primary-100",
+                                        )
+                                    }}
 
+                                >
+                                    Pay at property
+
+                                </Radio>
+                            </RadioGroup>
+
+                            <label htmlFor='secure' className=' flex items-center  gap-1 mt-4'>
+                                <input type='checkbox' id='secure' />
+                                <span className='text-sm '>
+                                    Secure and encrypted
+                                </span>
+
+                            </label>
+                            <label htmlFor='terms' className=' flex items-center gap-1'>
+                                <input type='checkbox' id='terms' />
+                                <span className='text-sm '>
+                                    I agree to the cancellation policy and terms
+                                </span>
+
+                            </label>
+                        </div>
+                        <Button
+                            type='submit'
+                            isLoading={isPending}
+                            variant='solid'
+                            color='primary'
+                            radius='sm'
+                            fullWidth
+
+                        >
+                            Proceed to Payment
+                        </Button>
+                    </form>
                 </CardBody>
             </Card>
 

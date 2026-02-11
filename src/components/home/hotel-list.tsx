@@ -1,6 +1,7 @@
 'use client';
 
 import { useGetAllHotels } from "@/hooks/use-hotel";
+import { useAuth } from "@/stores/auth-store";
 import { Card, CardBody, Button, Chip, Skeleton } from "@heroui/react";
 import { ArrowLeft, ArrowRight, Star } from "lucide-react";
 import Image from "next/image";
@@ -12,7 +13,6 @@ import { useRef } from "react";
 export default function HotelCardList() {
 
     const { data: hotels, isLoading, isError, error } = useGetAllHotels();
-
 
 
     const containerRef = useRef<HTMLDivElement>(null);
