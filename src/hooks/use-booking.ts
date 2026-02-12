@@ -1,4 +1,4 @@
-import { createBooking, getBookingById, getBookingByUseridService, updateBooking } from "@/service/booking-service"
+import { cancelBookingService, createBooking, getBookingById, getBookingByUseridService, updateBooking } from "@/service/booking-service"
 
 import { addToast } from "@heroui/react"
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
@@ -85,5 +85,25 @@ export const useGetetBookingByUserId = (userId: string) => {
         queryKey: ['booking_by_userId', userId],
         queryFn: () => getBookingByUseridService(userId),
         enabled: !!userId
+    })
+}
+
+export const useCancelBooking = () => {
+    return useMutation({
+        mutationKey: ['cancel_booking'],
+        mutationFn: cancelBookingService,
+        onSuccess: (data) => {
+            addToast({
+                title: "Booking cancelled.",
+                color: 'default'
+            })
+        },
+        onError: (error) => {
+            console.log(error, "In cancel booking")
+            addToast({
+                title: error?.message || "Booking cancel failed.",
+                color: 'danger'
+            })
+        }
     })
 }

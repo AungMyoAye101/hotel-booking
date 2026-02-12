@@ -3,7 +3,7 @@ import { MapPin } from "lucide-react"
 import Image from "next/image"
 import FiveStars from "../star"
 import { Button, Card, CardBody, Skeleton } from "@heroui/react"
-import { useGetBookingById } from "@/hooks/use-booking"
+import { useCancelBooking, useGetBookingById } from "@/hooks/use-booking"
 import { useParams } from "next/navigation"
 import { PDFDownloadLink } from "@react-pdf/renderer"
 import BookingPDF from "../ui/booking-pdf"
@@ -28,6 +28,10 @@ const BookingInfo = () => {
         console.warn(error?.message);
         throw new Error("Failed to get booking data.")
     }
+
+    // ============ CANCEL BOOKING ==========
+
+
     return (
         <section className="space-y-4">
 
@@ -71,7 +75,7 @@ const BookingInfo = () => {
                                 </span>
                                 <span>Guests </span>
                                 <span className="font-semibold text-end">
-                                    {booking.guest}
+                                    {booking.guest} Adult
                                 </span>
                                 <span>Status </span>
                                 <span className="font-semibold text-sm text-end">
@@ -81,6 +85,10 @@ const BookingInfo = () => {
                                 <span>Room </span>
                                 <span className="font-semibold text-sm text-end">
                                     {booking.room?.name}
+                                </span>
+                                <span>Quantity </span>
+                                <span className="font-semibold text-sm text-end">
+                                    {booking.quantity} Room
                                 </span>
 
                             </div>
@@ -96,31 +104,45 @@ const BookingInfo = () => {
                 </CardBody>
             </Card>
             <div className="flex gap-4">
-
+                <CancelBooking bookingId={booking._id} />
                 <Button
                     as={PDFDownloadLink}
                     document={<BookingPDF booking={booking} />}
                     fileName={booking.name + "booking.pdf"}
                     variant="solid"
                     radius="sm"
-                    color="secondary"
+                    color="primary"
                     fullWidth
                 >
 
                     Download PDF
                 </Button>
 
-                <Button
-                    variant="solid"
-                    color="primary"
-                    radius="sm"
-                    fullWidth
-                >
-                    Update
-                </Button>
             </div>
         </section>
     )
 }
 
 export default BookingInfo
+
+
+const CancelBooking = ({ bookingId }: { bookingId: string }) => {
+    const { mutate, isPending } = useCancelBooking()
+
+    const handleCancel = () => {
+        if (!bookingId) {
+            throw new Error("Booking Id is required")
+        }
+        mutate(bookingId)
+    }
+    return <Button
+        isLoading={isPending}
+        variant='bordered'
+        color='danger'
+        radius="sm"
+        fullWidth
+        onPress={() => handleCancel()}
+    >
+        Cancel Booking
+    </Button>
+}

@@ -1,19 +1,21 @@
 "use client";
 import { useGetetBookingByUserId } from '@/hooks/use-booking';
 import { useAuth } from '@/stores/auth-store'
-import { Card, CardBody } from '@heroui/react';
+import { Button, Card, CardBody, Chip } from '@heroui/react';
 import Image from 'next/image';
 import FiveStars from '../star';
-import { BedDouble, Calendar, CreditCard, UserRound } from 'lucide-react';
+import { BedDouble, Calendar, CreditCard, Hotel, MapPin, UserRound } from 'lucide-react';
+import Link from 'next/link';
 
 
 const BookingCard = () => {
     const userId = useAuth(s => s.user?._id)
     const { data: bookings, isLoading, isError, error } = useGetetBookingByUserId(userId as string)
 
-    console.log(bookings, error)
+
     return (
-        <section>
+        <section className='py-10'>
+            <h1 className='text-2xl font-semibold my-4'>Your Booking Hostory</h1>
             <div className='space-y-6'>
                 {
 
@@ -35,20 +37,31 @@ const BookingCard = () => {
                                         />
                                     </div>
 
-                                    <div className='flex-1 flex flex-col gap-2'>
-                                        <div>
-                                            <h1 className='text-2xl font-bold'>
-                                                {booking.hotel?.name}
-                                            </h1>
-                                            <p className='text-slate-700'>
-                                                {booking.hotel?.city} City
-                                            </p>
-                                            <FiveStars count={booking.hotel?.star} />
-                                        </div>
-                                        <div className='w-full h-0.5 bg-slate-200' />
+                                    <div className='flex-1 flex flex-col gap-3 justify-center'>
+
+
 
                                         {/* Checkin and out */}
+                                        <div className='flex items-center gap-1'>
+                                            <Hotel />
+                                            <span className='font-semibold mr-4'>
+                                                Hotel: {booking.hotel?.name}
+                                            </span>
+                                            <FiveStars count={booking.hotel?.star} />
+                                            <Chip size='sm'
+                                                color={booking.status === "CONFIRMED" ? "success" : "default"}
+                                                className='text-white'
+                                            >{booking.status}</Chip>
+                                        </div>
+                                        <div className='flex items-center gap-1'>
+                                            <MapPin />
+                                            <span className='font-semibold text-sm'>
+                                                Address: {booking.hotel?.adddress} , {booking.hotel?.city}
+                                            </span>
+
+                                        </div>
                                         <div className='flex gap-4 '>
+
                                             <div className='flex items-center gap-1'>
                                                 <Calendar />
                                                 <span className='font-semibold text-sm'>
@@ -62,7 +75,7 @@ const BookingCard = () => {
                                                 </span>
                                             </div>
                                         </div>
-                                        <div className='w-full h-0.5 bg-slate-200' />
+
 
                                         {/* guest*/}
                                         <div className='flex items-center gap-1'>
@@ -71,7 +84,7 @@ const BookingCard = () => {
                                                 Guest : {3} Adults
                                             </span>
                                         </div>
-                                        <div className='w-full h-0.5 bg-slate-200' />
+
                                         {/* room */}
                                         <div className='flex items-center gap-1'>
                                             <BedDouble />
@@ -80,7 +93,7 @@ const BookingCard = () => {
                                             </span>
                                         </div>
 
-                                        <div className='w-full h-0.5 bg-slate-200' />
+
                                         {/* Payment */}
 
                                         <div className='flex items-center gap-1'>
@@ -90,6 +103,20 @@ const BookingCard = () => {
                                             </span>
                                         </div>
                                     </div>
+
+
+
+                                    <Button
+
+                                        as={Link}
+                                        href={`/user/booking/${booking._id}`}
+                                        color='primary'
+                                        variant='solid'
+                                        radius='sm'
+                                        className='self-end'
+                                    >
+                                        View Details
+                                    </Button>
 
 
                                 </div>

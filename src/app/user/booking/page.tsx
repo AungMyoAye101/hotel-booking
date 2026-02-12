@@ -3,7 +3,7 @@ import React from 'react'
 
 const page = () => {
     return (
-        <section className='px-4 py-12'>
+        <section className='px-4 mt-12'>
             <BookingCard />
         </section>
     )

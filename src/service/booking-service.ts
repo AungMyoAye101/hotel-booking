@@ -10,9 +10,6 @@ export const createBooking = async (booking: createBookingType) => {
         '/booking/create', booking
     )
 
-    if (!data.success) {
-        throw new Error(data.message || "Failed to create booking")
-    }
 
     return data.result.booking;
 }
@@ -26,20 +23,11 @@ export const updateBooking = async ({ bookingId, booking }: updateBookingParam) 
     )
 
 
-    if (!data.success) {
-        throw new Error(data.message || "Failed to update booking")
-    }
-
     return data.result.booking
 }
 
 export const getBookingById = async (bookingId: string) => {
     const { data } = await api.get<APIResponse<{ booking: BookingInfoType }>>(`/booking/${bookingId}`)
-
-
-    if (!data.success) {
-        throw new Error(data.message || "Failed to update booking")
-    }
 
     return data.result.booking
 }
@@ -48,4 +36,8 @@ export const getBookingByUseridService = async (userId: string) => {
     const { data } = await api.get<APIResponse<{ booking: BookingInfoType[] }>>(`/booking/user/${userId}`)
 
     return data.result.booking;
+}
+export const cancelBookingService = async (bookingId: string) => {
+    const { data } = await api.put<APIResponse<{ booking: BookingInfoType }>>(`/booking/cancel/${bookingId}`, { bookingId })
+    return data.result;
 }

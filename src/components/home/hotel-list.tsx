@@ -14,7 +14,6 @@ export default function HotelCardList() {
 
     const { data: hotels, isLoading, isError, error } = useGetAllHotels();
 
-
     const containerRef = useRef<HTMLDivElement>(null);
 
     const handleSlide = (isRight: boolean) => {
