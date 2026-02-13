@@ -11,14 +11,16 @@ const Promotion = () => {
             <Card>
                 <CardBody>
                     <div className='flex flex-col sm:flex-row gap-6'>
-                        <Image
-                            src={'/hotel-bg.webp'}
-                            alt='hotel image'
-                            width={300}
-                            height={300}
-                            className='aspect-video object-cover rounded-md w-full sm:w-auto'
+                        <div className='relative aspect-square min-w-xs max-w-lg'>
 
-                        />
+                            <Image
+                                src={'/hotel-bg.webp'}
+                                alt='hotel image'
+                                fill
+                                className=' object-cover rounded-md '
+
+                            />
+                        </div>
 
                         <div className='flex flex-col gap-4 justify-center p-4'>
                             <h1 className='text-3xl font-semibold text-black/90'>Exclusive member deals</h1>

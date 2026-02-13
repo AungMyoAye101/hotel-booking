@@ -34,14 +34,14 @@ const Destination = () => {
 
             <div
 
-                className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4  '>
+                className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4 place-items-center '>
                 {
                     DESTINATION_DATA.map((item) => (
                         <Card
                             key={item.name}
                             radius='sm'
                             shadow='sm'
-                            className='border border-slate-300 p-0 overflow-hidden'>
+                            className='border border-slate-300 p-0 overflow-hidden w-xs sm:w-full'>
                             <CardBody className='p-0'>
                                 <div className='relative w-full aspect-square'>
 

@@ -38,7 +38,7 @@ export async function serverFetch<T>(endpoint: string, options?: RequestInit): P
             throw new FetchError(res.status, await res.text())
         }
 
-        const data = res.json()
+        const data = await res.json();
 
         return data;
     } catch (error) {
