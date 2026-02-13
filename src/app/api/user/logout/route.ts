@@ -1,10 +1,9 @@
+import { getBaseUrl } from "@/lib";
 import { cookies } from "next/headers";
 import { NextRequest, NextResponse } from "next/server";
-const BASE_URL = process.env.BASE_URL;
+
 export async function POST(req: NextRequest) {
-    if (!BASE_URL) {
-        throw new Error("Base url is required.")
-    }
+    const BASE_URL = getBaseUrl();
     const cookieStore = await cookies()
     const access_token = cookieStore.get("access_token")?.value;
     if (!access_token) {

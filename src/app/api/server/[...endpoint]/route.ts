@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { cookies } from "next/headers";
+import { getBaseUrl } from "@/lib";
 
-const BASE_URL = process.env.BASE_URL;
 
 
 
@@ -16,6 +16,7 @@ let refreshing: Promise<RefreshResult | null> | null = null;
 //============ refresh token logic =========
 
 const refreshToken = async (token: string): Promise<RefreshResult | null> => {
+    const BASE_URL = getBaseUrl();
     if (!refreshing) {
         refreshing = (async () => {
             try {
@@ -31,7 +32,7 @@ const refreshToken = async (token: string): Promise<RefreshResult | null> => {
 
                 if (!res.ok) return null;
                 const data = await res.json();
-                console.log("refreshed")
+
                 return {
                     access_token: data.result.token,
                     setCookie: res.headers.getSetCookie()
@@ -49,7 +50,7 @@ const refreshToken = async (token: string): Promise<RefreshResult | null> => {
 //============= make api request to server ============
 async function forward(req: NextRequest, accessToken?: string, refreshToken?: string) {
     const { pathname, search } = req.nextUrl;
-
+    const BASE_URL = getBaseUrl();
     const endpoint = pathname.replace('/api/server', "") + search;
 
 
@@ -85,13 +86,6 @@ async function forward(req: NextRequest, accessToken?: string, refreshToken?: st
 //============= route handler ================
 
 const handler = async (req: NextRequest) => {
-    if (!BASE_URL) {
-        return NextResponse.json(
-            { error: "API_URL environment variable is not set" },
-            { status: 500 }
-        );
-
-    }
 
     const cookieStore = await cookies();
     const refresh_token = cookieStore.get("refresh_token")?.value;
@@ -109,7 +103,7 @@ const handler = async (req: NextRequest) => {
             response = await forward(req, refreshed.access_token, refresh_token);
 
             const data = response.json();
-            console.log(data)
+
             const res = NextResponse.json(data, { status: 200 });
 
             res.cookies.set('access_token', refreshed.access_token, {

@@ -1,7 +1,8 @@
 'use server'
 
+import { getBaseUrl } from "@/lib";
 import { notFound } from "next/navigation";
-const BASE_URL = process.env.BASE_URL;
+
 
 class FetchError extends Error {
     status: number;
@@ -17,6 +18,7 @@ class FetchError extends Error {
 export async function serverFetch<T>(endpoint: string, options?: RequestInit): Promise<T> {
 
     try {
+        const BASE_URL = getBaseUrl()
         const res = await fetch(`${BASE_URL + endpoint}`,
             {
                 ...options,

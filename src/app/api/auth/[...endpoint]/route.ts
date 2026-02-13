@@ -1,11 +1,11 @@
+import { getBaseUrl } from "@/lib";
 import { NextRequest, NextResponse } from "next/server";
-const BASE_URL = process.env.BASE_URL;
+
 
 export async function POST(req: NextRequest) {
     const { pathname } = req.nextUrl;
-    if (!BASE_URL) {
-        throw new Error("Base url is required.")
-    }
+    const BASE_URL = getBaseUrl();
+
     let endpoint: string = '/';
     if (pathname === "/api/auth/login") {
         endpoint = BASE_URL + '/auth/login'
