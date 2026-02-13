@@ -75,7 +75,7 @@ const Complete = () => {
                     <div className='flex flex-col md:flex-row gap-4'>
                         <div>
                             <Image
-                                src={booking.hotel?.photo?.secure_url || '/hotel-bg.png'}
+                                src={booking.hotel?.photo?.secure_url || '/hotel-card.webp'}
                                 alt={booking?.hotel?.name + "photo "}
                                 width={300}
                                 height={260}
@@ -180,7 +180,7 @@ const Complete = () => {
                                 </p>
                                 <Button
                                     as={Link}
-                                    href={`/user/booking/${booking._id}`}
+                                    href={`/user/booking`}
                                     variant='solid'
                                     fullWidth
                                     color='primary'

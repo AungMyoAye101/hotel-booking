@@ -1,5 +1,4 @@
 'use client'
-import { useBookingStore } from '@/stores/booking-store'
 import { BookingStatus } from '@/types'
 import { Chip, Progress } from '@heroui/react'
 

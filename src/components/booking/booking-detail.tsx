@@ -22,7 +22,7 @@ const BookingDetail = ({ booking }: Props) => {
 
                     <div className="relative rounded-lg aspect-video w-full">
                         <Image
-                            src={'/hotel-bg.png'}
+                            src={booking?.hotel?.photo?.secure_url || "/hotel-card.webp"}
                             alt="hotel photo"
                             fill
 

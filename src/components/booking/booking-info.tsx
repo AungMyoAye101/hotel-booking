@@ -39,7 +39,7 @@ const BookingInfo = () => {
                         <div
                             className="relative w-full aspect-video rounded-md">
                             <Image
-                                src={booking.hotel?.photo?.secure_url || "/hotel-hero.png"}
+                                src={booking.hotel?.photo?.secure_url || "/hotel-card.webp"}
                                 alt={booking.hotel?.name + "photo "}
                                 fill
 

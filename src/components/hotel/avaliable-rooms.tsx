@@ -162,7 +162,7 @@ const AvaliableRooms = ({ hotelId }: Props) => {
                                     {/* Image */}
                                     <div className="relative  w-full md:max-w-sm  aspect-video">
                                         <Image
-                                            src={room.photo?.secure_url ?? '/hotel-hero.png'}
+                                            src={room.photo?.secure_url ?? '/room.webp'}
                                             alt={room.name}
                                             fill
 

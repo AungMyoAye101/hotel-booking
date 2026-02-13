@@ -24,7 +24,7 @@ const HotelDetails = ({ hotel }: Props) => {
                 <Image
                     width={1400}
                     height={1024}
-                    src={hotel.photo?.secure_url || '/hotel-bg.jfif'}
+                    src={hotel.photo?.secure_url || '/hero.webp'}
                     alt='hotel image'
                     className='  absolute h-screen inset-0 -z-20  object-center object-cover  brightness-60'
                 />
