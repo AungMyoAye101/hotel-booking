@@ -69,7 +69,7 @@ const BookingDetail = ({ booking }: Props) => {
                     <h2 className='head-1'>{booking?.room?.name}</h2>
                     <p className='flex gap-1 items-center '>
                         <BedDouble size={16} />
-                        Bed Type : {booking?.room?.bedType}
+                        Bed Type : {booking?.room?.bedTypes}
                     </p>
                     <div>
                         <span className='text-warning-500 text-lg font-semibold'>

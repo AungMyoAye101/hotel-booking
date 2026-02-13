@@ -1,4 +1,4 @@
-import { Avatar, Card, CardBody, CardFooter, Skeleton } from '@heroui/react'
+import { Avatar, Card, CardBody, Skeleton } from '@heroui/react'
 import FiveStars from '../star'
 import { useGetReviewByHotelId } from '@/hooks/use-review'
 type Props = {

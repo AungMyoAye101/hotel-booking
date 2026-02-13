@@ -1,7 +1,7 @@
 'use client';
 
 import { getAllHotels, getAvaliableRooms, getHotelDetails } from "@/service/hotel-service"
-import { AvaliableRoomsType, QueryType } from "@/types";
+import { AvaliableRoomsType } from "@/types";
 import { useQuery } from "@tanstack/react-query"
 
 export const useHotelDetail = (hotelId: string) => {

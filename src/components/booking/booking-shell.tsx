@@ -4,7 +4,6 @@ import BookingDetail from "./booking-detail"
 import Indicator from "./indicator"
 import { useParams } from "next/navigation";
 import { useGetBookingById } from "@/hooks/use-booking";
-import BookingLoading from "./booking-loading";
 import { BookingInfoType } from "@/types";
 import { Skeleton } from "@heroui/skeleton";
 

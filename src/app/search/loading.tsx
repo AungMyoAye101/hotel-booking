@@ -1,12 +1,12 @@
-"use client";
-import { Spinner } from "@heroui/react"
+import LoadingSpinner from "@/components/ui/spinner"
+
 
 
 const Loading = () => {
     return (
         <section>
             <div className="flex justify-center items-center min-h-screen">
-                <Spinner size="lg" aria-label="Loading content" />
+                <LoadingSpinner />
             </div>
         </section>
     )

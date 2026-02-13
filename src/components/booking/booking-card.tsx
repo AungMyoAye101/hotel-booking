@@ -10,7 +10,7 @@ import Link from 'next/link';
 
 const BookingCard = () => {
     const userId = useAuth(s => s.user?._id)
-    const { data: bookings, isLoading, isError, error } = useGetetBookingByUserId(userId as string)
+    const { data: bookings } = useGetetBookingByUserId(userId as string)
 
 
     return (

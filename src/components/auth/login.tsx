@@ -1,15 +1,12 @@
 
 'use client';
-
-
 import { useAuth } from '@/stores/auth-store';
-import { APIResponse, AuthResType } from '@/types';
+import { APIResponse } from '@/types';
 import { User } from '@/types/user-type';
 import { loginSchema, type loginType } from '@/validations/auth-schema';
-import { addToast, Button, Card, CardBody, CardHeader, Form, Input } from '@heroui/react'
+import { addToast, Button, Card, CardBody, CardHeader, Input } from '@heroui/react'
 import { zodResolver } from '@hookform/resolvers/zod';
 import axios from 'axios';
-
 import { Eye, EyeOff, Lock, Mail } from 'lucide-react';
 import Image from 'next/image'
 import Link from 'next/link';

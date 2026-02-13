@@ -1,9 +1,9 @@
 "use client"
-import { Button, Card, CardBody, } from '@heroui/react'
-import { ArrowLeft, ArrowRight, MoveRight, Stars } from 'lucide-react'
+import { Button, Card, CardBody, } from '@heroui/react';
+import { ArrowRight } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { useRef } from 'react';
+
 
 const DESTINATION_DATA = [
     {
@@ -25,25 +25,15 @@ const DESTINATION_DATA = [
 ]
 
 const Destination = () => {
-    const containerRef = useRef<HTMLDivElement>(null);
 
-    const handleSlide = (isRight: boolean) => {
-        const container = containerRef.current;
-        if (container) {
-            container.scrollBy({
-                left: isRight ? 400 : -400,
-                behavior: 'smooth'
-            })
-        }
 
-    }
     return (
         <section className=' py-12 space-y-6 '>
             <h1 className='head-1 text-black'>Popular destinations</h1>
 
 
             <div
-                ref={containerRef}
+
                 className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4  '>
                 {
                     DESTINATION_DATA.map((item) => (

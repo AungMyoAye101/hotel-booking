@@ -1,9 +1,8 @@
 "use client";
-import { BASE_URL } from "@/lib";
+
 import { useAuth } from "@/stores/auth-store";
-import { APIResponse } from "@/types";
-import axios, { AxiosError } from "axios";
-import { error } from "console";
+import axios from "axios";
+
 
 
 

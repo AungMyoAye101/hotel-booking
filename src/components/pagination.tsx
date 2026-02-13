@@ -1,9 +1,9 @@
 "use client";
 import { MetaType } from '@/types';
 import { Button, Pagination } from '@heroui/react'
-import { ArrowLeft, ArrowRight, ArrowRightCircle, ChevronLast, ChevronLastIcon } from 'lucide-react';
+import { ArrowLeft, ArrowRight, } from 'lucide-react';
 import { useRouter, useSearchParams } from 'next/navigation';
-import { useState } from 'react';
+
 
 type Props = {
     meta: MetaType

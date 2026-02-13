@@ -1,12 +1,8 @@
-
 import AvaliableRooms from "@/components/hotel/avaliable-rooms";
 import HotelDetails from "@/components/hotel/hotel-details";
 import { serverFetch } from "@/hooks/api";
 import { APIResponse } from "@/types";
 import { hotelType } from "@/types/hotel-types";
-
-
-
 
 type Params = {
     hotelId: string;

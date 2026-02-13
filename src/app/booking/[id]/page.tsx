@@ -1,7 +1,4 @@
-
 import { BookingCreateProvider } from "@/components/booking"
-
-
 
 const page = () => {
 

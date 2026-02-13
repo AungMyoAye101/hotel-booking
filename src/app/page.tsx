@@ -1,4 +1,3 @@
-
 import HotelCardList from "@/components/home/hotel-list";
 import Destination from "@/components/home/destination";
 import Hero from "@/components/home/hero";

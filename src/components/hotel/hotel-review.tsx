@@ -2,9 +2,8 @@
 
 import { useCreateReview } from '@/hooks/use-review'
 import { useAuth } from '@/stores/auth-store'
-import { CreateReviewType, ReviewType } from '@/types'
-import { addToast, Button, Card, CardBody, Select, SelectItem, Textarea, Tooltip } from '@heroui/react'
-
+import { CreateReviewType } from '@/types'
+import { addToast, Button, Card, CardBody, Textarea, Tooltip } from '@heroui/react'
 import { FormEvent, useState } from 'react'
 import { Star } from 'lucide-react'
 

@@ -1,10 +1,7 @@
 'use client'
 
 import { useMemo, useState } from 'react'
-
 import Image from 'next/image'
-
-
 import {
     Button,
     Card,
@@ -18,20 +15,15 @@ import {
 } from '@heroui/react'
 
 import { BedDouble, Check, UsersRound } from 'lucide-react'
-import { parseDate, CalendarDate, getLocalTimeZone } from '@internationalized/date'
-
+import { parseDate, getLocalTimeZone } from '@internationalized/date'
 import { useGetAvaliableRoom } from '@/hooks/use-hotel'
-
 import { useAuth } from '@/stores/auth-store'
-
 import RoomCardLoading from '../loading/room-loading'
 import Empty from '../empty'
-import { BookingStatus } from '@/types'
 import { useUpdateParams } from '@/hooks/use-params'
 import { useCreateBooking } from '@/hooks/use-booking'
 
 
-/* ---------------------------------- types --------------------------------- */
 
 type Props = {
     hotelId: string

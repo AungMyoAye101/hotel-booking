@@ -1,7 +1,7 @@
 'use client';
 import { useAuth } from '@/stores/auth-store';
 import { Avatar, Button, Popover, PopoverContent, PopoverTrigger } from '@heroui/react'
-import { LogInIcon, Menu } from 'lucide-react'
+import { LogInIcon } from 'lucide-react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation';

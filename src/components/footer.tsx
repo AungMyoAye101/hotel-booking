@@ -1,6 +1,6 @@
 'use client'
 import { Button, Input } from '@heroui/react'
-import { BadgeDollarSign, Facebook, FacebookIcon, Instagram, InstagramIcon, Phone, Twitter, XIcon, YoutubeIcon } from 'lucide-react';
+import { BadgeDollarSign, FacebookIcon, InstagramIcon, XIcon, YoutubeIcon } from 'lucide-react';
 import Image from 'next/image'
 import Link from 'next/link'
 

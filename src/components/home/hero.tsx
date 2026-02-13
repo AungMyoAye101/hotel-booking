@@ -1,6 +1,5 @@
 import Image from 'next/image'
 import InputCon from './input-con'
-import { useAuth } from '@/stores/auth-store'
 
 
 const Hero = () => {

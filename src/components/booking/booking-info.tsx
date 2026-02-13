@@ -29,8 +29,6 @@ const BookingInfo = () => {
         throw new Error("Failed to get booking data.")
     }
 
-    // ============ CANCEL BOOKING ==========
-
 
     return (
         <section className="space-y-4">

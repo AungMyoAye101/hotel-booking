@@ -1,5 +1,4 @@
 import { useMutation } from "@tanstack/react-query"
-import api from "./axios-api"
 import { useAuth } from "@/stores/auth-store"
 import { APIResponse } from "@/types"
 import { User } from "@/types/user-type"

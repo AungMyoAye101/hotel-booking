@@ -1,5 +1,5 @@
 import api from "@/hooks/axios-api";
-import { APIResponse, createPaymentType, PaymentType, PaymentCreateType } from "@/types";
+import { APIResponse, PaymentType } from "@/types";
 import { CreatePaymentType } from "@/validations/payment-schmea";
 
 

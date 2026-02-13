@@ -1,5 +1,4 @@
 import { confirmPaymentService, createPayment, getPaymentById } from "@/service/payment-service"
-import { useBookingStore } from "@/stores/booking-store"
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
 
 import { useRouter } from "next/navigation"
@@ -12,7 +11,7 @@ export const useCreatePayment = () => {
         mutationFn: createPayment,
         onSuccess: (data) => {
             qc.invalidateQueries({
-                queryKey: ['booking_by_id', data._id]
+                queryKey: ['booking_by_id', data.bookingId]
             })
             router.push(`/booking/${data.bookingId}/complete`)
         },
@@ -22,15 +21,14 @@ export const useCreatePayment = () => {
     })
 }
 export const useConfirmPayment = () => {
-    const { setStage, confirmPayment } = useBookingStore.getState()
+
     const queryClient = useQueryClient()
 
     return useMutation({
         mutationKey: ['confirm_payment'],
         mutationFn: confirmPaymentService,
         onSuccess: (data) => {
-            setStage(3)
-            confirmPayment(true)
+
             queryClient.invalidateQueries({
                 queryKey: ['payment_id', data.id]
             })

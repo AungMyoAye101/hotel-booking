@@ -1,17 +1,11 @@
 'use client';
 
-import { useGetBookingById } from '@/hooks/use-booking';
 import { useCreatePayment } from '@/hooks/use-payment';
-
 import { BookingInfoType, PaymentMethodType } from '@/types';
-import { addToast, Button, Card, CardBody, CardHeader, cn, DatePicker, Input, Radio, RadioGroup } from '@heroui/react'
-
+import { addToast, Button, Card, CardBody, CardHeader, cn, Radio, RadioGroup } from '@heroui/react'
 import Image from 'next/image';
-import { useParams } from 'next/navigation';
-
 import { FormEvent, useState } from 'react';
-
-import { createPaymentSchema, CreatePaymentType, PaymentInput, paymentSchema } from '@/validations/payment-schmea';
+import { createPaymentSchema, CreatePaymentType } from '@/validations/payment-schmea';
 import { BankingInputs, CardInputs, MobileBankingInputs } from './payment-inputs';
 
 

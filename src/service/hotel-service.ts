@@ -1,5 +1,5 @@
 import api from "@/hooks/axios-api"
-import { APIResponse, AvaliableRoomsType, QueryType, RoomType } from "@/types"
+import { APIResponse, AvaliableRoomsType, RoomType } from "@/types"
 import { hotelType } from "@/types/hotel-types"
 
 export const getHotelDetails = async (hotelId: string) => {

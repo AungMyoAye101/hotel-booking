@@ -1,9 +1,6 @@
 
 import Profile from "@/components/user/profile";
 
-
-
-
 type Params = {
     id: string
 }

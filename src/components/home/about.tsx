@@ -1,5 +1,5 @@
-import { BadgeDollarSign, BadgeRussianRubleIcon, Building2, CheckCheck, HotelIcon, PrinterCheck, ShieldCheck } from 'lucide-react'
-import React from 'react'
+import { BadgeDollarSign, Building2, ShieldCheck } from 'lucide-react'
+
 
 const About = () => {
     return (

@@ -1,19 +1,18 @@
 
 'use client';
 
-import { BASE_URL } from '@/lib';
 import { useAuth } from '@/stores/auth-store';
-import type { APIResponse, AuthResType } from '@/types';
+import type { APIResponse } from '@/types';
 import { User } from '@/types/user-type';
 import { registerSchema, registerType } from '@/validations/auth-schema';
-import { addToast, Button, Card, CardBody, CardHeader, Form, Input, toast } from '@heroui/react'
+import { addToast, Button, Card, CardBody, CardHeader, Input } from '@heroui/react'
 import { zodResolver } from '@hookform/resolvers/zod';
 import axios from 'axios';
 import { Eye, EyeOff, Lock, Mail } from 'lucide-react';
 import Image from 'next/image'
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import React, { useState } from 'react'
+import { useState } from 'react'
 import { useForm } from 'react-hook-form';
 
 const Signup = () => {

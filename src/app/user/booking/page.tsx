@@ -1,5 +1,5 @@
 import BookingCard from '@/components/booking/booking-card'
-import React from 'react'
+
 
 const page = () => {
     return (

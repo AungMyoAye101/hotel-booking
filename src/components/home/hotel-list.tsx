@@ -1,7 +1,6 @@
 'use client';
 
 import { useGetAllHotels } from "@/hooks/use-hotel";
-import { useAuth } from "@/stores/auth-store";
 import { Card, CardBody, Button, Chip, Skeleton } from "@heroui/react";
 import { ArrowLeft, ArrowRight, MapPin, Star } from "lucide-react";
 import Image from "next/image";

@@ -1,6 +1,6 @@
 'use client'
 
-import { Locate, MapPin, Star } from "lucide-react"
+import { MapPin, Star } from "lucide-react"
 
 import HotelReview from "./hotel-review"
 

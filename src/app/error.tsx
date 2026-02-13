@@ -1,7 +1,6 @@
 "use client"
 
 import { Button } from "@heroui/button"
-import Link from "next/link"
 import { useEffect } from "react"
 
 const Error = (
