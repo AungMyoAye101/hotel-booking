@@ -51,7 +51,7 @@ async function forward(req: NextRequest, accessToken?: string, refreshToken?: st
     const { pathname, search } = req.nextUrl;
 
     const endpoint = pathname.replace('/api/server', "") + search;
-    console.log(endpoint)
+
 
     const headers: Record<string, string> =
     {
@@ -100,7 +100,6 @@ const handler = async (req: NextRequest) => {
 
     let response = await forward(req, access_token, refresh_token);
 
-
     // ===========unauthorized error handle===========
 
     if (response.status === 401) {
@@ -110,7 +109,7 @@ const handler = async (req: NextRequest) => {
             response = await forward(req, refreshed.access_token, refresh_token);
 
             const data = response.json();
-
+            console.log(data)
             const res = NextResponse.json(data, { status: 200 });
 
             res.cookies.set('access_token', refreshed.access_token, {

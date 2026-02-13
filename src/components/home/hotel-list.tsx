@@ -3,7 +3,7 @@
 import { useGetAllHotels } from "@/hooks/use-hotel";
 import { useAuth } from "@/stores/auth-store";
 import { Card, CardBody, Button, Chip, Skeleton } from "@heroui/react";
-import { ArrowLeft, ArrowRight, Star } from "lucide-react";
+import { ArrowLeft, ArrowRight, MapPin, Star } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { useRef } from "react";
@@ -36,14 +36,14 @@ export default function HotelCardList() {
                             <Skeleton className="w-full h-52 rounded-lg" />
                             <div className="space-y-2 p-4">
                                 <div className="flex justify-between">
-                                    <Skeleton className="w-32 h-6 rounded-lg" />
-                                    <Skeleton className="w-24 h-6 rounded-lg" />
+                                    <Skeleton className="w-32 h-4 rounded-lg" />
+                                    <Skeleton className="w-24 h-4 rounded-lg" />
                                 </div>
-                                <Skeleton className="w-32 h-6 rounded-lg" />
-                                <Skeleton className="w-32 h-6 rounded-lg" />
+                                <Skeleton className="w-32 h-4 rounded-lg" />
+                                <Skeleton className="w-32 h-4 rounded-lg" />
                                 <div className="flex justify-between">
-                                    <Skeleton className="w-32 h-6 rounded-lg" />
-                                    <Skeleton className="w-20 h-6 rounded-lg" />
+                                    <Skeleton className="w-32 h-4 rounded-lg" />
+                                    <Skeleton className="w-20 h-4 rounded-lg" />
                                 </div>
                             </div>
                         </CardBody>
@@ -87,7 +87,7 @@ export default function HotelCardList() {
                                     <div className="relative w-full">
 
                                         <Image
-                                            src={hotel.photo?.secure_url || '/hotel-bg.png'}
+                                            src={hotel.photo?.secure_url || '/hotel-card.webp'}
                                             alt="hotel photo"
                                             height={160}
                                             width={240}
@@ -102,7 +102,7 @@ export default function HotelCardList() {
                                             </Chip>
 
                                         </div>
-                                        <p className="line-clamp-1">{hotel.address}</p>
+                                        <p className="line-clamp-1 flex gap-1 items-center"><MapPin className="size-5" />{hotel.address}</p>
                                         <div className="flex items-center gap-1">
                                             {
                                                 Array(hotel.star).fill(null).map((_, i) => (

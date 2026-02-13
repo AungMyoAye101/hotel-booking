@@ -1,7 +1,28 @@
 "use client"
-import { Button, Card, CardBody, Image, Link } from '@heroui/react'
+import { Button, Card, CardBody, } from '@heroui/react'
 import { ArrowLeft, ArrowRight, MoveRight, Stars } from 'lucide-react'
+import Image from 'next/image';
+import Link from 'next/link';
 import { useRef } from 'react';
+
+const DESTINATION_DATA = [
+    {
+        url: '/yangon.webp',
+        name: 'yangon'
+    },
+    {
+        url: '/mandalay.webp',
+        name: 'mandalay'
+    },
+    {
+        url: '/bagan.webp',
+        name: 'bagan'
+    },
+    {
+        url: '/bangkok.webp',
+        name: 'bangkok'
+    },
+]
 
 const Destination = () => {
     const containerRef = useRef<HTMLDivElement>(null);
@@ -19,49 +40,47 @@ const Destination = () => {
     return (
         <section className=' py-12 space-y-6 '>
             <h1 className='head-1 text-black'>Popular destinations</h1>
-            <div className='relative'>
-                <Button isIconOnly
-                    variant='solid'
-                    radius="full"
-                    className="absolute left-0 top-1/2 bottom-1/2 z-20"
-                    onPress={() => handleSlide(false)}
-                ><ArrowLeft /></Button>
 
-                <div
-                    ref={containerRef}
-                    className='flex gap-4 overflow-hidden overflow-x-scroll no-scrollbar px-4'>
-                    {
-                        Array(4).fill(null).map((_, i) => (
-                            <Card key={i} radius='sm' shadow='sm' className='min-w-xs border border-slate-300'>
-                                <CardBody className='p-0'>
+
+            <div
+                ref={containerRef}
+                className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4  '>
+                {
+                    DESTINATION_DATA.map((item) => (
+                        <Card
+                            key={item.name}
+                            radius='sm'
+                            shadow='sm'
+                            className='border border-slate-300 p-0 overflow-hidden'>
+                            <CardBody className='p-0'>
+                                <div className='relative w-full aspect-square'>
+
                                     <Image
-                                        src={'/hotel-bg.png'}
+                                        src={item.url}
                                         alt='hotel image'
-                                        width={400}
-                                        height={260}
-                                        className=' rounded-md w-full object-cover '
+                                        fill
+                                        className=' object-cover rounded-none'
                                     />
-                                    <div className='flex flex-col gap-1 p-4'>
-                                        <h1 className='text-lg font-bold'>Yangon</h1>
-                                        <p className=''>120 + hotels</p>
-                                        <Button variant='bordered' className='text-primary border-primary bg-blue-50'>
-                                            Explore stays   <ArrowRight />
-                                        </Button>
-                                    </div>
-                                </CardBody>
-                            </Card>
+                                </div>
+                                <div className='flex flex-col gap-1 p-4'>
+                                    <h1 className='text-lg font-bold capitalize'>{item.name}</h1>
 
-                        ))
-                    }
-                </div>
-                <Button
-                    isIconOnly
-                    variant='solid'
-                    radius="full"
-                    className="absolute right-0 top-1/2 bottom-1/2 z-10"
-                    onPress={() => handleSlide(true)}
-                ><ArrowRight /></Button>
+                                    <Button
+                                        as={Link}
+                                        href={`/search?destination=${item.name}`}
+                                        variant='bordered'
+                                        className='text-primary border-primary bg-blue-50'>
+                                        Explore stays   <ArrowRight />
+                                    </Button>
+                                </div>
+                            </CardBody>
+                        </Card>
+
+                    ))
+                }
             </div>
+
+
         </section>
     )
 }

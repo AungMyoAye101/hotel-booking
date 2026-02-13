@@ -56,7 +56,7 @@ const Login = () => {
     return (
         <section className='h-screen flex justify-center md:justify-end items-center px-4 '>
             <Image
-                src={'/hotel-bg.png'}
+                src={'/hotel-bg.webp'}
                 alt='hotel photo'
                 width={1400}
                 height={1240}

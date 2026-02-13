@@ -1,9 +1,26 @@
 'use client'
 
 import { Avatar, Card, CardBody, CardFooter, } from '@heroui/react'
+import FiveStars from '../star'
+const REVIEW_DATA = [
+    {
+        name: "Jordan Smith",
+        rating: 5,
+        text: "Absolutely loved every second of my stay here.The staff went above and beyond to make us feel welcome.Already planning my return trip for next summer!"
+    },
+    {
+        name: "Riley Vance",
+        rating: 3,
+        text: "The location was perfect for sightseeing and local eats.However, the room was much smaller than the photos suggested.Decent for a quick sleep, but don't expect much luxury."
+    },
+    {
+        name: "Casey Morgan",
+        rating: 4,
+        text: "Very disappointed with the cleanliness of the bathroom.I had to call maintenance twice just to get fresh towels.I would definitely recommend looking at other options nearby."
+    }
+]
 
-import { Star, } from 'lucide-react'
-
+const color: ("primary" | "success" | "warning" | "default" | "secondary" | "danger")[] = ['primary', 'success', 'warning']
 
 const Testmonial = () => {
     return (
@@ -14,31 +31,21 @@ const Testmonial = () => {
             </p>
             <div className='flex flex-wrap items-center justify-center gap-6 my-10'>
                 {
-                    Array.from({ length: 3 }).map((_, i) => (
+                    REVIEW_DATA.map((v, i) => (
                         <Card key={i} className='hover:shadow-xl min-w-xs max-w-sm '>
 
                             <CardBody className='space-y-2' >
-                                <div className='flex '>
-                                    <Star fill='oklch(79.5% 0.184 86.047)' strokeWidth={0} size={20} />
-                                    <Star fill='oklch(79.5% 0.184 86.047)' strokeWidth={0} size={20} />
-
-                                    <Star fill='oklch(79.5% 0.184 86.047)' strokeWidth={0} size={20} />
-                                    <Star fill='oklch(79.5% 0.184 86.047)' strokeWidth={0} size={20} />
-                                    <Star fill='oklch(79.5% 0.184 86.047)' strokeWidth={0} size={20} />
-                                </div>
+                                <FiveStars count={v.rating} />
 
 
                                 <p className='text-balance'>
-                                    Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                                    Numquam vero neque mollitia blanditiis quibusdam temporibus,
-                                    eligendi in voluptas iure? Veritatis blanditiis,
-                                    quas quam magnam quidem nam quos tempora officiis sed?
+                                    {v.text}
 
                                 </p>
                             </CardBody>
-                            <CardFooter className='flex gap-2 items-center'>
-                                <Avatar />
-                                <h2 className='text-lg font-semibold '>John Doe</h2>
+                            <CardFooter className='flex gap-4 items-center'>
+                                <Avatar src='/user.jpg' alt='user photo' isBordered color={color[i]} size='sm' />
+                                <h2 className='text-lg font-semibold '>{v.name}</h2>
 
                             </CardFooter>
                         </Card>

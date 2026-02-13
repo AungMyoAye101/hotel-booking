@@ -10,7 +10,7 @@ const Hero = () => {
             <Image
                 width={1400}
                 height={1024}
-                src={'/hotel-bg.jfif'}
+                src={'/hero.webp'}
                 alt='hotel image'
                 className='h-screen w-full  absolute -z-20  object-center object-cover  brightness-60'
             />

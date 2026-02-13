@@ -1,8 +1,8 @@
 "use client"
 
 import { hotelType } from '@/types/hotel-types'
-import { Button, Card, CardBody, Chip, useDisclosure } from '@heroui/react'
-import { ArrowRight, Building, Building2, MapPin, Star } from 'lucide-react'
+import { Button, Card, CardBody, Chip } from '@heroui/react'
+import { ArrowRight, Building, MapPin, Star } from 'lucide-react'
 import Image from 'next/image'
 import Link from 'next/link'
 
@@ -10,7 +10,6 @@ type Props = {
     hotels: hotelType[]
 }
 const HotelCard = ({ hotels }: Props) => {
-    const { isOpen, onOpen, onOpenChange } = useDisclosure();
     return (
         <section className='space-y-6'>
 
@@ -25,7 +24,7 @@ const HotelCard = ({ hotels }: Props) => {
 
                                 <div className="relative w-full sm:w-48 h-48  shrink-0 ">
                                     <Image
-                                        src={hotel.photo?.secure_url || '/hotel-bg.png'}
+                                        src={hotel.photo?.secure_url || '/hotel-card.webp'}
                                         alt="hotel photo"
                                         fill
                                         className=" rounded-lg "
