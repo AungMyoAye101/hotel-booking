@@ -33,7 +33,7 @@ const BookingInfo = () => {
     return (
         <section className="space-y-4">
 
-            <Card className="w-sm max-w-md  h-fit">
+            <Card className="w-full max-w-md  h-fit">
                 <CardBody>
                     <div className='  overflow-hidden'>
                         <div

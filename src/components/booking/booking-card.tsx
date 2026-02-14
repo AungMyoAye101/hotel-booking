@@ -1,7 +1,7 @@
 "use client";
 import { useGetetBookingByUserId } from '@/hooks/use-booking';
 import { useAuth } from '@/stores/auth-store'
-import { Button, Card, CardBody, Chip } from '@heroui/react';
+import { Button, Card, CardBody, Chip, Skeleton } from '@heroui/react';
 import Image from 'next/image';
 import FiveStars from '../star';
 import { BedDouble, Calendar, CreditCard, Hotel, MapPin, UserRound } from 'lucide-react';
@@ -10,13 +10,19 @@ import Link from 'next/link';
 
 const BookingCard = () => {
     const userId = useAuth(s => s.user?._id)
-    const { data: bookings } = useGetetBookingByUserId(userId as string)
+    const { data: bookings, isLoading } = useGetetBookingByUserId(userId as string)
 
 
     return (
         <section className='py-10'>
             <h1 className='text-2xl font-semibold my-4'>Your Booking Hostory</h1>
             <div className='space-y-6'>
+
+                {
+                    isLoading && Array(6).fill(null).map((_, i) => (
+                        <Skeleton key={i} className='w-full h-40' />
+                    ))
+                }
                 {
 
 

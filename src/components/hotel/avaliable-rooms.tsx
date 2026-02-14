@@ -3,6 +3,7 @@
 import { useMemo, useState } from 'react'
 import Image from 'next/image'
 import {
+    addToast,
     Button,
     Card,
     CardBody,
@@ -93,6 +94,10 @@ const AvaliableRooms = ({ hotelId }: Props) => {
     const { mutate, isPending } = useCreateBooking()
     const handleCreateBooking = (roomId: string, quantity: number, price: number) => {
         if (!userId) {
+            addToast({
+                title: "Please login first.",
+                color: "warning"
+            })
             throw new Error("You are not aunticated yet.")
         }
 

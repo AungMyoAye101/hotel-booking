@@ -53,8 +53,8 @@ const Complete = () => {
                 <p>Your reservation is complete</p>
             </div>
 
-            <div className='bg-primary-50 rounded flex gap-4 items-center p-2'>
-                <Mail />
+            <div className='bg-primary-50 rounded flex  gap-4 items-center p-2'>
+                <Mail className='w-12 h-auto' />
                 <span>
 
 
@@ -96,7 +96,7 @@ const Complete = () => {
                             <div className='w-full h-0.5 bg-slate-200' />
 
                             {/* Checkin and out */}
-                            <div className='flex gap-4 '>
+                            <div className='flex gap-4 flex-wrap'>
                                 <div className='flex items-center gap-1'>
                                     <Calendar />
                                     <span className='font-semibold text-sm'>

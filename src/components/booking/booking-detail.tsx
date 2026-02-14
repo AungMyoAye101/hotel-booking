@@ -32,7 +32,7 @@ const BookingDetail = ({ booking }: Props) => {
                     <div className='space-y-1 py-2'>
                         <h1 className='head-1'>
                             {booking?.hotel?.name}
-                            Name
+
 
                         </h1>
 

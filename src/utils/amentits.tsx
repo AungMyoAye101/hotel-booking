@@ -1,4 +1,4 @@
-import { AirVent, Bath, Dumbbell, FolderOpenDot, MapPin, ParkingCircle, Utensils, Weight, Wifi } from "lucide-react";
+import { AirVent, Bath, Dumbbell, ParkingCircle, Utensils, Wifi } from "lucide-react";
 
 export const AMENITIES = [
     { label: "Wi-Fi", value: "wifi", icon: <Wifi /> },

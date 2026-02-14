@@ -23,10 +23,18 @@ const HotelReview = ({ hotelId }: Props) => {
 
     const onSubmit = (e: FormEvent) => {
         e.preventDefault();
-        if (!hotelId || !userId) {
+        if (!userId) {
             return addToast({
-                title: "All fields are required.",
+                title: "Please login first.",
                 color: "warning"
+            })
+
+        }
+        if (!hotelId) {
+            console.error("Hotel id is required.")
+            return addToast({
+                title: "Something went worng",
+                color: "danger"
             })
         }
         const data = {
