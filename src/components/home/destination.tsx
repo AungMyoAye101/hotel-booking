@@ -7,11 +7,11 @@ import Link from 'next/link';
 
 const DESTINATION_DATA = [
     {
-        url: '/yangon.webp',
+        url: '/ygn.webp',
         name: 'yangon'
     },
     {
-        url: '/mandalay.webp',
+        url: '/mdy.webp',
         name: 'mandalay'
     },
     {

@@ -20,7 +20,7 @@ const BookingCard = () => {
 
                 {
                     isLoading && Array(6).fill(null).map((_, i) => (
-                        <Skeleton key={i} className='w-full h-40' />
+                        <Skeleton key={i} className='w-full h-48' />
                     ))
                 }
                 {
@@ -48,7 +48,7 @@ const BookingCard = () => {
 
 
                                         {/* Checkin and out */}
-                                        <div className='flex items-center gap-1'>
+                                        <div className='flex flex-wrap items-center gap-1'>
                                             <Hotel />
                                             <span className='font-semibold mr-4'>
                                                 Hotel: {booking.hotel?.name}
@@ -66,9 +66,9 @@ const BookingCard = () => {
                                             </span>
 
                                         </div>
-                                        <div className='flex gap-4 '>
+                                        <div className='flex gap-4 flex-wrap '>
 
-                                            <div className='flex items-center gap-1'>
+                                            <div className='flex  items-center gap-1'>
                                                 <Calendar />
                                                 <span className='font-semibold text-sm'>
                                                     Check in :  {new Date(booking.checkIn).toDateString()}

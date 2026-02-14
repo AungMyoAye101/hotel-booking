@@ -54,7 +54,7 @@ const Complete = () => {
             </div>
 
             <div className='bg-primary-50 rounded flex  gap-4 items-center p-2'>
-                <Mail className='w-12 h-auto' />
+                <Mail className='w-10 h-auto' />
                 <span>
 
 

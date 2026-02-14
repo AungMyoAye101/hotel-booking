@@ -5,8 +5,8 @@ import Promotion from "@/components/home/promotion";
 import About from "@/components/home/about";
 import Testmonial from "@/components/home/testmonial";
 
-export default async function Home() {
 
+export default async function Home() {
 
   return (
     <section className="max-w-7xl mx-auto px-4">
