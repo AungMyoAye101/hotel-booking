@@ -19,7 +19,7 @@ export default function HotelCardList() {
         const container = containerRef.current;
         if (container) {
             container.scrollBy({
-                left: isRight ? 400 : -400,
+                left: isRight ? 300 : -300,
                 behavior: 'smooth'
             })
         }
@@ -127,7 +127,6 @@ export default function HotelCardList() {
                                             <Button
                                                 as={Link}
                                                 href={`/hotel/${hotel._id}`}
-
                                                 radius="sm"
                                                 variant="solid"
                                                 color="primary"

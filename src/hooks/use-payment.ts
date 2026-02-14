@@ -13,7 +13,7 @@ export const useCreatePayment = () => {
             qc.invalidateQueries({
                 queryKey: ['booking_by_id', data.bookingId]
             })
-            router.push(`/booking/${data.bookingId}/complete`)
+            router.push(`/booking/${data.bookingId}/complete`, { scroll: true })
         },
         onError: (error) => {
             console.log(error)

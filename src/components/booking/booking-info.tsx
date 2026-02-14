@@ -7,6 +7,7 @@ import { useCancelBooking, useGetBookingById } from "@/hooks/use-booking"
 import { useParams } from "next/navigation"
 import { PDFDownloadLink } from "@react-pdf/renderer"
 import BookingPDF from "../ui/booking-pdf"
+import Link from "next/link"
 
 const BookingInfo = () => {
     const { bookingId } = useParams()
@@ -32,7 +33,14 @@ const BookingInfo = () => {
 
     return (
         <>
-            <Button isIconOnly radius="full" className="absolute left-8"><ArrowLeft /></Button>
+            <Button
+                as={Link}
+                href="/user/booking"
+                isIconOnly
+                radius="full"
+                className="absolute left-8"
+
+            ><ArrowLeft /></Button>
             <section className="space-y-4 w-full max-w-md">
 
                 <Card className=" h-fit">

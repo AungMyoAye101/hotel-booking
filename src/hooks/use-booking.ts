@@ -12,6 +12,7 @@ export const useCreateBooking = () => {
         mutationKey: ['create_booking'],
         mutationFn: createBooking,
         onSuccess: (data) => {
+
             queryClient.setQueryData(['booking_by_id', data._id], data);
             addToast({
                 title: "Create booking successful.",
@@ -19,7 +20,7 @@ export const useCreateBooking = () => {
 
             })
 
-            router.push(`/booking/${data._id}`, { scroll: false })
+            router.push(`/booking/${data._id}`, { scroll: true })
         },
         onError: (error
         ) => {
@@ -88,10 +89,16 @@ export const useGetetBookingByUserId = (userId: string) => {
 }
 
 export const useCancelBooking = () => {
+    const qc = useQueryClient()
     return useMutation({
         mutationKey: ['cancel_booking'],
         mutationFn: cancelBookingService,
         onSuccess: (data) => {
+            console.log(data)
+            qc.invalidateQueries({
+                queryKey: ["booking_by_id"],
+                exact: false
+            })
             addToast({
                 title: "Booking cancelled.",
                 color: 'default'
