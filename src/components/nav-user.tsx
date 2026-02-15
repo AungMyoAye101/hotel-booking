@@ -21,7 +21,7 @@ const NavUser = ({ id }: { id: string }) => {
             </Button>
 
             <Button
-                isLoading={isPending}
+                isDisabled={isPending}
                 onPress={() => mutate()}
                 color="danger"
                 radius="sm" startContent={<LogOut size={20} />}

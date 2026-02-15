@@ -28,15 +28,15 @@ const Login = () => {
     const onSubmit = async (fields: loginType) => {
         setIsLoading(true)
         try {
-            const { data } = await axios.post<APIResponse<User>>('/api/auth/login', fields, { withCredentials: true })
+            const { data } = await axios.post('/api/auth/login', fields, { withCredentials: true })
             console.log(data)
-            setUser(data.result)
+            setUser(data)
             addToast({
                 title: data.message || "login success.",
                 color: 'success'
             })
             reset()
-            router.push('/')
+            // router.push('/')
 
         } catch (error: any) {
             console.warn(error)

@@ -1,4 +1,4 @@
-import { confirmPaymentService, createPayment, getPaymentById } from "@/service/payment-service"
+import { confirmPaymentService, createPayment, getPaymentById, getReceiptService } from "@/service/payment-service"
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
 
 import { useRouter } from "next/navigation"
@@ -45,5 +45,13 @@ export const useGetPaymentById = (id: string) => {
         queryKey: ['payment_id', id],
         queryFn: () => getPaymentById(id),
         enabled: !!id
+    })
+}
+
+export const useGetReceipts = (userId: string) => {
+    return useQuery({
+        queryKey: ["receipts"],
+        queryFn: () => getReceiptService(userId),
+        enabled: !!userId
     })
 }

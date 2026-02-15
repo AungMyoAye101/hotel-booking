@@ -1,5 +1,5 @@
 import api from "@/hooks/axios-api";
-import { APIResponse, PaymentType } from "@/types";
+import { APIResponse, PaymentType, ReceiptType } from "@/types";
 import { CreatePaymentType } from "@/validations/payment-schmea";
 
 
@@ -37,9 +37,15 @@ export const getPaymentById = async (id: string) => {
     const { data } = await api.get<APIResponse<{ payment: PaymentType }>>(
         `/payment/${id}`
     )
-    if (!data.success) {
-        throw new Error(data.message || "Failed to get payment.")
-    }
+
 
     return data.result.payment;
+}
+
+
+export const getReceiptService = async (userId: string) => {
+    const { data } = await api.get<APIResponse<{ receipts: ReceiptType[] }>>(`/receipt/${userId}`)
+
+    return data.result.receipts;
+
 }

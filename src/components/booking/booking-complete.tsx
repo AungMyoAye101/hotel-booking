@@ -228,7 +228,7 @@ const Complete = () => {
                                 </p>
                                 <Button
                                     as={Link}
-                                    href={`/user/booking/${booking._id}`}
+                                    href={`/user/${booking.user._id}/payment`}
                                     variant='solid'
                                     fullWidth
                                     color='primary'

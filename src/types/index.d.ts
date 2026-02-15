@@ -156,6 +156,7 @@ export type PaymentType = {
 }
 
 export type ReceiptType = {
+    _id: string,
     receiptNo: string,
     userId: string,
     paymentId: string,

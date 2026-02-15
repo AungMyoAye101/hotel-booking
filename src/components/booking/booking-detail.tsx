@@ -10,7 +10,7 @@ type Props = {
 
 }
 const BookingDetail = ({ booking }: Props) => {
-
+    console.log(booking, "ninini")
 
     return (
         <section className='w-full md:max-w-sm space-y-4'>
