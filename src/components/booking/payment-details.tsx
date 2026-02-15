@@ -47,12 +47,14 @@ const PaymentDetailsForm = ({ booking }: Prop) => {
     const onSubmit = (e: FormEvent) => {
         e.preventDefault()
         if (!booking) return;
+        console.log(payNow, "===", payNow === "paynow" ? true : false)
+        const payStatus = payNow === "paynow";
         const paymentData = {
             bookingId: booking._id,
             userId: booking.user._id,
             paymentMethod: payment,
             amount: booking.totalPrice,
-            payNow: payNow === "paynow" ? true : false
+            payNow: payStatus
         }
 
         const { success, error, data } = createPaymentSchema.safeParse(paymentData);
