@@ -47,7 +47,7 @@ const PaymentDetailsForm = ({ booking }: Prop) => {
     const onSubmit = (e: FormEvent) => {
         e.preventDefault()
         if (!booking) return;
-        console.log(payNow, "===", payNow === "paynow" ? true : false)
+
         const payStatus = payNow === "paynow";
         const paymentData = {
             bookingId: booking._id,

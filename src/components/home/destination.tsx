@@ -1,7 +1,6 @@
 "use client"
-import { Button, Card, CardBody, } from '@heroui/react';
+import { Button, Card, CardBody, Image, } from '@heroui/react';
 import { ArrowRight } from 'lucide-react';
-import Image from 'next/image';
 import Link from 'next/link';
 
 
@@ -43,15 +42,17 @@ const Destination = () => {
                             shadow='sm'
                             className='border border-slate-300 p-0 overflow-hidden w-xs sm:w-full'>
                             <CardBody className='p-0'>
-                                <div className='relative w-full aspect-square'>
 
-                                    <Image
-                                        src={item.url}
-                                        alt='hotel image'
-                                        fill
-                                        className=' object-cover rounded-none'
-                                    />
-                                </div>
+
+                                <Image
+                                    src={item.url}
+                                    alt='hotel image'
+                                    width={300}
+                                    height={260}
+
+                                    className='aspect-square object-cover rounded-none w-full'
+                                />
+
                                 <div className='flex flex-col gap-1 p-4'>
                                     <h1 className='text-lg font-bold capitalize'>{item.name}</h1>
 

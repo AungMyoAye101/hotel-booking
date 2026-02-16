@@ -1,7 +1,7 @@
 "use client";
 import { useLogout } from "@/hooks/use-auth";
 import { Button } from "@heroui/button"
-import { BookMarked, LogOut, User } from "lucide-react";
+import { BookMarked, CircleDollarSign, LogOut, User } from "lucide-react";
 import Link from "next/link"
 
 
@@ -18,6 +18,10 @@ const NavUser = ({ id }: { id: string }) => {
             <Button as={Link} href="/user/booking" radius="sm" startContent={<BookMarked size={20} />} className="flex justify-start items-center">
 
                 My bookings
+            </Button>
+            <Button as={Link} href={`/user/${id}/payment`} radius="sm" startContent={<CircleDollarSign size={20} />} className="flex justify-start items-center">
+
+                Payment
             </Button>
 
             <Button

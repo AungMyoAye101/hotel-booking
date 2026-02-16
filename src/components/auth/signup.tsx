@@ -30,9 +30,9 @@ const Signup = () => {
     const onSubmit = async (fields: registerType) => {
         setIsLoading(true)
         try {
-            const { data } = await axios.post<APIResponse<User>>('/api/auth/signup', fields, { withCredentials: true })
+            const { data } = await axios.post('/api/auth/signup', fields, { withCredentials: true })
 
-            setUser(data.result)
+            setUser(data)
             addToast({
                 title: data.message || "User account register successFul.",
                 color: 'success'

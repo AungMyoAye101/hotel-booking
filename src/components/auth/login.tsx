@@ -29,7 +29,7 @@ const Login = () => {
         setIsLoading(true)
         try {
             const { data } = await axios.post('/api/auth/login', fields, { withCredentials: true })
-            console.log(data)
+
             setUser(data)
             addToast({
                 title: data.message || "login success.",

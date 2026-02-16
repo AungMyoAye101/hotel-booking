@@ -9,7 +9,7 @@ import { PDFDownloadLink } from "@react-pdf/renderer";
 const PaymentHistory = () => {
     const { id } = useParams<{ id: string }>()
     const { data: receipts, isLoading, isError, error } = useGetReceipts(id);
-    console.log(receipts, error, "dd")
+
     if (isLoading) {
         return <div className="space-y-4">
             <Skeleton className="w-full h-40 rounded-md" />

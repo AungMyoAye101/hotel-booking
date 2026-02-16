@@ -46,11 +46,11 @@ const ReviewCard = ({ hotelId }: Props) => {
 
 
             <h1 className='text-2xl font-semibold'>Guest Reviews</h1>
-            <div className='flex flex-wrap items-center justify-center md:justify-start gap-4'>
+            <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4'>
 
                 {
                     reviews?.map(value => (
-                        <Card key={value._id} shadow='sm' className=' min-w-72  max-w-xs border border-slate-300 '>
+                        <Card key={value._id} shadow='sm' className=' w-fll border border-slate-300 '>
 
                             <CardBody >
                                 <div className='flex items-start gap-2'>
@@ -61,8 +61,8 @@ const ReviewCard = ({ hotelId }: Props) => {
                                     <div className='space-y-2'>
                                         <h1 className='text-lg font-semibold'>{value.userId.name}</h1>
                                         <FiveStars count={value.rating} />
-                                        <p>Reviewed : {new Date(value.createdAt).toDateString()}</p>
-                                        <p className='text-sm'>
+                                        <p className='text-sm'>Reviewed : {new Date(value.createdAt).toDateString()}</p>
+                                        <p className='text-sm line-clamp-2'>
                                             {value.review}
                                         </p>
                                     </div>
