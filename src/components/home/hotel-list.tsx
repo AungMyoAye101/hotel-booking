@@ -90,7 +90,7 @@ export default function HotelCardList() {
                                             alt="hotel photo"
                                             height={160}
                                             width={240}
-                                            className="w-full rounded-none"
+                                            className="w-full rounded-none aspect-video h-auto"
                                         />
                                     </div>
                                     <div className="px-4 py-2 space-y-1">

@@ -167,10 +167,9 @@ const AvaliableRooms = ({ hotelId }: Props) => {
                                     {/* Image */}
                                     <div className="relative  w-full md:max-w-sm  aspect-video">
                                         <Image
-                                            src={room.photo?.secure_url ?? '/room.webp'}
+                                            src={room.photo?.secure_url || '/room.webp'}
                                             alt={room.name}
                                             fill
-
                                             className=" rounded-lg"
                                         />
                                         <div className="absolute left-1 bottom-1 bg-yellow-100 px-2 py-1 flex items-center gap-1 text-sm">
@@ -181,7 +180,7 @@ const AvaliableRooms = ({ hotelId }: Props) => {
 
                                     {/* Info */}
                                     <div className="flex-1 space-y-2 p-4">
-                                        <div className='flex justify-between'>
+                                        <div className='flex justify-between flex-wrap'>
                                             <h2 className="head-1 truncate line-clamp-1 text-wrap">{room.name}</h2>
 
                                             <div >
@@ -199,7 +198,7 @@ const AvaliableRooms = ({ hotelId }: Props) => {
                                                         const val = [...keys][0]
                                                         setQuantity(Number(val))
                                                     }}
-                                                    className='w-12'
+                                                    className='w-8'
                                                 >
                                                     {
                                                         Array.from({ length: room.totalRooms }).map((_, i) => {

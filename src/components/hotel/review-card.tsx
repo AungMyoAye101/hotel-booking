@@ -38,7 +38,7 @@ const ReviewCard = ({ hotelId }: Props) => {
 
     if (isError || reviews?.length === 0) {
         console.error(error?.message)
-        throw error;
+        throw new Error(error?.message);
     }
 
     return (
@@ -57,8 +57,11 @@ const ReviewCard = ({ hotelId }: Props) => {
                                     <Avatar
                                         src='/user.jpg'
                                         alt='user photo'
+                                        size='md'
+                                        isBordered
+                                        className='w-8 h-8'
                                     />
-                                    <div className='space-y-2'>
+                                    <div className='space-y-2 flex-1'>
                                         <h1 className='text-lg font-semibold'>{value.userId.name}</h1>
                                         <FiveStars count={value.rating} />
                                         <p className='text-sm'>Reviewed : {new Date(value.createdAt).toDateString()}</p>
