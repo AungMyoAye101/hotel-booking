@@ -1,8 +1,8 @@
 {
-    "corn": [
+    "corns": [
         {
             "path": "/api/cleanup",
-            "schedule": "/15 * * * *"
+            "schedule": "*/15 * * * *"
         }
     ]
 }
